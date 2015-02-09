@@ -21,8 +21,8 @@ define({
     "appid": "",
 	"itemInfo": {
 		"item": {
-				"title":"Soil Survey Map of USA",
-				"snippet": "Detailed description of data",
+				"title":"JCLM",
+				"snippet": "Gestión carreteras de Castilla La Mancha",
 				"extent": [[-139.4916, 10.7191],[-52.392, 59.5199]]
 			},
 		"itemData":	{
