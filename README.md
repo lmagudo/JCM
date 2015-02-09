@@ -1,4 +1,4 @@
-basic-viewer-template
+Junta Castilla La Mancha App
 =====================
 *Basic Viewer*  is a configurable application template used to display a web map with a specified set of commonly used tools and options.
 
