@@ -1,0 +1,17 @@
+﻿-- commonConfig.js  >>> Cambiar servicios por defecto utilizados. Al menos print y geometry
+    geometry:{
+            url: location.protocol + "//utility.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
+    },
+    printTask: {
+            url: location.protocol + "//utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+    },
+    elevationSync:{
+            url: location.protocol + "//elevation.arcgis.com/arcgis/rest/services/Tools/ElevationSync/GPServer"
+    },
+    geocode: [{
+        url: location.protocol + "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+
+
+-- default.js >> cambiar bitly..  linea 113
+        "bitlyLogin": "esrimarketing",
+            "bitlyKey": "R_52f84981da0e75b23aea2b3b20cbafbc"
