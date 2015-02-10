@@ -22,7 +22,7 @@ define({
 	"itemInfo": {
 		"item": {
 				"title":"Junta Castilla la Mancha app",
-				"snippet": "Detailed description of data",
+				"snippet": "Gestión carreteras de Castilla La Mancha",
 				"extent": [[-8, 36],[2, 41]]
 			},
 		"itemData":	{
