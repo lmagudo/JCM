@@ -19,36 +19,63 @@ define({
     //Default configuration settings for the application. This is where you'll define things like a bing maps key,
     //default web map, default app color theme and more. These values can be overwritten by template configuration settings and url parameters.
     "appid": "",
-	"itemInfo": {
-		"item": {
-				"title":"Soil Survey Map of USA",
-				"snippet": "Detailed description of data",
-				"extent": [[-139.4916, 10.7191],[-52.392, 59.5199]]
-			},
-		"itemData":	{
-				"operationalLayers": [{
-				  "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer",
-				  "visibility": true,
-				  "opacity": 0.75,
-				  "title": "Soil Survey Map",
-				  "itemId": "204d94c9b1374de9a21574c9efa31164"
-				}],
-				"baseMap": {
-				  "baseMapLayers": [{
-					"opacity": 1,
-					"visibility": true,
-					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
-					},{
-					"isReference": true,
-					"opacity": 1,
-					"visibility": true,
-					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
-					}],
-				  "title": "World_Terrain_Base"
-				},
-				"version": "1.1"
-			}
-	},
+    "itemInfo": {
+        "item": {
+            "title": "Soil Survey Map of USA",
+            "snippet": "Detailed description of data",
+            "extent": [[-139.4916, 10.7191], [-52.392, 59.5199]]
+        },
+        "itemData": {
+            "operationalLayers": [{
+                "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer",
+                "visibility": true,
+                "opacity": 0.75,
+                "title": "Soil Survey Map",
+                "itemId": "204d94c9b1374de9a21574c9efa31164"
+            }],
+            "baseMap": {
+                "baseMapLayers": [{
+                    "opacity": 1,
+                    "visibility": true,
+                    "url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
+                }, {
+                    "isReference": true,
+                    "opacity": 1,
+                    "visibility": true,
+                    "url": "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
+                }],
+                "title": "World_Terrain_Base"
+            },
+            "version": "1.1",
+            "bookmarks": [
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -14201669,
+                    "ymin": 4642975,
+                    "xmax": -13021482,
+                    "ymax": 5278931
+                },
+                "name": "Northern California"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -8669334,
+                    "ymin": 4982379,
+                    "xmax": -8664724,
+                    "ymax": 4984864
+                },
+                "name": "Central Pennsylvania"
+            }
+            ]
+        }
+    },
+
     "webmap": "f5b13dbed07c46cdb783cf361833aa6b",
     "oauthappid": null, //"AFTKRmv16wj14N3z",
     //Group templates must support a group url parameter. This will contain the id of the group.
@@ -76,16 +103,16 @@ define({
     "logo": null,
     //Set of tools that will be added to the toolbar
     "tools": [
-        {"name": "legend", "enabled": true},
-        {"name": "bookmarks", "enabled": true},
-        {"name": "layers", "enabled": true},
-        {"name": "basemap", "enabled": true},
-        {"name": "overview", "enabled": true},
-        {"name": "measure", "enabled": true},
-        {"name": "edit", "enabled": true, "toolbar": false}, 
-        {"name": "print", "enabled": true, "legend": true, "layouts":false, "format":"pdf"},
-        {"name": "details", "enabled": true},
-        {"name": "share", "enabled": true}
+        { "name": "legend", "enabled": true },
+        { "name": "bookmarks", "enabled": true, "editable": true },
+        { "name": "layers", "enabled": true },
+        { "name": "basemap", "enabled": true },
+        { "name": "overview", "enabled": true },
+        { "name": "measure", "enabled": true },
+        { "name": "edit", "enabled": true, "toolbar": false },
+        { "name": "print", "enabled": true, "legend": true, "layouts": false, "format": "pdf" },
+        { "name": "details", "enabled": true },
+        { "name": "share", "enabled": true }
     ],
     //Set the active tool on the toolbar. Note home and locate can't be the active tool.
     //Set to "" to display no tools at startup

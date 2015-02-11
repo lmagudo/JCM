@@ -253,6 +253,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             var deferred = new Deferred();
             if (this.config.response.itemInfo.itemData.bookmarks) {
                 //Conditionally load this module since most apps won't have bookmarks
+                console.error("Adding bookmarks");
                 require(["application/has-config!bookmarks?esri/dijit/Bookmarks"], lang.hitch(this, function (Bookmarks) {
                     if (!Bookmarks) {
                         deferred.resolve(false);
@@ -261,6 +262,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                     var bookmarkDiv = toolbar.createTool(tool, panelClass);
                     var bookmarks = new Bookmarks({
                         map: this.map,
+                        //editable: true, /// Añadido por Jon, pero no funciona... al dar a uno nuevo o editar se salta a la siguiente tool
                         bookmarks: this.config.response.itemInfo.itemData.bookmarks
                     }, domConstruct.create("div", {}, bookmarkDiv));
 
