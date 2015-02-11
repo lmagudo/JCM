@@ -19,33 +19,33 @@ define({
     //Default configuration settings for the application. This is where you'll define things like a bing maps key,
     //default web map, default app color theme and more. These values can be overwritten by template configuration settings and url parameters.
     "appid": "",
-    "itemInfo": {
-        "item": {
-            "title": "Soil Survey Map of USA",
-            "snippet": "Detailed description of data",
-            "extent": [[-139.4916, 10.7191], [-52.392, 59.5199]]
-        },
+	"itemInfo": {
+		"item": {
+				"title":"Junta Castilla la Mancha app",
+				"snippet": "Gestión carreteras de Castilla La Mancha",
+				"extent": [[-8, 36],[2, 41]]
+			},
         "itemData": {
-            "operationalLayers": [{
-                "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer",
-                "visibility": true,
-                "opacity": 0.75,
-                "title": "Soil Survey Map",
-                "itemId": "204d94c9b1374de9a21574c9efa31164"
-            }],
-            "baseMap": {
-                "baseMapLayers": [{
-                    "opacity": 1,
-                    "visibility": true,
-                    "url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
+				"operationalLayers": [{
+				  "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer",
+				  "visibility": true,
+				  "opacity": 0.75,
+				  "title": "Junta Castilla la Mancha App",
+				  "itemId": "204d94c9b1374de9a21574c9efa31164"
+				}],
+				"baseMap": {
+				  "baseMapLayers": [{
+					"opacity": 1,
+					"visibility": true,
+					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
                 }, {
-                    "isReference": true,
-                    "opacity": 1,
-                    "visibility": true,
-                    "url": "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
-                }],
-                "title": "World_Terrain_Base"
-            },
+					"isReference": true,
+					"opacity": 1,
+					"visibility": true,
+					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
+					}],
+				  "title": "World_Terrain_Base"
+				},
             "version": "1.1",
             "bookmarks": [
             {
@@ -71,12 +71,11 @@ define({
                     "ymax": 4984864
                 },
                 "name": "Central Pennsylvania"
-            }
+			}
             ]
         }
-    },
-
-    "webmap": "f5b13dbed07c46cdb783cf361833aa6b",
+	},
+    "webmap": false,
     "oauthappid": null, //"AFTKRmv16wj14N3z",
     //Group templates must support a group url parameter. This will contain the id of the group.
     //group: "",
@@ -128,7 +127,7 @@ define({
     //When true display a scalebar on the map
     "scalebar": false,
     //Specify a title for the application. If not provided the web map title is used.
-    "title": null,
+    "title": "Junta Castilla La Mancha App",
     //This option demonstrates how to handle additional custom url parameters. For example
     //if you want users to be able to specify lat/lon coordinates that define the map's center or
     //specify an alternate basemap via a url parameter.
