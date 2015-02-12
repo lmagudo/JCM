@@ -120,38 +120,41 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                 var toolList = [];
                 for (var i = 0; i < this.config.tools.length; i++) {
                     switch (this.config.tools[i].name) {
-                    case "legend":
-                        toolList.push(this._addLegend(this.config.tools[i], toolbar, "medium"));
-                        break;
-                    case "bookmarks":
-                        toolList.push(this._addBookmarks(this.config.tools[i], toolbar, "medium"));
-                        break;
-                    case "layers":
-                        toolList.push(this._addLayers(this.config.tools[i], toolbar, "medium"));
-                        break;
-                    case "basemap":
-                        toolList.push(this._addBasemapGallery(this.config.tools[i], toolbar, "large"));
-                        break;
-                    case "overview":
-                        toolList.push(this._addOverviewMap(this.config.tools[i], toolbar, "medium"));
-                        break;
-                    case "measure":
-                        toolList.push(this._addMeasure(this.config.tools[i], toolbar, "small"));
-                        break;
-                    case "edit":
-                        toolList.push(this._addEditor(this.config.tools[i], toolbar, "medium"));
-                        break;
-                    case "print":
-                        toolList.push(this._addPrint(this.config.tools[i], toolbar, "small"));
-                        break;
-                    case "details":
-                        toolList.push(this._addDetails(this.config.tools[i], toolbar, "medium"));
-                        break;
-                    case "share":
-                        toolList.push(this._addShare(this.config.tools[i], toolbar, "medium"));
-                        break;
-                    default:
-                        break;
+                        case "legend":
+                            toolList.push(this._addLegend(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        case "bookmarks":
+                            toolList.push(this._addBookmarks(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        case "layers":
+                            toolList.push(this._addLayers(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        case "basemap":
+                            toolList.push(this._addBasemapGallery(this.config.tools[i], toolbar, "large"));
+                            break;
+                        case "overview":
+                            toolList.push(this._addOverviewMap(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        case "measure":
+                            toolList.push(this._addMeasure(this.config.tools[i], toolbar, "small"));
+                            break;
+                        case "edit":
+                            toolList.push(this._addEditor(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        case "print":
+                            toolList.push(this._addPrint(this.config.tools[i], toolbar, "small"));
+                            break;
+                        case "details":
+                            toolList.push(this._addDetails(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        case "share":
+                            toolList.push(this._addShare(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        case "wmstool":
+                            toolList.push(this._addWMSTool(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        default:
+                            break;
                     }
                 }
 
@@ -276,7 +279,13 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
 
             return deferred.promise;
         },
-        _addDetails: function (tool, toolbar, panelClass) {
+        _addWMSTool: function (tool, toolbar, panelClass) {
+            var deferred = new Deferred();
+            var wmsdiv = toolbar.createTool(tool, panelClass);
+            deferred.resolve(false);
+            return deferred.promise;
+        },
+            _addDetails: function (tool, toolbar, panelClass) {
             //Add the default map description panel
             var deferred = new Deferred();
             if (has("details")) {

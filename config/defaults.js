@@ -159,7 +159,8 @@ define({
         { "name": "edit", "enabled": true, "toolbar": false },
         { "name": "print", "enabled": true, "legend": true, "layouts": false, "format": "pdf" },
         { "name": "details", "enabled": true },
-        { "name": "share", "enabled": true }
+        { "name": "share", "enabled": true },
+        { "name": "wmstool", "enabled": true }
     ],
     //Set the active tool on the toolbar. Note home and locate can't be the active tool.
     //Set to "" to display no tools at startup
