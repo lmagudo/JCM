@@ -53,25 +53,73 @@ define({
                     "spatialReference": {
                         "wkid": 102100
                     },
-                    "xmin": -14201669,
-                    "ymin": 4642975,
-                    "xmax": -13021482,
-                    "ymax": 5278931
+                    "xmin": -305841,
+                    "ymin": 4583166,
+                    "xmax": -102111,
+                    "ymax": 4793510
                 },
-                "name": "Northern California"
+                "name": "Albacete"
             },
             {
                 "extent": {
                     "spatialReference": {
                         "wkid": 102100
                     },
-                    "xmin": -8669334,
-                    "ymin": 4982379,
-                    "xmax": -8664724,
-                    "ymax": 4984864
+                    "xmin": -565398,
+                    "ymin":  4629732,
+                    "xmax": -304650,
+                    "ymax": 4809517
                 },
-                "name": "Central Pennsylvania"
-			}
+                "name": "Ciudad Real"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -359419,
+                    "ymin": 4754351,
+                    "xmax": -134391,
+                    "ymax": 4973824
+                },
+                "name": "Cuenca"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -393550,
+                    "ymin": 4887305,
+                    "xmax": -172094,
+                    "ymax": 5069471
+                },
+                "name": "Guadalajara"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -605879,
+                    "ymin": 4767766,
+                    "xmax": -309016,
+                    "ymax": 4806660
+                },
+                "name": "Toledo"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -601910,
+                    "ymin":  4610603,
+                    "xmax": -150266,
+                    "ymax": 5068598
+                },
+                "name": "Castilla la Mancha"
+            }
             ]
         }
 	},
