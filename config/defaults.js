@@ -21,24 +21,30 @@ define({
     "appid": "",
 	"itemInfo": {
 		"item": {
+<<<<<<< HEAD
 				"title":"JCLM",
 				"snippet": "Gestión carreteras de Castilla La Mancha",
 				"extent": [[-139.4916, 10.7191],[-52.392, 59.5199]]
+=======
+				"title":"Junta Castilla la Mancha app",
+				"snippet": "Gestión carreteras de Castilla La Mancha",
+				"extent": [[-7.2, 37],[1.5, 42]]
+>>>>>>> Developing
 			},
-		"itemData":	{
+        "itemData": {
 				"operationalLayers": [{
-				  "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer",
+				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/MapServer",
 				  "visibility": true,
-				  "opacity": 0.75,
-				  "title": "Soil Survey Map",
-				  "itemId": "204d94c9b1374de9a21574c9efa31164"
+				  "opacity": false,
+				  "title": "Junta Castilla la Mancha App",
+				  "itemId": false
 				}],
 				"baseMap": {
 				  "baseMapLayers": [{
 					"opacity": 1,
 					"visibility": true,
 					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
-					},{
+                }, {
 					"isReference": true,
 					"opacity": 1,
 					"visibility": true,
@@ -46,10 +52,84 @@ define({
 					}],
 				  "title": "World_Terrain_Base"
 				},
-				"version": "1.1"
-			}
+            "version": "1.1",
+            "bookmarks": [
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -305841,
+                    "ymin": 4583166,
+                    "xmax": -102111,
+                    "ymax": 4793510
+                },
+                "name": "Albacete"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -565398,
+                    "ymin":  4629732,
+                    "xmax": -304650,
+                    "ymax": 4809517
+                },
+                "name": "Ciudad Real"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -359419,
+                    "ymin": 4754351,
+                    "xmax": -134391,
+                    "ymax": 4973824
+                },
+                "name": "Cuenca"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -393550,
+                    "ymin": 4887305,
+                    "xmax": -172094,
+                    "ymax": 5069471
+                },
+                "name": "Guadalajara"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -605879,
+                    "ymin": 4767766,
+                    "xmax": -309016,
+                    "ymax": 4806660
+                },
+                "name": "Toledo"
+            },
+            {
+                "extent": {
+                    "spatialReference": {
+                        "wkid": 102100
+                    },
+                    "xmin": -601910,
+                    "ymin":  4610603,
+                    "xmax": -150266,
+                    "ymax": 5068598
+                },
+                "name": "Castilla la Mancha"
+            }
+            ]
+        }
 	},
-    "webmap": "f5b13dbed07c46cdb783cf361833aa6b",
+    "webmap": false,
     "oauthappid": null, //"AFTKRmv16wj14N3z",
     //Group templates must support a group url parameter. This will contain the id of the group.
     //group: "",
@@ -76,16 +156,16 @@ define({
     "logo": null,
     //Set of tools that will be added to the toolbar
     "tools": [
-        {"name": "legend", "enabled": true},
-        {"name": "bookmarks", "enabled": true},
-        {"name": "layers", "enabled": true},
-        {"name": "basemap", "enabled": true},
-        {"name": "overview", "enabled": true},
-        {"name": "measure", "enabled": true},
-        {"name": "edit", "enabled": true, "toolbar": false}, 
-        {"name": "print", "enabled": true, "legend": true, "layouts":false, "format":"pdf"},
-        {"name": "details", "enabled": true},
-        {"name": "share", "enabled": true}
+        { "name": "legend", "enabled": true },
+        { "name": "bookmarks", "enabled": true, "editable": true },
+        { "name": "layers", "enabled": true },
+        { "name": "basemap", "enabled": true },
+        { "name": "overview", "enabled": true },
+        { "name": "measure", "enabled": true },
+        { "name": "edit", "enabled": true, "toolbar": false },
+        { "name": "print", "enabled": true, "legend": true, "layouts": false, "format": "pdf" },
+        { "name": "details", "enabled": true },
+        { "name": "share", "enabled": true }
     ],
     //Set the active tool on the toolbar. Note home and locate can't be the active tool.
     //Set to "" to display no tools at startup
@@ -101,7 +181,7 @@ define({
     //When true display a scalebar on the map
     "scalebar": false,
     //Specify a title for the application. If not provided the web map title is used.
-    "title": null,
+    "title": "Junta Castilla La Mancha App",
     //This option demonstrates how to handle additional custom url parameters. For example
     //if you want users to be able to specify lat/lon coordinates that define the map's center or
     //specify an alternate basemap via a url parameter.
