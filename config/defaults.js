@@ -21,15 +21,9 @@ define({
     "appid": "",
 	"itemInfo": {
 		"item": {
-<<<<<<< HEAD
-				"title":"JCLM",
-				"snippet": "Gestión carreteras de Castilla La Mancha",
-				"extent": [[-139.4916, 10.7191],[-52.392, 59.5199]]
-=======
 				"title":"Junta Castilla la Mancha app",
 				"snippet": "Gestión carreteras de Castilla La Mancha",
 				"extent": [[-7.2, 37],[1.5, 42]]
->>>>>>> Developing
 			},
         "itemData": {
 				"operationalLayers": [{
