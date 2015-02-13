@@ -199,6 +199,18 @@ define(["dojo/has"], function (has) {
         return ("navigator" in g);
     });
 
+    ///* WMSTooll 
+
+    has.add("wmstool", function (g) {
+        var share = getTool("wmstool", g.config);
+        //overwrite the default with app settings
+        if (g.config.hasOwnProperty("tool_wmstool")) {
+            share = g.config.tool_wmstool;
+        }
+        return share;
+    });
+
+
 
     return has;
 });

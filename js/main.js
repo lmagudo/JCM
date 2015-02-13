@@ -256,7 +256,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             var deferred = new Deferred();
             if (this.config.response.itemInfo.itemData.bookmarks) {
                 //Conditionally load this module since most apps won't have bookmarks
-                console.error("Adding bookmarks");
+                //console.error("Adding bookmarks");
                 require(["application/has-config!bookmarks?esri/dijit/Bookmarks"], lang.hitch(this, function (Bookmarks) {
                     if (!Bookmarks) {
                         deferred.resolve(false);
@@ -282,7 +282,9 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
         _addWMSTool: function (tool, toolbar, panelClass) {
             var deferred = new Deferred();
             var wmsdiv = toolbar.createTool(tool, panelClass);
-            deferred.resolve(false);
+            //wmsdiv.innerHTML("<div class='pageBody' id='pageBody_wmstool'>Capas wms</div>");
+            
+            deferred.resolve(true);
             return deferred.promise;
         },
             _addDetails: function (tool, toolbar, panelClass) {

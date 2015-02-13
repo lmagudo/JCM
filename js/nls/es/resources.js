@@ -42,6 +42,13 @@ define(
 				"link": "Enlace del mapa",
 				"facebook": "Facebook",
 				"twitter": "Twitter"
+			},
+			"wmstool": {
+			    //"error": "Location could not be found",
+			    //"notWhatYouWanted": "Not what you wanted?",
+			    //"selectAnother": "Select another location",
+			    //"currentLocation": "Current Location",
+			    "title": "WMS Layers"
 			}
         },
         "tooltips":{
@@ -57,7 +64,8 @@ define(
         	"time": "Hora",
         	"print": "Imprimir",
         	"details": "Detalles",
-        	"share": "Compartir"
+        	"share": "Compartir",
+            "wmstools": "Capas WMS"
         }
     })
 );

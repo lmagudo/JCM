@@ -42,7 +42,15 @@ define({
 				"link": "Map Link",
 				"facebook": "Facebook",
 				"twitter": "Twitter"
+			},
+			"wmstool": {
+			    //"error": "Location could not be found",
+			    //"notWhatYouWanted": "Not what you wanted?",
+			    //"selectAnother": "Select another location",
+			    //"currentLocation": "Current Location",
+			    "title": "WMS Layers"
 			}
+
         },
         "tooltips":{
         	"home": "Default extent",
@@ -57,7 +65,8 @@ define({
         	"time": "Time",
         	"print": "Print",
         	"details": "Details",
-        	"share": "Share"
+        	"share": "Share",
+            "wmstool": "WMS Layers"
         }
     }),
 "ar": 1,

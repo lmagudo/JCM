@@ -169,7 +169,12 @@
                "type":"boolean",
                "fieldName":"tool_share",
                "label":"Share Tools"
-            }
+            },
+            {  
+                "type":"boolean",
+                "fieldName":"tool_wmstool",
+                "label":"WMS Layers"
+            },
          ]
       },
       {  
@@ -250,6 +255,8 @@
       "tool_bookmarks":true,
       "tool_basemap":true,
       "tool_search":true,
-      "searchExtent":false
+      "searchExtent":false,
+      "tool_wmstool":true
+
    }
 }
