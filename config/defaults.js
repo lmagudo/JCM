@@ -23,15 +23,15 @@ define({
 		"item": {
 				"title":"Junta Castilla la Mancha app",
 				"snippet": "Gestión carreteras de Castilla La Mancha",
-				"extent": [[-8, 36],[2, 41]]
+				"extent": [[-7.2, 37],[1.5, 42]]
 			},
         "itemData": {
 				"operationalLayers": [{
-				  "url": "http://server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer",
+				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/MapServer",
 				  "visibility": true,
-				  "opacity": 0.75,
+				  "opacity": false,
 				  "title": "Junta Castilla la Mancha App",
-				  "itemId": "204d94c9b1374de9a21574c9efa31164"
+				  "itemId": false
 				}],
 				"baseMap": {
 				  "baseMapLayers": [{
