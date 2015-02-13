@@ -142,7 +142,7 @@ define({
     //Theme defines the background color of the title area and tool dialog
     //Color defines the text color for the title and details. Note that
     //both these values must be specified as hex colors.
-    "theme": "#80ab00",
+    "theme": "#005196",
     "color": "#fff",
     //Specify the tool icon color for the tools on the toolbar and the menu icon.
     // Valid values are white and black.
