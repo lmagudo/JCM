@@ -49,6 +49,10 @@ define(
 			    //"selectAnother": "Select another location",
 			    //"currentLocation": "Current Location",
 			    "title": "WMS Layers"
+			},
+
+            "incidencias": {			    
+			    "title": "Incidencias"
 			}
         },
         "tooltips":{
@@ -65,7 +69,8 @@ define(
         	"print": "Imprimir",
         	"details": "Detalles",
         	"share": "Compartir",
-            "wmstool": "Capas WMS"
+            "wmstool": "Capas WMS",
+            "incidencias": "Panel de incidencias"
         }
     })
 );
