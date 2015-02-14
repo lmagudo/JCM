@@ -65,7 +65,7 @@ define(
         	"print": "Imprimir",
         	"details": "Detalles",
         	"share": "Compartir",
-            "wmstools": "Capas WMS"
+            "wmstool": "Capas WMS"
         }
     })
 );
