@@ -29,7 +29,7 @@ define({
 				"operationalLayers": [{
 				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/MapServer",
 				  "visibility": true,
-				  "opacity": false,
+				  "opacity": 0.7,
 				  "title": "Junta Castilla la Mancha App",
 				  "itemId": false
 				}],
