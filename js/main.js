@@ -13,8 +13,8 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  */
-define(["dojo/ready", "dojo/json", "dojo/_base/array", "dojo/_base/Color", "dojo/_base/declare", "dojo/_base/lang", "dojo/dom", "dojo/dom-geometry", "dojo/dom-attr", "dojo/dom-class", "dojo/dom-construct", "dojo/dom-style", "dojo/on", "dojo/Deferred", "dojo/promise/all", "dojo/query", "dijit/registry", "dijit/Menu", "dijit/CheckedMenuItem", "application/toolbar", "application/has-config", "esri/arcgis/utils", "esri/dijit/HomeButton", "esri/dijit/LocateButton", "esri/dijit/Legend", "esri/dijit/BasemapGallery", "esri/dijit/Measurement", "esri/dijit/OverviewMap", "esri/geometry/Extent", "esri/layers/FeatureLayer", "application/TableOfContents", "application/ShareDialog", "application/wmsDialog"], function (
-ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, domConstruct, domStyle, on, Deferred, all, query, registry, Menu, CheckedMenuItem, Toolbar, has, arcgisUtils, HomeButton, LocateButton, Legend, BasemapGallery, Measurement, OverviewMap, Extent, FeatureLayer, TableOfContents, ShareDialog, wmsDialog) {
+define(["dojo/ready", "dojo/json", "dojo/_base/array", "dojo/_base/Color", "dojo/_base/declare", "dojo/_base/lang", "dojo/dom", "dojo/dom-geometry", "dojo/dom-attr", "dojo/dom-class", "dojo/dom-construct", "dojo/dom-style", "dojo/on", "dojo/Deferred", "dojo/promise/all", "dojo/query", "dijit/registry", "dijit/Menu", "dijit/CheckedMenuItem", "application/toolbar", "application/has-config", "esri/arcgis/utils", "esri/dijit/HomeButton", "esri/dijit/LocateButton", "esri/dijit/Legend", "esri/dijit/BasemapGallery", "esri/dijit/Measurement", "esri/dijit/OverviewMap", "esri/geometry/Extent", "esri/layers/FeatureLayer", "application/TableOfContents", "application/ShareDialog", "application/wmsDialog", "application/incidenciasDialog"], function (
+ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, domConstruct, domStyle, on, Deferred, all, query, registry, Menu, CheckedMenuItem, Toolbar, has, arcgisUtils, HomeButton, LocateButton, Legend, BasemapGallery, Measurement, OverviewMap, Extent, FeatureLayer, TableOfContents, ShareDialog, wmsDialog, incidenciasDialog) {
 
 
     return declare(null, {
@@ -152,6 +152,9 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                             break;
                         case "wmstool":
                             toolList.push(this._addWMSTool(this.config.tools[i], toolbar, "medium"));
+                            break;
+                        case "incidencias":
+                            toolList.push(this._addIncidenciasTool(this.config.tools[i], toolbar, "medium"));
                             break;
                         default:
                             break;
@@ -297,6 +300,28 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             wmsDial.startup();
 
             
+
+            //wmsdiv.innerHTML("<div class='pageBody' id='pageBody_wmstool'>Capas wms</div>");
+            
+            deferred.resolve(true);
+            return deferred.promise;
+        },
+         _addIncidenciasTool: function (tool, toolbar, panelClass) {
+            var deferred = new Deferred();
+            var incidenciasDiv = toolbar.createTool(tool, panelClass);
+
+            var incidenciasDial = new incidenciasDialog({
+                //bitlyLogin: this.config.bitlyLogin,
+                //bitlyKey: this.config.bitlyKey,
+                //map: this.map,
+                //image: this.config.sharinghost + "/sharing/rest/content/items/" + this.config.response.itemInfo.item.id + "/info/" + this.config.response.itemInfo.thumbnail,
+                title: this.config.title,
+                //summary: this.config.response.itemInfo.item.snippet || ""
+            }, incidenciasDiv);
+            domClass.add(incidenciasDial.domNode, "pageBody");
+            incidenciasDial.startup();
+
+
 
             //wmsdiv.innerHTML("<div class='pageBody' id='pageBody_wmstool'>Capas wms</div>");
             

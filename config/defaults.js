@@ -29,7 +29,7 @@ define({
 				"operationalLayers": [{
 				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/MapServer",
 				  "visibility": true,
-				  "opacity": false,
+				  "opacity": 0.7,
 				  "title": "Junta Castilla la Mancha App",
 				  "itemId": false
 				}],
@@ -160,7 +160,8 @@ define({
         { "name": "print", "enabled": true, "legend": true, "layouts": false, "format": "pdf" },
         { "name": "details", "enabled": true },
         { "name": "share", "enabled": true },
-        { "name": "wmstool", "enabled": true }
+        { "name": "wmstool", "enabled": true },
+        { "name": "incidencias", "enabled": true }
     ],
     //Set the active tool on the toolbar. Note home and locate can't be the active tool.
     //Set to "" to display no tools at startup
