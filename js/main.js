@@ -282,19 +282,21 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
         _addWMSTool: function (tool, toolbar, panelClass) {
             var deferred = new Deferred();
             var wmsDiv = toolbar.createTool(tool, panelClass);
-
+            
             var wmsDial = new wmsDialog({
                 //bitlyLogin: this.config.bitlyLogin,
                 //bitlyKey: this.config.bitlyKey,
                 //map: this.map,
                 //image: this.config.sharinghost + "/sharing/rest/content/items/" + this.config.response.itemInfo.item.id + "/info/" + this.config.response.itemInfo.thumbnail,
                 title: this.config.title,
+                wmslayers: this.config.wmslayers
+                
                 //summary: this.config.response.itemInfo.item.snippet || ""
             }, wmsDiv);
             domClass.add(wmsDial.domNode, "pageBody");
             wmsDial.startup();
 
-
+            
 
             //wmsdiv.innerHTML("<div class='pageBody' id='pageBody_wmstool'>Capas wms</div>");
             

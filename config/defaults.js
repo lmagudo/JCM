@@ -185,5 +185,24 @@ define({
     ],
     //Replace these with your own bitly key
     "bitlyLogin": "esrimarketing",
-    "bitlyKey": "R_52f84981da0e75b23aea2b3b20cbafbc"
+    "bitlyKey": "R_52f84981da0e75b23aea2b3b20cbafbc",
+    "wmslayers":
+        [
+            {
+                name:"Cartociudad",
+                url:"http://www.cartociudad.es/wms/CARTOCIUDAD/CARTOCIUDAD?"
+            },
+            {
+                name: "PNOA Máxima actualidad",
+                url: "http://www.ign.es/wms-inspire/pnoa-ma?"
+
+            },
+            {
+                name: "Magarama Paisaje",
+                url: " http://wms.magrama.es/sig/Biodiversidad/Paisaje/wms.aspx?"
+
+            }
+
+           
+        ]
 });
