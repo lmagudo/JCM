@@ -191,8 +191,8 @@ define({
     "wmslayers":
         [
             {
-                name:"Cartociudad",
-                url:"http://www.cartociudad.es/wms/CARTOCIUDAD/CARTOCIUDAD?"
+                name:"Esri Sample",
+                url: "http://sampleserver1.arcgisonline.com/ArcGIS/services/Specialty/ESRI_StatesCitiesRivers_USA/MapServer/WMSServer?"
             },
             {
                 name: "PNOA Máxima actualidad",
