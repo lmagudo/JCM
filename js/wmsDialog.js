@@ -1,7 +1,9 @@
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", "dijit/_WidgetBase", "dijit/a11yclick", "dijit/_TemplatedMixin", "dojo/on",
 // load template
-"dojo/text!application/dijit/templates/wmsDialog.html", "dojo/i18n!application/nls/wmsDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event", "esri/layers/WMSLayer"], function (
-Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event, WMSLayer) {
+"dojo/text!application/dijit/templates/wmsDialog.html", "dojo/i18n!application/nls/wmsDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event", "esri/layers/WMSLayer", "esri/config"], function (
+Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event, WMSLayer, esriConfig) {
+    esriConfig.defaults.io.proxyUrl = "code/proxy.ashx";
+
     var Widget = declare("esri.dijit.wmsDialog", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: dijitTemplate,
         options: {
@@ -37,6 +39,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
 
             //this._creteLayerButtons(this.wmslayers);
             this._creteLayerButtons(this.wmslayers);
+            //this._cbEvents(this.layersColection);
 
         },
         // start widget. called by user
@@ -63,7 +66,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         ,
         _creteLayerButtons: function (wmslayers)
         {
-            console.log("heeey--------------------");
+            
             var max = wmslayers.length;
             var j = 0;
             var layersObject = [];
@@ -77,24 +80,50 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                     if (j == max)
                     {
                         var div = "";
+                        
                         for (var k = 0 ; k < layersObject.length; k++)
                         {
                             div += "<div><div><h4 id='button_" + layersObject[k].name + "'>" + layersObject[k].name + "</h4></div>";
                             for (var l = 0 ; l < layersObject[k].layers.length; l++)
                             {
-                                div += "<div ><span id='" + layersObject[k].layers[l].Name + "'>" + layersObject[k].layers[l].Title + "</span><input type='checkbox' name='layercheck' value='true'></div>";
+                                div += "<div ><span id='" + layersObject[k].layers[l].Name + "'>" + layersObject[k].layers[l].Title + "</span><input id='cb_"+layersObject[k].layers[l].Name+"' type='checkbox' name='layercheck' value='true' ></div>";
                             }
                             div += "</div>";
                         }
                         this.document.getElementById("layerButtons").innerHTML = div;
+                        
+
+                        function loadLayers(layersObject)
+                        {
+                            console.log("Añadiendo capas wms");
+                            console.log(layersObject);
+                            for (var i = 0 ; i < layersObject.length; i++)
+                            {
+                                var url = layersObject[i].url;
+                                
+                                for (var j=0; j < layersObject[i].layers.length; j++)
+                                {
+                                    var wmsLayer = new WMSLayer(url, {
+                                        format: "png",
+                                        visibleLayers: [layersObject[i].layers[j].Name]
+                                    });
+                                    console.log(wmsLayer);
+                                }
+                            }
+                        }
+                        loadLayers(layersObject);
+
                     }
-                    
-                   
                 });
-                
             }
+            
+           
            
             
+            
+        },
+        _cbEvents: function (layerColection) {
+
             
         },
         _getWMSLayers: function (wmslayer, callback)
