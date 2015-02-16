@@ -1,13 +1,15 @@
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", "dijit/_WidgetBase", "dijit/a11yclick", "dijit/_TemplatedMixin", "dojo/on",
 // load template
-"dojo/text!application/dijit/templates/wmsDialog.html", "dojo/i18n!application/nls/wmsDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event"], function (
-Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event) {
+"dojo/text!application/dijit/templates/wmsDialog.html", "dojo/i18n!application/nls/wmsDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event", "esri/layers/WMSLayer"], function (
+Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event, WMSLayer) {
     var Widget = declare("esri.dijit.wmsDialog", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: dijitTemplate,
         options: {
             //theme: "ShareDialog",
             title: null,
-            wmslayers: null
+            wmslayers: null,
+            dialog: null,
+            layerColection: []
             
         },
         // lifecycle: 1
@@ -26,23 +28,20 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                 wmsDialogContent: "dialog-content",
                
             };
+
         },
         // bind listener for button to action
         postCreate: function () {
             this.inherited(arguments);
-            //this._setExtentChecked();
-            //this._shareLink();
-            //this.own(on(this._extentInput, a11yclick, lang.hitch(this, this._useExtentUpdate)));
+            
 
+            //this._creteLayerButtons(this.wmslayers);
             this._creteLayerButtons(this.wmslayers);
-
 
         },
         // start widget. called by user
         startup: function () {
             this._init();
-           
-
 
         },
         // connections/subscriptions will be cleaned up during the destroy() lifecycle phase
@@ -51,16 +50,11 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         },
        
         _init: function () {
-            // set sizes for select box
-            //this._setSizeOptions();
-
             var dialog = new Dialog({
                 title: i18n.widgets.wmsDialog.title,
                 draggable: false
             }, domConstruct.create("div"));
             this.set("dialog", dialog);
-
-           
 
             // loaded
             this.set("loaded", true);
@@ -69,27 +63,39 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         ,
         _creteLayerButtons: function (wmslayers)
         {
-            console.log("Creting layer buttons. Numero: " + wmslayers.length);
-            if (wmslayers && wmslayers.length )
-            {
-                this._layersNode.innerHTML = "";
-                var innerDiv = "";
-                for (var i = 0 ; i < wmslayers.length ; i++)
-                {
-                    innerDiv += "<div id = 'title_" + wmslayers[i].name + "'>";
-                    innerDiv += "<button>" + wmslayers[i].name + "</button>";
-                    this._getWMSLayers(wmslayers[i], function (response) {
-                        
-                        innerDiv += response;
-                        innerDiv += "</div>";
-                        console.log(innerDiv);
-                        this._layersNode
-                    });
-                   
-                }
+            console.log("heeey--------------------");
+            var max = wmslayers.length;
+            var j = 0;
+            var layersObject = [];
+            for (var i = 0 ; i < this.wmslayers.length ; i++) {
                 
-                this._layersNode.innerHTML = innerDiv;
+                this._getWMSLayers(this.wmslayers[i], function (response) {
+                    j++;
+                   
+                    layersObject.push(response);
+                    console.log(response);
+                    if (j == max)
+                    {
+                        var div = "";
+                        for (var k = 0 ; k < layersObject.length; k++)
+                        {
+                            div += "<div><div><h4 id='button_" + layersObject[k].name + "'>" + layersObject[k].name + "</h4></div>";
+                            for (var l = 0 ; l < layersObject[k].layers.length; l++)
+                            {
+                                div += "<div ><span id='" + layersObject[k].layers[l].Name + "'>" + layersObject[k].layers[l].Title + "</span><input type='checkbox' name='layercheck' value='true'></div>";
+                            }
+                            div += "</div>";
+                        }
+                        this.document.getElementById("layerButtons").innerHTML = div;
+                    }
+                    
+                   
+                });
+                
             }
+           
+            
+            
         },
         _getWMSLayers: function (wmslayer, callback)
         {
@@ -108,12 +114,10 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             var div = "";
             layersRequest.then(
             function (response) {
-                //console.log("Success: ", response);
-                for (var i = 0 ; i < response.length; i++)
-                {
-                    div += "<span>" + response[i].Title + "</span>";
-                }
-                callback(div);
+                
+                wmslayer.layers = response;
+                
+                callback(wmslayer);
                 
             }, function (error) {
                 console.log("Error: ", error.message);
