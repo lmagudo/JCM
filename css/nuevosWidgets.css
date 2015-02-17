@@ -1,12 +1,27 @@
-﻿#wmsDialogDiv h1 {
+﻿/*dialogo de wms tool*/
+#wmsDialogDiv div{
 
     text-align:center;
 }
+
+#wmsDialogDiv span{
+
+    margin:5px;
+    font-size:16px;
+}
+
+
+
+
+
+/*dialogo de incidencias*/
+
 #incidenciasDialogDiv h1 {
 
     text-align:center;
 }
 
+<<<<<<< HEAD
 .btn_incidencias {
   background: #157abd;
   background-image: -webkit-linear-gradient(top, #157abd, #08588a);
@@ -35,3 +50,6 @@
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
+=======
+
+>>>>>>> 3460491f1270adef58643dbe2bff00e565df4e1b
