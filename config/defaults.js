@@ -191,14 +191,22 @@ define({
     "wmslayers":
         [
             //{
-            //    name:"Esri Sample",
-            //    url: "http://geocatmin.ingemmet.gob.pe/arcgis/services/SERV_METALOGENETICO/MapServer/WMSServer?"
+            //    name:"Cartociudad",
+            //    url: "http://www.cartociudad.es/wms/CARTOCIUDAD/CARTOCIUDAD?"
             //},
             //{
-            //    name: "PNOA Máxima actualidad",
-            //    url: "http://www.ign.es/wms-inspire/pnoa-ma?"
-
+            //    name: "Catastro",
+            //    url: "http://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?"
             //},
+            //{
+            //    name: "PNOA máxima atualidad",
+            //    url: "http://www.ign.es/wms-inspire/pnoa-ma?"
+            //},
+            {
+                name: "Espacios naturales",
+                url: "http://wms.magrama.es/sig/Biodiversidad/INENP/wms.aspx?"
+
+            },
             {
                 name: "Magarama Paisaje",
                 url: "http://wms.magrama.es/sig/Biodiversidad/Paisaje/wms.aspx?"

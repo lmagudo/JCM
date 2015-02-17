@@ -5,10 +5,6 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
     esriConfig.defaults.io.proxyUrl = "code/proxy.ashx";
     esriConfig.defaults.io.alwaysUseProxy = false;
 
-    function cambioVisible() {
-        console.log("Cambio Check");
-    }
-
     var Widget = declare("esri.dijit.wmsDialog", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: dijitTemplate,
         options: {
@@ -87,14 +83,15 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                     if (j == max)
                     {
                         var div = "";
-                        
+                        var index = -1;
                         for (var k = 0 ; k < layersObject.length; k++)
                         {
+                            index += 1;
                             div += "<div><div><h4 id='button_" + layersObject[k].name + "'>" + layersObject[k].name + "</h4></div>";
                             for (var l = 0 ; l < layersObject[k].layers.length; l++)
                             {
                                 
-                                div += "<div><span id='" + layersObject[k].layers[l].Name + "'>" + layersObject[k].layers[l].Title + "</span><input class='wmsCB' id='cb_"+layersObject[k].layers[l].Name+"' type='checkbox' name='layercheck' value='true' ></div>";
+                                div += "<div id='"+index+"'><span id='" + layersObject[k].layers[l].Name + "'>" + layersObject[k].layers[l].Title + "</span><input class='wmsCB' id='cb_"+layersObject[k].layers[l].Name+"' type='checkbox' name='layercheck' value='true' ></div>";
                             }
                             div += "</div>";
                         }
@@ -106,10 +103,38 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         {
                             cblist[i].addEventListener("click", function (evt) {
                                 console.log("checked");
-                                console.log(evt.target.parentNode);
+                                var checked = evt.target.checked;
+                                var index = evt.target.parentNode.id;
+                                toogleLayerto(layersObject, index, checked, response.map);
                             });
                         }
 
+                        function toogleLayerto(layersObject, targetIndex, checked, map)
+                        {
+                            var layerid = 0;
+                            var actualindex = -1;
+                           
+                            for (var i = 0; i < layersObject.length; i++)
+                            {
+                                for (var j = 0; j < layersObject[i].layers.length; j++)
+                                {
+                                    actualindex += 1;
+                                    if (actualindex == targetIndex)
+                                    {
+                                        
+                                        layerid = layersObject[i].layers[j].id;
+                                        break;
+                                    }
+                                }
+                            }
+                            
+
+                            var layer = map.getLayer(layerid);
+                            console.log(layer);
+                            if (checked) layer.show();
+                            else layer.hide();
+
+                        }
 
                         function loadLayers(layersObject,map)
                         {
@@ -127,9 +152,10 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                                         visibleLayers: [layersObject[i].layers[j].Name]
                                     });
                                     wmsLayer.visible = false;
-                                    layersObject[i].layers[i].id = wmsLayer.id;
+                                    
                                     console.log(wmsLayer);
                                     map.addLayer(wmsLayer);
+                                    layersObject[i].layers[j].id = wmsLayer.id;
                                 }
                             }
                         }
@@ -144,10 +170,12 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             
             
         },
+
         _cbEvents: function (layerColection) {
 
             
         },
+
         _getWMSLayers: function (wmslayer,map, callback)
         {
             var wmsuri = wmslayer.url;
@@ -185,3 +213,4 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         
     
 });
+
