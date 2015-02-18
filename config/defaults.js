@@ -190,10 +190,10 @@ define({
     "bitlyKey": "R_52f84981da0e75b23aea2b3b20cbafbc",
     "wmslayers":
         [
-            //{
-            //    name:"Cartociudad",
-            //    url: "http://www.cartociudad.es/wms/CARTOCIUDAD/CARTOCIUDAD?"
-            //},
+            {
+                name:"Cartociudad",
+                url: "http://www.cartociudad.es/wms/CARTOCIUDAD/CARTOCIUDAD?"
+            },
             //{
             //    name: "Catastro",
             //    url: "http://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?"
@@ -202,11 +202,11 @@ define({
             //    name: "PNOA máxima atualidad",
             //    url: "http://www.ign.es/wms-inspire/pnoa-ma?"
             //},
-            {
-                name: "Espacios naturales",
-                url: "http://wms.magrama.es/sig/Biodiversidad/INENP/wms.aspx?"
+            //{
+            //    name: "Espacios naturales",
+            //    url: "http://wms.magrama.es/sig/Biodiversidad/INENP/wms.aspx?"
 
-            },
+            //},
             {
                 name: "Magarama Paisaje",
                 url: "http://wms.magrama.es/sig/Biodiversidad/Paisaje/wms.aspx?"
