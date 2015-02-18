@@ -13,6 +13,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         constructor: function (options, srcRefNode) {
             // mix in settings and defaults
             var defaults = lang.mixin({}, this.options, options);
+            console.log(defaults);
             // widget node
             this.domNode = srcRefNode;
             this._i18n = i18n;

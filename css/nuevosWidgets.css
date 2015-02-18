@@ -21,4 +21,35 @@
     text-align:center;
 }
 
+<<<<<<< HEAD
+.btn_incidencias {
+  background: #157abd;
+  background-image: -webkit-linear-gradient(top, #157abd, #08588a);
+  background-image: -moz-linear-gradient(top, #157abd, #08588a);
+  background-image: -ms-linear-gradient(top, #157abd, #08588a);
+  background-image: -o-linear-gradient(top, #157abd, #08588a);
+  background-image: linear-gradient(to bottom, #157abd, #08588a);
+  -webkit-border-radius: 9;
+  -moz-border-radius: 9;
+  border-radius: 9px;
+  font-family: Courier New;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin-left: 20px;
+  margin-top: 80px;
+}
 
+.btn_incidencias:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+=======
+
+>>>>>>> 3460491f1270adef58643dbe2bff00e565df4e1b
