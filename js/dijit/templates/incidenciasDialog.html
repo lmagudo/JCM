@@ -2,11 +2,22 @@
     <div data-dojo-attach-point="_dialogNode">
     <div class="${css.incidenciasDialogContent}" id ="incidenciasDialogDiv">
        
-        <div data-dojo-attach-point="_layersNode" id="layerButtons"></div>       
+        <div data-dojo-attach-point="_layersNode" id="layerButton"></div>
         
-        <div class="contenedor">
-            <button class="btn_incidencias">Crear Incidencia</button>
-        </div>
+        <div class='contenedor'>
+            <button class="btn_incidencias" onclick="Popup('incidenciasForm')">Crear Incidencia</button>
+        </div>       
 
     </div>
 </div>
+<script>
+    function Popup(id) {
+        if (dojo.byId(id).style.display == "none") {
+            dojo.byId(id).style.display = "block";
+        }
+
+        else {
+            dojo.byId(id).style.display = "none";
+        }
+    }
+</script>

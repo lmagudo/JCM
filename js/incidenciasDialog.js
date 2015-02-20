@@ -2,6 +2,7 @@
 // load template
 "dojo/text!application/dijit/templates/incidenciasDialog.html", "dojo/i18n!application/nls/incidenciasDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event"], function (
 Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event) {
+    
     var Widget = declare("esri.dijit.incidenciasDialog", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: dijitTemplate,
         options: {
@@ -13,7 +14,6 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         constructor: function (options, srcRefNode) {
             // mix in settings and defaults
             var defaults = lang.mixin({}, this.options, options);
-            console.log(defaults);
             // widget node
             this.domNode = srcRefNode;
             this._i18n = i18n;
@@ -29,9 +29,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         // bind listener for button to action
         postCreate: function () {
             this.inherited(arguments);
-            //this._setExtentChecked();
-            //this._shareLink();
-            //this.own(on(this._extentInput, a11yclick, lang.hitch(this, this._useExtentUpdate)));
+            this._creteLayerButtons();
         },
         // start widget. called by user
         startup: function () {
@@ -58,9 +56,28 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             // loaded
             this.set("loaded", true);
             this.emit("load", {});
+        },
+        _creteLayerButtons: function ()
+        {
+            var div = "";
+            div += "<div class='contenedor'><button class='btn_incidencias' onclick='Popup('incidenciasForm')'>Crear Incidencia</button></div>";
+            //this.document.getElementById("layerButton").innerHTML = div;
         }
+
         });
     return Widget;
         
     
 });
+
+function Popup(id) {
+    
+    $('incidenciasForm').load('index.html');
+    if (dojo.byId(id).style.display == "none") {
+        dojo.byId(id).style.display = "block";
+    }
+
+    else {
+        dojo.byId(id).style.display = "none";
+    }     
+}

@@ -21,7 +21,19 @@
     text-align:center;
 }
 
-<<<<<<< HEAD
+#incidenciasForm 
+{
+    width:400px;
+    height:400px;
+    position:relative;
+    top:50%;
+    left:100px;
+    margin:auto;
+    background-color: transparent;
+    display:none;
+    z-index: 9999;
+}
+
 .btn_incidencias {
   background: #157abd;
   background-image: -webkit-linear-gradient(top, #157abd, #08588a);
@@ -50,6 +62,3 @@
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
-=======
-
->>>>>>> 3460491f1270adef58643dbe2bff00e565df4e1b
