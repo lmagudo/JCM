@@ -2,9 +2,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 // load template
 "dojo/text!application/dijit/templates/wmsDialog.html", "dojo/i18n!application/nls/wmsDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event", "esri/layers/WMSLayer", "esri/config"], function (
 Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event, WMSLayer, esriConfig) {
-    //esriConfig.defaults.io.proxyUrl = "code/proxy.ashx";
-    esriConfig.defaults.io.proxyUrl = "code/php/proxy.php";
-    //esriConfig.defaults.io.proxyUrl = "http://localhost:801/code/php/proxy.php";
+    esriConfig.defaults.io.proxyUrl = "code/proxy.ashx";
+    //esriConfig.defaults.io.proxyUrl = "code/php/proxy.php";
+    //esriConfig.defaults.io.proxyUrl = "http://localhost/JCM/code/php/proxy.php";
     
     esriConfig.defaults.io.alwaysUseProxy = false;
 
@@ -134,8 +134,14 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
 
                             var layer = map.getLayer(layerid);
                             console.log(layer);
-                            if (checked) layer.show();
-                            else layer.hide();
+                            if (layer) {
+                                if (checked) layer.show();
+                                else layer.hide();
+                            }
+                            else
+                            {
+                                if (checked) alert("Capa no filtrada por proxy");
+                            }
 
                         }
 
