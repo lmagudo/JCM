@@ -23,11 +23,11 @@
 
 #incidenciasForm 
 {
-    width:400px;
-    height:400px;
+    width:600px;
+    height:500px;
     position:relative;
-    top:50%;
-    left:100px;
+    top:20%;
+    left:0%;
     margin:auto;
     background-color: transparent;
     display:none;

@@ -43,27 +43,36 @@
                 <div class="pageBody">                    
                     <div class="contenedor">
                         <form action="">
+                            <label>Autor:</label>
                             <input type="text" ng-model="Autor" class="form-control" />
 
+                            <label>Fecha:</label>
                             <div class="row" ng-controller="DatepickerDemoCtrl">
                             <div class="col-md-6">
                                     <p class="input-group">
-                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar" ></i></button>
                                         <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="dt" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />                                        
                                     </p>
                                 </div>
-                            </div> 
+                            </div>
+                            
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Problema:</label> <select class="form-control" ng-model="problema" ng-options="problem for problem in problemas"><option></option></select>
                                 </div>
                             </div>
-                            
-                            <input type="text" ng-model="Solucion" />
-                            <input type="text" ng-model="Matricula" />
+
+                            <label>Solución:</label>
+                            <input type="text" ng-model="Solucion" class="form-control" />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Matricula:</label> <select class="form-control" ng-model="Matricula" ng-options="matri for matri in matriculas"><option></option></select>
+                                </div>
+                            </div>
                         </form>
                     </div>
-                    <button ng-click="OK()">Ok</button>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="OK()" >Ok</button>
                 </div>
             </div>
 
@@ -127,7 +136,7 @@
          });
 		</script>
         <script src="js/angular.min.js" type="text/javascript"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/ui-bootstrap-tpls-0.12.0.min.js" type="text/javascript"></script>
         <script src="js/incidenciasForm.js" type="text/javascript"></script>

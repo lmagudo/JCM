@@ -40,6 +40,7 @@
     app.controller('incidenciasController', function ($scope) {
         $scope.incident = properties;
         $scope.problemas = [];
+        $scope.matriculas = [];
         $scope.promselected;
 
         require(["esri/tasks/query", "esri/tasks/QueryTask"],
@@ -52,17 +53,31 @@
 
             queryTask.execute(query, showResults);
 
+            var queryTask2 = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/MapServer/1");
+            var query2 = new Query();
+            query2.returnGeometry = false;
+            query2.outFields = ["Matricula"];
+            query2.where = "OBJECTID > 0";
 
+            queryTask2.execute(query2, showResults2);
         });
 
         function showResults(results) {
             for (i = 0; i < results.features.length; i++) {
-                console.log(results);
                 $scope.problemas.push(results.features[i].attributes.Problema);
             };
             //Intento refrescar el div del form
             $("incidenciasForm").load("index.html");
-            console.log($scope.problemas);
+        };
+
+        function showResults2(results) {
+            for (i = 0; i < results.features.length; i++) {
+                console.log(results);
+                $scope.matriculas.push(results.features[i].attributes.Matricula);
+            };
+            //Intento refrescar el div del form
+            $("incidenciasForm").load("index.html");
+            console.log($scope.matriculas);
         };
 
         $scope.OK = function () {
