@@ -31,7 +31,7 @@ define({
 				  "visibility": true,
 				  "opacity": 0.7,
 				  "title": "Junta Castilla la Mancha App",
-				  "itemId": false
+				  "itemId": false,
 				}],
 				"baseMap": {
 				  "baseMapLayers": [{
@@ -51,7 +51,7 @@ define({
             {
                 "extent": {
                     "spatialReference": {
-                        "wkid": 102100
+                        "wkid": 3857
                     },
                     "xmin": -305841,
                     "ymin": 4583166,
@@ -63,7 +63,7 @@ define({
             {
                 "extent": {
                     "spatialReference": {
-                        "wkid": 102100
+                        "wkid": 3857
                     },
                     "xmin": -565398,
                     "ymin":  4629732,
@@ -75,7 +75,7 @@ define({
             {
                 "extent": {
                     "spatialReference": {
-                        "wkid": 102100
+                        "wkid": 3857
                     },
                     "xmin": -359419,
                     "ymin": 4754351,
@@ -87,7 +87,7 @@ define({
             {
                 "extent": {
                     "spatialReference": {
-                        "wkid": 102100
+                        "wkid": 3857
                     },
                     "xmin": -393550,
                     "ymin": 4887305,
@@ -99,7 +99,7 @@ define({
             {
                 "extent": {
                     "spatialReference": {
-                        "wkid": 102100
+                        "wkid": 3857
                     },
                     "xmin": -605879,
                     "ymin": 4767766,
@@ -111,7 +111,7 @@ define({
             {
                 "extent": {
                     "spatialReference": {
-                        "wkid": 102100
+                        "wkid": 3857
                     },
                     "xmin": -601910,
                     "ymin":  4610603,

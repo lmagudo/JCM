@@ -1,11 +1,12 @@
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", "dijit/_WidgetBase", "dijit/a11yclick", "dijit/_TemplatedMixin", "dojo/on",
 // load template
-"dojo/text!application/dijit/templates/wmsDialog.html", "dojo/i18n!application/nls/wmsDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event", "esri/layers/WMSLayer", "esri/config"], function (
-Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event, WMSLayer, esriConfig) {
+"dojo/text!application/dijit/templates/wmsDialog.html", "dojo/i18n!application/nls/wmsDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event", "esri/layers/WMSLayer", "esri/config", "esri/layers/WMSLayerInfo", 'esri/geometry/Extent'], function (
+Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event, WMSLayer, esriConfig, WMSLayerInfo,Extent) {
     esriConfig.defaults.io.proxyUrl = "code/proxy.ashx";
     //esriConfig.defaults.io.proxyUrl = "code/php/proxy.php";
     //esriConfig.defaults.io.proxyUrl = "http://localhost/JCM/code/php/proxy.php";
-    
+    //esriConfig.defaults.io.proxyUrl = "http://jongarrido.es/JCM/code/php/proxy.php"
+
     esriConfig.defaults.io.alwaysUseProxy = false;
 
     var Widget = declare("esri.dijit.wmsDialog", [_WidgetBase, _TemplatedMixin, Evented], {
@@ -156,9 +157,19 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                                 
                                 for (var j=0; j < layersObject[i].layers.length; j++)
                                 {
+                                    var layer1 = new WMSLayerInfo({name:layersObject[i].layers[j].Name,title:layersObject[i].layers[j].title})
+
+                                    var resourceInfo = {
+                                        layerInfos: [layer1],
+                                        extent: new Extent(-180, -90, 180, 90,{ wkid: 4326 })
+                                    }
+
+                                    
                                     var wmsLayer = new WMSLayer(url, {
+                                        resourceInfo: resourceInfo,
                                         format: "png",
                                         visibleLayers: [layersObject[i].layers[j].Name]
+                                        //spatialReference: new esri.SpatialReference(3857)
                                     });
                                     wmsLayer.visible = false;
                                     
@@ -222,4 +233,3 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         
     
 });
-

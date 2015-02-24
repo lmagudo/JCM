@@ -976,6 +976,8 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             }).then(lang.hitch(this, function (response) {
 
                 this.map = response.map;
+               
+
                 domClass.add(this.map.infoWindow.domNode, "light");
                 this._updateTheme();
 
@@ -1017,6 +1019,9 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                     this.map.setExtent(this.initExt);
                 }
                 this.initExt = this.map.extent;
+
+                
+
                 on.once(this.map, "extent-change", lang.hitch(this, this._checkExtent));
 
                 this._createMapUI();
