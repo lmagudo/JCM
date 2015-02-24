@@ -171,6 +171,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                                         visibleLayers: [layersObject[i].layers[j].Name]
                                         //spatialReference: new esri.SpatialReference(3857)
                                     });
+                                    wmsLayer.spatialReferences[0] = 3857; //!!!Madre mía hasta que he dado con esto!!!
                                     wmsLayer.visible = false;
                                     
                                     console.log(wmsLayer);
