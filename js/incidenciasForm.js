@@ -42,6 +42,18 @@
         $scope.problemas = [];
         $scope.matriculas = [];
         $scope.promselected;
+        $scope.crearincidencia = function () {
+            require(["esri/layers/FeatureLayer"],
+            function (FeatureLayer) {
+                IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/prueba/MapServer/1", {
+                });
+
+                //var targetGraphic = "Grafico obtenido del dibujo";
+                //IncidenciafeatureLayer.applyEdits([targetGraphic], null, null);
+
+                console.log(IncidenciafeatureLayer);
+            });
+        };
 
         require(["esri/tasks/query", "esri/tasks/QueryTask"],
         function (Query, QueryTask) {
@@ -71,20 +83,23 @@
         };
 
         function showResults2(results) {
+
+            var count = 0;
+
             for (i = 0; i < results.features.length; i++) {
-                console.log(results);
-                $scope.matriculas.push(results.features[i].attributes.Matricula);
-            };
+                for (j = 0; j < $scope.matriculas.length; j++) {
+                    if (results.features[i].attributes.Matricula == $scope.matriculas[j]) {
+                        count = 1
+                    }
+                }
+                if (count == 0) {
+                    $scope.matriculas.push(results.features[i].attributes.Matricula);
+                }
+                else { count = 0 }
+            }
             //Intento refrescar el div del form
             $("incidenciasForm").load("index.html");
-            console.log($scope.matriculas);
-        };
-
-        $scope.OK = function () {
-
-        }
-
-
+        };       
 
 
     });

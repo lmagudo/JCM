@@ -62,3 +62,11 @@
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
+
+.ng-invalid.ng-dirty {
+    border-color:#FA787E;
+}
+
+.ng-valid.ng-dirty {
+    border-color:#78FA89;
+}

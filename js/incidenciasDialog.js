@@ -8,6 +8,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         options: {
             //theme: "ShareDialog",
             title: window.document.title,
+            map: null
             
         },
         // lifecycle: 1
@@ -19,6 +20,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             this._i18n = i18n;
             
             this.set("title", defaults.title);
+            this.set("map", defaults.map);
             
             this.css = {
                 
@@ -29,7 +31,10 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         // bind listener for button to action
         postCreate: function () {
             this.inherited(arguments);
-            this._creteLayerButtons();
+            this._creteLayerButtons(this.map);
+            //this._Popup('incidenciasForm',this.map);
+            //this._drawIncidencia(this.map);
+            //this._DrawResults();
         },
         // start widget. called by user
         startup: function () {
@@ -51,33 +56,145 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             }, domConstruct.create("div"));
             this.set("dialog", dialog);
 
-
-
             // loaded
             this.set("loaded", true);
             this.emit("load", {});
         },
-        _creteLayerButtons: function ()
-        {
+        _creteLayerButtons: function (map)
+        {  
+            var tb;
             var div = "";
-            div += "<div class='contenedor'><button class='btn_incidencias' onclick='Popup('incidenciasForm')'>Crear Incidencia</button></div>";
+            div += "<div class='contenedor'><button class='btn_incidencias' onclick='_Popup('incidenciasForm'," + this.options.map + ")'>Crear Prueba</button></div>";
             //this.document.getElementById("layerButton").innerHTML = div;
+
+            function _Popup(id,map){
+                $('incidenciasForm').load('index.html');
+                this._drawIncidencia(map);
+            }
+
+            function _drawIncidencia(map){
+                var drawmap = this.options.map;
+                console.log(map);
+                require(["esri/toolbars/draw"], function(){
+                    tb = new esri.toolbars.Draw(drawmap);
+                    tb.on("draw-end", _DrawResults);
+                    tb.activate(esri.toolbars.Draw.POINT);
+                });    
+            }
+
+            function _DrawResults(evt){
+                require([
+                "esri/Color",
+                "esri/graphic",
+                "esri/symbols/SimpleLineSymbol",
+                "esri/symbols/SimpleMarkerSymbol"
+                ],
+                function (Color, Graphic, SimpleLineSymbol, SimpleMarkerSymbol) {
+
+                    //tb.deactivate();
+
+                    if (dojo.byId('incidenciasForm').style.display == "block") {
+                        dojo.byId('incidenciasForm').style.display = "none";
+                    }
+
+                    else {
+                        dojo.byId('incidenciasForm').style.display = "none";
+                    }
+
+                    // add the drawn graphic to the map
+                    var geometry = evt.geometry;
+
+                    var symbol = new SimpleMarkerSymbol(
+                        SimpleMarkerSymbol.STYLE_CIRCLE,
+                        12,
+                        new SimpleLineSymbol(
+                        SimpleLineSymbol.STYLE_NULL,
+                        new Color([0, 0, 255, 0.9]),
+                        1
+                        ),
+                        new Color([0, 0, 255, 0.5])
+                    );
+
+                    graphicpoint = new Graphic(geometry, symbol);
+                    this.map.graphics.add(graphicpoint);
+                    console.log(map.graphics);
+
+                });
+            }
         }
 
+//        //prueba
+//        _Popup: function (id,map) {
+//    
+//            $('incidenciasForm').load('index.html');
+//            this._drawIncidencia(this.map);
+//        //    if (dojo.byId(id).style.display == "none") {
+//        //        dojo.byId(id).style.display = "block";
+//        //        drawIncidencia(id);
+//        //    }
+
+//        //    else {
+//        //        dojo.byId(id).style.display = "none";
+//        //    }     
+//        },
+
+//        _drawIncidencia: function (map) {            
+//            var drawmap = this.options.map;
+//            console.log(map);
+//            require(["esri/toolbars/draw"], function(){
+//                //tb = new esri.toolbars.Draw(drawmap);
+//                //tb.on("draw-end", _DrawResults);
+//                //tb.activate(esri.toolbars.Draw.POINT);
+//            });    
+//        },
+
+
+//        _DrawResults: function (evt) {
+//            require([
+//            "esri/Color",
+//            "esri/graphic",
+//            "esri/symbols/SimpleLineSymbol",
+//            "esri/symbols/SimpleMarkerSymbol"
+//            ],
+//            function (Color, Graphic, SimpleLineSymbol, SimpleMarkerSymbol) {
+
+//                //tb.deactivate();
+
+//                if (dojo.byId('incidenciasForm').style.display == "block") {
+//                    dojo.byId('incidenciasForm').style.display = "none";
+//                }
+
+//                else {
+//                    dojo.byId('incidenciasForm').style.display = "none";
+//                }
+
+//                //// add the drawn graphic to the map
+//                //var geometry = evt.geometry;
+
+//                var symbol = new SimpleMarkerSymbol(
+//                    SimpleMarkerSymbol.STYLE_CIRCLE,
+//                    12,
+//                    new SimpleLineSymbol(
+//                    SimpleLineSymbol.STYLE_NULL,
+//                    new Color([0, 0, 255, 0.9]),
+//                    1
+//                    ),
+//                    new Color([0, 0, 255, 0.5])
+//                );
+
+//                //graphicpoint = new Graphic(geometry, symbol);
+//                //this.map.graphics.add(graphicpoint);
+//                //console.log(map.graphics);
+
+//            });
+
+//        }
+
         });
+
+
     return Widget;
         
     
 });
 
-function Popup(id) {
-    
-    $('incidenciasForm').load('index.html');
-    if (dojo.byId(id).style.display == "none") {
-        dojo.byId(id).style.display = "block";
-    }
-
-    else {
-        dojo.byId(id).style.display = "none";
-    }     
-}
