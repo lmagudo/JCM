@@ -162,7 +162,8 @@ define({
         { "name": "details", "enabled": true },
         { "name": "share", "enabled": true },
         { "name": "wmstool", "enabled": true },
-        { "name": "incidencias", "enabled": true }
+        { "name": "incidencias", "enabled": true },
+        { "name": "buscador", "enabled": true }
     ],
     //Set the active tool on the toolbar. Note home and locate can't be the active tool.
     //Set to "" to display no tools at startup
@@ -193,20 +194,22 @@ define({
             {
                 name:"Cartociudad",
                 url: "http://www.cartociudad.es/wms/CARTOCIUDAD/CARTOCIUDAD?"
+               
             },
-            //{
-            //    name: "Catastro",
-            //    url: "http://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?"
-            //},
-            //{
-            //    name: "PNOA máxima atualidad",
-            //    url: "http://www.ign.es/wms-inspire/pnoa-ma?"
-            //},
-            //{
-            //    name: "Espacios naturales",
-            //    url: "http://wms.magrama.es/sig/Biodiversidad/INENP/wms.aspx?"
+            {
+                name: "Catastro",
+                url: "http://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?"
+              
+            },
+            {
+                name: "PNOA máxima atualidad",
+                url: "http://www.ign.es/wms-inspire/pnoa-ma?"
+            },
+            {
+                name: "Espacios naturales",
+                url: "http://wms.magrama.es/sig/Biodiversidad/INENP/wms.aspx?"
 
-            //},
+            },
             {
                 name: "Magarama Paisaje",
                 url: "http://wms.magrama.es/sig/Biodiversidad/Paisaje/wms.aspx?"

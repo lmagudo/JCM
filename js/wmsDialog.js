@@ -86,15 +86,16 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                     console.log(response);
                     if (j == max)
                     {
+                        j = -1;
                         var div = "";
                         var index = -1;
                         for (var k = 0 ; k < layersObject.length; k++)
                         {
-                            index += 1;
-                            div += "<div><div><h4 id='button_" + layersObject[k].name + "'>" + layersObject[k].name + "</h4></div>";
+                            
+                            div += "<div><div><h4 class='encabezadoWMS' id='button_" + layersObject[k].name + "'>" + layersObject[k].name + "</h4></div>";
                             for (var l = 0 ; l < layersObject[k].layers.length; l++)
                             {
-                                
+                                index += 1;
                                 div += "<div id='"+index+"'><span id='" + layersObject[k].layers[l].Name + "'>" + layersObject[k].layers[l].Title + "</span><input class='wmsCB' id='cb_"+layersObject[k].layers[l].Name+"' type='checkbox' name='layercheck' value='true' ></div>";
                             }
                             div += "</div>";
@@ -107,6 +108,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         {
                             cblist[i].addEventListener("click", function (evt) {
                                 console.log("checked");
+                                
                                 var checked = evt.target.checked;
                                 var index = evt.target.parentNode.id;
                                 toogleLayerto(layersObject, index, checked, response.map);
@@ -125,7 +127,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                                     actualindex += 1;
                                     if (actualindex == targetIndex)
                                     {
-                                        
+                                       
                                         layerid = layersObject[i].layers[j].id;
                                         break;
                                     }
@@ -150,31 +152,69 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         {
                             console.log("Añadiendo capas wms");
                             console.log(layersObject);
-                            console.log(map);
+                            //console.log(map);
                             for (var i = 0 ; i < layersObject.length; i++)
                             {
                                 var url = layersObject[i].url;
                                 
                                 for (var j=0; j < layersObject[i].layers.length; j++)
                                 {
-                                    var layer1 = new WMSLayerInfo({name:layersObject[i].layers[j].Name,title:layersObject[i].layers[j].title})
+                                    var layer1 = new WMSLayerInfo({ name: layersObject[i].layers[j].Name, title: layersObject[i].layers[j].title }); //!!!Madre mía hasta que he dado con esto!!!
 
                                     var resourceInfo = {
                                         layerInfos: [layer1],
-                                        extent: new Extent(-180, -90, 180, 90,{ wkid: 4326 })
-                                    }
+                                        extent: new Extent(-180, -90, 180, 90, { wkid: 4326 })
+                                    }; //!!!Madre mía hasta que he dado con esto!!!
 
                                     
                                     var wmsLayer = new WMSLayer(url, {
                                         resourceInfo: resourceInfo,
                                         format: "png",
-                                        visibleLayers: [layersObject[i].layers[j].Name]
+                                        visibleLayers: [layersObject[i].layers[j].Name],
+                                       
                                         //spatialReference: new esri.SpatialReference(3857)
                                     });
+
+                                   
+                                    if (url == "http://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?")// Se fuerza una petición SRS="EPSG:3857"  en el caso de las capas de catastro...
+                                    {
+                                        wmsLayer.getImageUrl = function (a, b, c, f) {
+                                            if (!this.visibleLayers || 0 === this.visibleLayers.length) f(this._blankImageURL);
+                                            else {
+                                                var g = a.spatialReference.wkid;
+                                                //-1 === d.indexOf(this.spatialReferences, g) && a.spatialReference.latestWkid && (g = a.spatialReference.latestWkid);
+                                                //if (d.some(this._WEB_MERCATOR, function (a) { return a == g }))
+                                                //{
+                                                //    var m = d.filter(this.spatialReferences, function (a) { return d.some(this._WEB_MERCATOR, function (b) { return b == a }) }, this); 0 === m.length && (m = d.filter(this.spatialReferences, function (a) { return d.some(this._WORLD_MERCATOR, function (b) { return b == a }) }, this)); g = 0 < m.length ? m[0] : this._WEB_MERCATOR[0]
+                                                //}
+                                                //this.spatialReferences = d.filter(this.spatialReferences, function (a) { return a !== g });
+                                                //this.spatialReferences.unshift(g);
+                                                var m = a.xmin, s = a.xmax, t = a.ymin, e = a.ymax;
+                                                a = { SERVICE: "WMS", REQUEST: "GetMap" };
+                                                a.FORMAT = this.imageFormat;
+                                                a.TRANSPARENT = this.imageTransparency ? "TRUE" : "FALSE";
+                                                a.STYLES = "";
+                                                a.VERSION = this.version;
+                                                a.LAYERS = this.visibleLayers ? this.visibleLayers.toString() : null;
+                                                a.WIDTH = b;
+                                                a.HEIGHT = c;
+                                                this.maxWidth < b && (a.WIDTH = this.maxWidth);
+                                                this.maxHeight < c && (a.HEIGHT = this.maxHeight);
+                                                b = g ? g : NaN; isNaN(b) || ("1.3.0" == this.version ? a.SRS = "EPSG:" + "3857" : a.SRS = "EPSG:" + "3857");
+                                                "1.3.0" == this.version && this._useLatLong(b) ? a.BBOX = t + "," + m + "," + e + "," + s : a.BBOX = m + "," + t + "," + s + "," + e;
+                                                b = this.getMapURL; var h;
+                                                b += -1 == b.indexOf("?") ? "?" : "";
+                                                for (h in a) a.hasOwnProperty(h) && (b += "?" == b.substring(b.length - 1, b.length) ? "" : "\x26", b += h + "\x3d" + a[h]);
+                                                f(b)
+                                            }
+                                        };
+
+
+                                    }
+                                    
                                     wmsLayer.spatialReferences[0] = 3857; //!!!Madre mía hasta que he dado con esto!!!
                                     wmsLayer.visible = false;
-                                    
-                                    console.log(wmsLayer);
+                                   
                                     map.addLayer(wmsLayer);
                                     layersObject[i].layers[j].id = wmsLayer.id;
                                 }
