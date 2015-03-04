@@ -1,5 +1,5 @@
 ﻿(function () {
-    var app = angular.module('incidencias', ['ui.bootstrap']);
+    var app = angular.module('incidencias', ['ui.bootstrap', 'ngMessages']);
 
     app.controller('DatepickerDemoCtrl', function ($scope) {
         $scope.today = function () {
@@ -42,7 +42,9 @@
         $scope.problemas = [];
         $scope.matriculas = [];
         $scope.promselected;
+        $scope.showmessages = false;
         $scope.crearincidencia = function () {
+            $scope.showmessages = true;
             require(["esri/layers/FeatureLayer"],
             function (FeatureLayer) {
                 IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/prueba/MapServer/1", {
@@ -99,7 +101,7 @@
             }
             //Intento refrescar el div del form
             $("incidenciasForm").load("index.html");
-        };       
+        };
 
 
     });
