@@ -1,14 +1,18 @@
 ﻿(function () {
     var app = angular.module('incidencias', ['ui.bootstrap', 'ngMessages']);
 
+    var mydate;
+
     app.controller('DatepickerDemoCtrl', function ($scope) {
+
         $scope.today = function () {
-            $scope.dt = new Date();
+            $scope.date = new Date();
+            console.log($scope);
         };
         //$scope.today();
 
         $scope.clear = function () {
-            $scope.dt = null;
+            $scope.date = null;
         };
 
         // Disable weekend selection
@@ -29,31 +33,68 @@
         };
 
         $scope.dateOptions = {
-            formatYear: 'yy',
+            formatYear: 'yyyy',
             startingDay: 1
         };
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.formats = ['dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
     });
 
     app.controller('incidenciasController', function ($scope) {
-        $scope.incident = properties;
         $scope.problemas = [];
         $scope.matriculas = [];
         $scope.promselected;
         $scope.showmessages = false;
+
         $scope.crearincidencia = function () {
             $scope.showmessages = true;
-            require(["esri/layers/FeatureLayer"],
-            function (FeatureLayer) {
+
+            console.log($("#date").val());
+            $scope.date = $("#date").val();
+
+            $scope.newfeature = {
+                "geometry": {
+                    "x": -104.4140625,
+                    "y": 69.2578125,
+                    "spatialReference": {
+                        "wkid": 4326
+                    }
+                },
+                "attributes": {
+                    "Autor": this.Autor,
+                    "Problema": this.problema,
+                    "Solucion": this.Solucion,
+                    "IdMatricula": this.Matricula,
+                    "fecha": mydate
+                },
+                "symbol": {
+                    "color": [255, 0, 0, 128],
+                    "size": 12,
+                    "angle": 0,
+                    "xoffset": 0,
+                    "yoffset": 0,
+                    "type": "esriSMS",
+                    "style": "esriSMSSquare",
+                    "outline": {
+                        "color": [0, 0, 0, 255],
+                        "width": 1,
+                        "type": "esriSLS",
+                        "style": "esriSLSSolid"
+                    }
+                }
+            };
+
+            require(["esri/layers/FeatureLayer", "esri/graphic"],
+            function (FeatureLayer, Graphic) {
                 IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/prueba/MapServer/1", {
                 });
 
-                //var targetGraphic = "Grafico obtenido del dibujo";
+                var targetGraphic = new Graphic($scope.newfeature);
+                //Ahora mismo tengo comentada esta linea para que no cree ninguna entidad nueva en la bbdd
                 //IncidenciafeatureLayer.applyEdits([targetGraphic], null, null);
-
-                console.log(IncidenciafeatureLayer);
+                console.log($scope.newfeature);
+                console.log(targetGraphic);
             });
         };
 
@@ -102,14 +143,7 @@
             //Intento refrescar el div del form
             $("incidenciasForm").load("index.html");
         };
-
-
     });
-
-    var properties = {
-        showbuttom: false
-    };
-
 })();
 
 

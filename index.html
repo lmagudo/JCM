@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="incidencias">
 	<head>
+        <meta charset="utf-8"/>
 		<title></title>	<!-- Define the versions of IE that will be used to render the page. See Microsoft documentation for details. Optional. -->
     	
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta charset="utf-8">
+		
 		<!-- Responsive -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta name="mobile-web-app-capable" content="yes">
@@ -36,15 +37,17 @@
 		<!-- Map -->
 		<!-- The ArcGIS API for JavaScript provides bidirectional support.  When viewing the application in an right to left (rtl) language like Hebrew and Arabic the map needs to remain in left-to-right (ltr) mode. Specify this by setting the dir attribute on the div to ltr. -->
 		<div id="mapDiv" dir="ltr">
-            <!-- Formulario incidencias -->
+
+         <!-- Formulario incidencias -->
             <div id="incidenciasForm" ng-controller="incidenciasController as incidencia">
                 <div class="pageHeader bg roundedTop">
+                    <div id="TituloIncidencia" class="fc" style="color: rgba(255, 255, 255, 0.9); padding-top:30px">Panel de Incidencias</div>
                 </div>
                 <div class="pageBody">                    
                     <div class="contenedor">
                         <form name="inciForm" ng-submit="inciForm.$valid && crearincidencia()" novalidate>
                         <div class="control-group" ng-class="{true: 'error'}[submitted && inciForm.email.$invalid]">
-                            <fieldset class="form-group" style="width:100px">
+                            <fieldset class="form-group" style="width:140px; float:left">
                                 <label>Autor:</label>
                                 <div class="controls">
                                     <input name="autor" type="text" ng-model="Autor" class="form-control" required/>
@@ -52,23 +55,22 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="form-group" style="float:right">
+                            <fieldset class="form-group" style="width:350px; padding-left:80px">
                                 <label>Fecha:</label>
                                 <div class="row" ng-controller="DatepickerDemoCtrl">
                                 <div class="col-md-6">
                                         <p class="input-group">
                                             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar" ></i></button>
                                             <div class="controls">
-                                            <input name="fecha" type="date" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="dt" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" required/>
-                                                <span class="help-inline" ng-show="submitted && inciForm.fecha.$error.required">Olvidaste la fecha...</span>
-                                                <span class="help-inline" ng-show="submitted && inciForm.fecha.$error.date">Fecha no valida</span>
+                                            <input name="date" type="date" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="date" is-open="opened" datepicker-options="dateOptions" close-text="Close" required/>
+                                                <span class="help-inline" ng-show="submitted && inciForm.date.$error.required">Olvidaste la fecha...</span>
+                                                <span class="help-inline" ng-show="submitted && inciForm.date.$error.date">Fecha no v&aacute;lida</span>
                                             </div>                           
                                         </p>
                                     </div>
                                 </div>
                             </fieldset>
-                            
-                            <fieldset class="form-group">
+                            <fieldset class="form-group" style="width:360px;float:left">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Problema:</label>
@@ -79,39 +81,34 @@
                                     </div>
                                 </div>
                             </fieldset>
-
-                            <fieldset class="form-group">
-                                <label>Solución:</label>
-                                <div class="controls">
-                                    <input name="solucion" type="text" ng-model="Solucion" class="form-control" required/>
-                                    <span class="help-inline" ng-show="submitted && inciForm.solucion.$error.required">Olvidaste describir la solución...</span>
-                                </div>
-                             </fieldset>
-
-                            <fieldset class="form-group">
+                            <fieldset class="form-group" style="width:150px">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Matricula:</label>
+                                        <label>Matr&iacute;cula:</label>
                                         <div class="controls">
                                             <select name="matricula" class="form-control" ng-model="Matricula" ng-options="matricula for matricula in matriculas" required><option></option></select>
-                                        <span class="help-inline" ng-show="submitted && inciForm.matricula.$error.required">Selecciona una matrícula...</span>
+                                        <span class="help-inline" ng-show="submitted && inciForm.matricula.$error.required">Selecciona una matr&iacute;cula...</span>
                                         </div>
-                                    </div>
                                 </div>
-                            </fieldset>
+                             </fieldset>                 
+                             <fieldset class="form-group" >
+                                <label>Soluci&oacute;n:</label>
+                                <div class="controls">
+                                    <input name="solucion" type="text" ng-model="Solucion" class="form-control" required/>
+                                    <span class="help-inline" ng-show="submitted && inciForm.solucion.$error.required">Olvidaste describir la soluci&oacute;n...</span>
+                                </div>
+                             </fieldset>
                             </div>
 
-                            <fieldset class="form-group">
+                            <div style="text-align:center; margin-left:auto; margin-right:auto">
+                             <fieldset class="form-group">
                                 <input class="btn btn-primary pull-right" type="submit" value="Submit" ng-click="submitted=true" />
-                            </fieldset>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
 
         </div>
-
-        
         
 
 		<!-- Panel Content -->
@@ -175,14 +172,72 @@
         <script src="js/ui-bootstrap-tpls-0.12.0.min.js" type="text/javascript"></script>
         <script src="js/incidenciasForm.js" type="text/javascript"></script>
         <script>
-            function Popup(id) {
-                if (dojo.byId(id).style.display == "none") {
-                    dojo.byId(id).style.display = "block";
+            function _Popup(id, map) {
+
+                var tb;
+                console.log(map);
+                require(["esri/toolbars/draw"], function(){
+                    tb = new esri.toolbars.Draw(drawmap);
+                    tb.on("draw-end", _DrawResults);
+                    tb.activate(esri.toolbars.Draw.POINT);
+                });
+
+                function _DrawResults(evt) {
+                    require([
+                    "esri/Color",
+                    "esri/graphic",
+                    "esri/symbols/SimpleLineSymbol",
+                    "esri/symbols/SimpleMarkerSymbol"
+                    ],
+                    function (Color, Graphic, SimpleLineSymbol, SimpleMarkerSymbol) {
+
+                        tb.deactivate();
+
+                        if (dojo.byId('incidenciasForm').style.display == "block") {
+                            dojo.byId('incidenciasForm').style.display = "none";
+                        }
+
+                        else {
+                            dojo.byId('incidenciasForm').style.display = "none";
+                        }
+
+                        // add the drawn graphic to the map
+                        var geometry = evt.geometry;
+
+                        var symbol = new SimpleMarkerSymbol(
+                            SimpleMarkerSymbol.STYLE_CIRCLE,
+                            12,
+                            new SimpleLineSymbol(
+                            SimpleLineSymbol.STYLE_NULL,
+                            new Color([0, 0, 255, 0.9]),
+                            1
+                            ),
+                            new Color([0, 0, 255, 0.5])
+                        );
+
+                        var graphicpoint = new Graphic(geometry, symbol);
+                        map.graphics.add(graphicpoint);
+                        console.log(map.graphics);
+
+                        _Popup(id, geometry);
+
+                    });
+
                 }
 
-                else {
-                    dojo.byId(id).style.display = "none";
+                function _Popup(id, geometry) {
+                    
+                    if (dojo.byId(id).style.display == "none") {
+                        dojo.byId(id).style.display = "block";
+
+                    }
+
+                    else {
+                        dojo.byId(id).style.display = "none";
+                    }
                 }
+
+
             }
         </script>
 	</body>
