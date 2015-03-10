@@ -28,9 +28,9 @@
 {
     width:600px;
     height:500px;
-    position:relative;
+    position:absolute;
     top:20%;
-    left:0%;
+    left:20%;
     margin:auto;
     background-color: transparent;
     display:none;

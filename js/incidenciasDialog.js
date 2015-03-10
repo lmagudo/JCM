@@ -66,16 +66,30 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         },
         _creteLayerButtons: function (map)
         {  
-            //Aquí compruebo que lo que estoy pasando es en efecto el objeto mapa
-            console.log(map);
+           
             var div = "";
             var id = 'incidenciasForm';
             //Aquí creo el botón y el evento onclick que está manejado por la función _drawincIncidencia(). Esta función la puedes encontrar en un
             //script que hay al final de la página index.html, mi idea en un principio era definir aquí las funciones de dibujo, pero como no lo conseguia,
             //decidí tan solo crear aquí el evento onclick y definir todas las funciones en el script que te he mencionado antes.
-            div += "<div class='contenedor'><button class='btn_incidencias' onclick=" + '"' + "_drawincIncidencia(" + id + ", " + map + ")" + '"' + ">Crear Incidencia</button></div>";
-            docu.getElementById("layerButton").innerHTML = div;
+            div += "<div class='contenedor'><button class='btn_incidencias'>Crear Incidencia</button></div>";
+            
+            document.getElementById("layerButton").innerHTML = div;
+            var boton = document.getElementsByClassName("btn_incidencias")[0];
 
+            boton.addEventListener("click", function (evt) {
+                console.log("click");
+                showFormIncidencias();
+            });
+
+            var map = map;
+            function showFormIncidencias()
+            {
+                console.log("¿Está el mapa....?");
+                console.log(map);
+                var form = document.getElementById("incidenciasForm");
+                form.style.display = "block"
+            }
         }
 
         //A partir de aquí todo lo que está comentado son pruebas que había hecho y desecho. Mi idea era crear aquí las funciones del dibujo
