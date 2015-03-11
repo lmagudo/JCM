@@ -34,11 +34,6 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         postCreate: function () {
             this.inherited(arguments);
             this._creteLayerButtons(this.map);
-
-            //Esto son por pruebas que había hecho con las funciones
-            //this._Popup('incidenciasForm');
-            //this._drawIncidencia(this.map);
-            //this._DrawResults();
         },
         // start widget. called by user
         startup: function () {
@@ -69,10 +64,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
            
             var div = "";
             var id = 'incidenciasForm';
-            //Aquí creo el botón y el evento onclick que está manejado por la función _drawincIncidencia(). Esta función la puedes encontrar en un
-            //script que hay al final de la página index.html, mi idea en un principio era definir aquí las funciones de dibujo, pero como no lo conseguia,
-            //decidí tan solo crear aquí el evento onclick y definir todas las funciones en el script que te he mencionado antes.
-            div += "<div class='contenedor'><button class='btn_incidencias'>Crear Incidencia</button></div>";
+            div += "<div class='contenedor'><button id='btnIncidencias' class='btn_incidencias'>Crear Incidencia</button></div>";
             
             document.getElementById("layerButton").innerHTML = div;
             var boton = document.getElementsByClassName("btn_incidencias")[0];
@@ -83,95 +75,110 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             });
 
             var map = map;
+            var tb;
             function showFormIncidencias()
             {
                 console.log("¿Está el mapa....?");
-                console.log(map);
-                var form = document.getElementById("incidenciasForm");
-                form.style.display = "block"
+                console.log(map);                
+                
+                map.graphics.clear();
+
+                require(["esri/toolbars/draw"], function(){
+                    tb = new esri.toolbars.Draw(map);
+                    tb.on("draw-end", _DrawResults);
+                    tb.activate(esri.toolbars.Draw.POINT);
+                });
+
+                function _DrawResults(evt) {
+                    require([
+                    "esri/Color",
+                    "esri/graphic",
+                    "esri/symbols/SimpleLineSymbol",
+                    "esri/symbols/SimpleMarkerSymbol"
+                    ],
+                    function (Color, Graphic, SimpleLineSymbol, SimpleMarkerSymbol) {
+
+                        tb.deactivate();
+
+                        if (dojo.byId('incidenciasForm').style.display == "block") {
+                            dojo.byId('incidenciasForm').style.display = "none";
+                        }
+
+                        else {
+                            dojo.byId('incidenciasForm').style.display = "none";
+                        }
+
+                        // add the drawn graphic to the map
+                        var geometry = evt.geometry;
+
+                        var symbol = new SimpleMarkerSymbol(
+                            SimpleMarkerSymbol.STYLE_CIRCLE,
+                            12,
+                            new SimpleLineSymbol(
+                            SimpleLineSymbol.STYLE_NULL,
+                            new Color([0, 0, 255, 0.9]),
+                            1
+                            ),
+                            new Color([0, 0, 255, 0.5])
+                        );
+
+                        var graphicpoint = new Graphic(geometry, symbol);
+                        map.graphics.add(graphicpoint);
+
+                        _Popup("incidenciasForm", geometry);
+
+                    });
+
+                }
+
+                function _Popup(id, geometry) {
+                    
+                    if (dojo.byId(id).style.display == "none") {
+                        dojo.byId(id).style.display = "block";
+
+                        //Cierro el panel de la derecha
+                        closePage(0);
+                        // Obtengo la latitud y la longitud de la geometría del punto
+                        var x = geometry.getLongitude().toString();
+                        var y = geometry.getLatitude().toString();
+                        //relleno los inputs del form para la x y la y
+                        $("#posx").val(x);
+                        $("#posy").val(y);
+
+                    }
+
+                    else {
+                        dojo.byId(id).style.display = "none";
+                    }
+                }
+
+
+                function closePage (num) {
+
+                    require([
+                        "dojo/_base/html", "dojo/dom"
+                    ],
+                    function(html, dom){
+                        var box = html.getContentBox(dom.byId("panelContent"));
+
+                        var startPos = this.curTool * box.h;
+                        var endPos = num * box.h;
+                        var diff = Math.abs(num - this.curTool);
+                        this.snap = false;
+                        if (diff == 1) {
+                            this._animateScroll(startPos, endPos);
+                        } else {
+                            document.body.scrollTop = endPos;
+                            document.documentElement.scrollTop = endPos;
+                            this.snap = true;
+                        }
+                        this.curTool = num;
+                    });
+                }
+
+
             }
         }
-
-        //A partir de aquí todo lo que está comentado son pruebas que había hecho y desecho. Mi idea era crear aquí las funciones del dibujo
-        //y las de abrir el formulario pasandole la geometría del punto.
-
-//         _Popup: function (id)
-//        {
-//            if (dojo.byId(id).style.display == "none") {
-//                    dojo.byId(id).style.display = "block";
-//                }
-
-//                else {
-//                    dojo.byId(id).style.display = "none";
-//                }
-//        }
-
-//        //prueba
-//        _Popup: function (id,map) {
-//    
-//            $('incidenciasForm').load('index.html');
-//            this._drawIncidencia(this.map);
-//        //    if (dojo.byId(id).style.display == "none") {
-//        //        dojo.byId(id).style.display = "block";
-//        //        drawIncidencia(id);
-//        //    }
-
-//        //    else {
-//        //        dojo.byId(id).style.display = "none";
-//        //    }     
-//        },
-
-//        _drawIncidencia: function (map) {            
-//            var drawmap = this.options.map;
-//            console.log(map);
-//            require(["esri/toolbars/draw"], function(){
-//                //tb = new esri.toolbars.Draw(drawmap);
-//                //tb.on("draw-end", _DrawResults);
-//                //tb.activate(esri.toolbars.Draw.POINT);
-//            });    
-//        },
-
-
-//        _DrawResults: function (evt) {
-//            require([
-//            "esri/Color",
-//            "esri/graphic",
-//            "esri/symbols/SimpleLineSymbol",
-//            "esri/symbols/SimpleMarkerSymbol"
-//            ],
-//            function (Color, Graphic, SimpleLineSymbol, SimpleMarkerSymbol) {
-
-//                //tb.deactivate();
-
-//                if (dojo.byId('incidenciasForm').style.display == "block") {
-//                    dojo.byId('incidenciasForm').style.display = "none";
-//                }
-
-//                else {
-//                    dojo.byId('incidenciasForm').style.display = "none";
-//                }
-
-//                //// add the drawn graphic to the map
-//                //var geometry = evt.geometry;
-
-//                var symbol = new SimpleMarkerSymbol(
-//                    SimpleMarkerSymbol.STYLE_CIRCLE,
-//                    12,
-//                    new SimpleLineSymbol(
-//                    SimpleLineSymbol.STYLE_NULL,
-//                    new Color([0, 0, 255, 0.9]),
-//                    1
-//                    ),
-//                    new Color([0, 0, 255, 0.5])
-//                );
-
-//                //graphicpoint = new Graphic(geometry, symbol);
-//                //this.map.graphics.add(graphicpoint);
-//                //console.log(map.graphics);
-
-//            });
-
-//        }
 
         });
 

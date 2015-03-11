@@ -50,13 +50,22 @@
         $scope.crearincidencia = function () {
             $scope.showmessages = true;
 
+            //Oculto el formulario
+            $('#incidenciasForm').hide();
+
+            //Obtego los valores de la posición de ls inputs correspondientes
+            $scope.X = parseFloat($("#posx").val());
+            $scope.Y = parseFloat($("#posy").val());
+
             console.log($("#date").val());
+
             $scope.date = $("#date").val();
 
+            //Creo el gráfico
             $scope.newfeature = {
                 "geometry": {
-                    "x": -104.4140625,
-                    "y": 69.2578125,
+                    "x": this.X,
+                    "y": this.Y,
                     "spatialReference": {
                         "wkid": 4326
                     }
@@ -66,7 +75,7 @@
                     "Problema": this.problema,
                     "Solucion": this.Solucion,
                     "IdMatricula": this.Matricula,
-                    "fecha": mydate
+                    "fecha": "11/03/2015"
                 },
                 "symbol": {
                     "color": [255, 0, 0, 128],
@@ -85,16 +94,21 @@
                 }
             };
 
-            require(["esri/layers/FeatureLayer", "esri/graphic"],
+            require(["esri/layers/FeatureLayer", "esri/graphic", "dojo/domReady!"],
             function (FeatureLayer, Graphic) {
-                IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/prueba/MapServer/1", {
+                IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/FeatureServer/0", {
+                    mode: FeatureLayer.MODE_ONDEMAND,
+                    outFields: ["Autor", "Problema", "Solucion", "IdMatricula", "fecha"]
                 });
 
                 var targetGraphic = new Graphic($scope.newfeature);
-                //Ahora mismo tengo comentada esta linea para que no cree ninguna entidad nueva en la bbdd
-                //IncidenciafeatureLayer.applyEdits([targetGraphic], null, null);
+                IncidenciafeatureLayer.applyEdits([targetGraphic], null, null);
                 console.log($scope.newfeature);
                 console.log(targetGraphic);
+
+                IncidenciafeatureLayer.on("edits-complete", function () {
+                    console.log("Completada edición");
+                });
             });
         };
 
