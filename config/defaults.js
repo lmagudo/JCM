@@ -157,7 +157,7 @@ define({
         { "name": "basemap", "enabled": true },
         { "name": "overview", "enabled": true },
         { "name": "measure", "enabled": true },
-        { "name": "edit", "enabled": true, "toolbar": false },
+        { "name": "edit", "enabled": false, "toolbar": false },
         { "name": "print", "enabled": true, "legend": true, "layouts": false, "format": "pdf" },
         { "name": "details", "enabled": true },
         { "name": "share", "enabled": true },

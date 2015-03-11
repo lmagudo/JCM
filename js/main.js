@@ -13,8 +13,8 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  */
-define(["dojo/ready", "dojo/json", "dojo/_base/array", "dojo/_base/Color", "dojo/_base/declare", "dojo/_base/lang", "dojo/dom", "dojo/dom-geometry", "dojo/dom-attr", "dojo/dom-class", "dojo/dom-construct", "dojo/dom-style", "dojo/on", "dojo/Deferred", "dojo/promise/all", "dojo/query", "dijit/registry", "dijit/Menu", "dijit/CheckedMenuItem", "application/toolbar", "application/has-config", "esri/arcgis/utils", "esri/dijit/HomeButton", "esri/dijit/LocateButton", "esri/dijit/Legend", "esri/dijit/BasemapGallery", "esri/dijit/Measurement", "esri/dijit/OverviewMap", "esri/geometry/Extent", "esri/layers/FeatureLayer", "application/TableOfContents", "application/ShareDialog", "application/wmsDialog", "application/incidenciasDialog"], function (
-ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, domConstruct, domStyle, on, Deferred, all, query, registry, Menu, CheckedMenuItem, Toolbar, has, arcgisUtils, HomeButton, LocateButton, Legend, BasemapGallery, Measurement, OverviewMap, Extent, FeatureLayer, TableOfContents, ShareDialog, wmsDialog, incidenciasDialog) {
+define(["dojo/ready", "dojo/json", "dojo/_base/array", "dojo/_base/Color", "dojo/_base/declare", "dojo/_base/lang", "dojo/dom", "dojo/dom-geometry", "dojo/dom-attr", "dojo/dom-class", "dojo/dom-construct", "dojo/dom-style", "dojo/on", "dojo/Deferred", "dojo/promise/all", "dojo/query", "dijit/registry", "dijit/Menu", "dijit/CheckedMenuItem", "application/toolbar", "application/has-config", "esri/arcgis/utils", "esri/dijit/HomeButton", "esri/dijit/LocateButton", "esri/dijit/Legend", "esri/dijit/BasemapGallery", "esri/dijit/Measurement", "esri/dijit/OverviewMap", "esri/geometry/Extent", "esri/layers/FeatureLayer", "application/TableOfContents", "application/ShareDialog", "application/wmsDialog", "application/incidenciasDialog", "esri/InfoTemplate"], function (
+ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, domConstruct, domStyle, on, Deferred, all, query, registry, Menu, CheckedMenuItem, Toolbar, has, arcgisUtils, HomeButton, LocateButton, Legend, BasemapGallery, Measurement, OverviewMap, Extent, FeatureLayer, TableOfContents, ShareDialog, wmsDialog, incidenciasDialog, InfoTemplate) {
 
 
     return declare(null, {
@@ -105,6 +105,42 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             domClass.remove(document.body, "app-loading");
             on(window, "orientationchange", lang.hitch(this, this._adjustPopupSize));
             this._adjustPopupSize();
+            
+            var layerJCM = this.map.getLayer("operational0");
+            this._addLayerInfoWindow(layerJCM);
+        },
+        _addLayerInfoWindow: function (layer) {
+            var content = "<b>Matricula</b>: ${Matricula}";
+            //"<br><b>Matriculaaaaaaa</b>: ${CUMM_GAS} MCF" +
+            //"<br><b>Total Acres</b>: ${APPROXACRE}" +
+            //"<br><b>Avg. Field Depth</b>: ${AVG_DEPTH} meters";
+            //var infoTemplate = new InfoTemplate("${Matricula}", content);
+            console.log(".......................................................");
+            ////console.log(layer);
+
+            //var infoTemplates = {
+            //    3: {
+            //        infoTemplate: InfoTemplate,
+            //        layerUrl: null
+            //    }
+            //};
+
+            //layer.setInfoTemplates(infoTemplates);
+
+            //layer.infoTemplates = infoTemplates;
+            //layer.outFields = ["*"];
+            //console.log(this.map);
+
+            console.log(layer);
+
+            //this.map.on("click", function (evt) {
+                
+
+            //    this.infoWindow.setTitle("Coordinates");
+            //    this.infoWindow.setContent("lat/lon : " + evt.mapPoint.y + ", " + evt.mapPoint.x);
+            //    this.infoWindow.show(evt.screenPoint, this.getInfoWindowAnchor(evt.screenPoint));
+            //});
+
         },
 
         // Create UI
@@ -975,10 +1011,14 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                 bingMapsKey: this.config.bingKey
             }).then(lang.hitch(this, function (response) {
 
-                this.map = response.map;
+                
                
+                this.map = response.map;
 
+                
                 domClass.add(this.map.infoWindow.domNode, "light");
+
+
                 this._updateTheme();
 
                 //Add a logo if provided
@@ -990,8 +1030,10 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                     domClass.add("panelTop", "largerTitle");
                 }
 
+                
+                
+
                 //Set the application title
-                this.map = response.map;
                 //Set the title - use the config value if provided.
                 //var title = (this.config.title === null) ? response.itemInfo.item.title : this.config.title;
                 var title;
