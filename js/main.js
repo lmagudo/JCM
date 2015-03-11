@@ -348,19 +348,11 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             var incidenciasDiv = toolbar.createTool(tool, panelClass);
 
             var incidenciasDial = new incidenciasDialog({
-                //bitlyLogin: this.config.bitlyLogin,
-                //bitlyKey: this.config.bitlyKey,
-                //map: this.map,
-                //image: this.config.sharinghost + "/sharing/rest/content/items/" + this.config.response.itemInfo.item.id + "/info/" + this.config.response.itemInfo.thumbnail,
                 title: this.config.title,
                 map: this.map
             }, incidenciasDiv);
             domClass.add(incidenciasDial.domNode, "pageBody");
             incidenciasDial.startup();
-
-
-
-            //wmsdiv.innerHTML("<div class='pageBody' id='pageBody_wmstool'>Capas wms</div>");
             
             deferred.resolve(true);
             return deferred.promise;

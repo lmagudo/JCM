@@ -28,9 +28,9 @@
 {
     width:600px;
     height:500px;
-    position:relative;
+    position:absolute;
     top:20%;
-    left:0%;
+    left:20%;
     margin:auto;
     background-color: transparent;
     display:none;
@@ -72,4 +72,30 @@
 
 .ng-valid.ng-dirty {
     border-color:#78FA89;
+}
+
+.animate-show {
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+.check-element {
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
 }
