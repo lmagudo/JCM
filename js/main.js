@@ -1003,9 +1003,10 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                 bingMapsKey: this.config.bingKey
             }).then(lang.hitch(this, function (response) {
 
-                
-               
+
+
                 this.map = response.map;
+                TwoCartoMap = response.map;
 
                 
                 domClass.add(this.map.infoWindow.domNode, "light");

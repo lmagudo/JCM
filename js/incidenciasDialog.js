@@ -77,9 +77,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             var map = map;
             var tb;
             function showFormIncidencias()
-            {
-                console.log("¿Está el mapa....?");
-                console.log(map);                
+            {                              
                 
                 map.graphics.clear();
 
@@ -138,12 +136,8 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
 
                         //Cierro el panel de la derecha
                         closePage(0);
-                        // Obtengo la latitud y la longitud de la geometría del punto
-                        var x = geometry.getLongitude().toString();
-                        var y = geometry.getLatitude().toString();
-                        //relleno los inputs del form para la x y la y
-                        $("#posx").val(x);
-                        $("#posy").val(y);
+                        map.centerAt(map.graphics.graphics[0].geometry);
+                        map.disableScrollWheelZoom();
 
                     }
 

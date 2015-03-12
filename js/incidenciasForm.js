@@ -46,6 +46,13 @@
         $scope.matriculas = [];
         $scope.promselected;
         $scope.showmessages = false;
+        $scope.dicMatricula = new Object();
+
+        $scope.CancelIncidencia = function () {
+            TwoCartoMap.graphics.clear();
+            $('#incidenciasForm').hide();
+            TwoCartoMap.enableScrollWheelZoom();
+        };
 
         $scope.crearincidencia = function () {
             $scope.showmessages = true;
@@ -53,9 +60,11 @@
             //Oculto el formulario
             $('#incidenciasForm').hide();
 
-            //Obtego los valores de la posición de ls inputs correspondientes
-            $scope.X = parseFloat($("#posx").val());
-            $scope.Y = parseFloat($("#posy").val());
+            $scope.X = TwoCartoMap.graphics.graphics[0].geometry.getLongitude().toString();
+            $scope.Y = TwoCartoMap.graphics.graphics[0].geometry.getLatitude().toString();
+
+            //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
+            $scope.idMatricula = $scope.dicMatricula[$scope.Matricula]
 
             console.log($("#date").val());
 
@@ -74,7 +83,7 @@
                     "Autor": this.Autor,
                     "Problema": this.problema,
                     "Solucion": this.Solucion,
-                    "IdMatricula": this.Matricula,
+                    "IdMatricula": this.idMatricula,
                     "fecha": "11/03/2015"
                 },
                 "symbol": {
@@ -103,11 +112,12 @@
 
                 var targetGraphic = new Graphic($scope.newfeature);
                 IncidenciafeatureLayer.applyEdits([targetGraphic], null, null);
-                console.log($scope.newfeature);
-                console.log(targetGraphic);
+                TwoCartoMap.enableScrollWheelZoom();
 
                 IncidenciafeatureLayer.on("edits-complete", function () {
                     console.log("Completada edición");
+                    TwoCartoMap.graphics.clear();
+                    TwoCartoMap.refresh();                    
                 });
             });
         };
@@ -125,7 +135,7 @@
             var queryTask2 = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/MapServer/1");
             var query2 = new Query();
             query2.returnGeometry = false;
-            query2.outFields = ["Matricula"];
+            query2.outFields = ["Matricula", "idMatricula"];
             query2.where = "OBJECTID > 0";
 
             queryTask2.execute(query2, showResults2);
@@ -150,7 +160,10 @@
                     }
                 }
                 if (count == 0) {
+                    //Relleno el combobox de matricula
                     $scope.matriculas.push(results.features[i].attributes.Matricula);
+                    //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula
+                    $scope.dicMatricula[results.features[i].attributes.Matricula] = results.features[i].attributes.idMatricula;
                 }
                 else { count = 0 }
             }
