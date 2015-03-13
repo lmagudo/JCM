@@ -80,16 +80,13 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             function showFormIncidencias()
             {                              
                 
-                map.graphics.clear();                
-
-<<<<<<< HEAD
-                require(["esri/toolbars/draw","dijit/Tooltip", "dojo/domReady!"], function(Draw, Tooltip){
-=======
+                map.graphics.clear();
+                
                 //desactivar el infowindow
                 map.setInfoWindowOnClick(false);
 
-                require(["esri/toolbars/draw"], function(){
->>>>>>> cff1d29108eff9d8c9761375f4e9943012429143
+                require(["esri/toolbars/draw","dijit/Tooltip", "dojo/domReady!"], function(Draw, Tooltip){
+
                     tb = new esri.toolbars.Draw(map);
                     tb.on("draw-end", _DrawResults);
                     tb.activate(esri.toolbars.Draw.POINT);                    
