@@ -343,7 +343,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             deferred.resolve(true);
             return deferred.promise;
         },
-         _addIncidenciasTool: function (tool, toolbar, panelClass) {
+        _addIncidenciasTool: function (tool, toolbar, panelClass) {
             var deferred = new Deferred();
             var incidenciasDiv = toolbar.createTool(tool, panelClass);
 
@@ -357,7 +357,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             deferred.resolve(true);
             return deferred.promise;
         },
-            _addDetails: function (tool, toolbar, panelClass) {
+        _addDetails: function (tool, toolbar, panelClass) {
             //Add the default map description panel
             var deferred = new Deferred();
             if (has("details")) {
@@ -999,17 +999,18 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                 mapOptions: {},
                 editable: has("edit"),
                 //is the app editable
-                usePopupManager: true,
+                //usePopupManager: true,
                 bingMapsKey: this.config.bingKey
             }).then(lang.hitch(this, function (response) {
 
 
-
+                
                 this.map = response.map;
                 TwoCartoMap = response.map;
 
-                
-                domClass.add(this.map.infoWindow.domNode, "light");
+                this._createInfoEvent();
+
+                //domClass.add(this.map.infoWindow.domNode, "light");
 
 
                 this._updateTheme();
@@ -1071,6 +1072,52 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                     }));
                 }
             }), this.reportError);
+        },
+        _createInfoEvent: function ()
+        {
+            console.log("Creting infoWindow");
+            domClass.add(this.map.infoWindow.domNode, "light");
+            incidenciasLayer = this.map.getLayer("operational0");
+            //console.log(layer);
+
+            //define the info template that is used to display the popup content. 
+            var template = new InfoTemplate();
+            template.setTitle("<b>Incidencias</b>");
+           
+            template.setContent("<div>" +
+                "<b>IdIncidencia: </b>${IdIncidencia}<br>" +
+                "<b>Problema: </b>${Problema}<br>" +
+                "<b>Solucion: </b>${Solucion}<br>" +
+                "<b>IdMatricula: </b>${IdMatricula}<br>" +
+                "<b>IdCarretera: </b>${IdCarretera}<br>" +
+                "<b>Autor: </b>${Autor}<br>" +
+                "<b>Estado: </b>${Estado}<br>" +
+                "<b>idctramo: </b>${idctramo}<br>" +
+                "<b>fecha: </b>${fecha}<br>" +
+                "<b>Resuelta: </b>${Resuelta}<br>" +
+                "</div>");
+            //OBJECTID ( type: esriFieldTypeOID , alias: OBJECTID , editable: false , nullable: false )
+            //IdIncidencia ( type: esriFieldTypeInteger , alias: IdIncidencia , editable: true , nullable: true )
+            //Problema ( type: esriFieldTypeString , alias: Problema , editable: true , nullable: true , length: 250 )
+            //Solucion ( type: esriFieldTypeString , alias: Solucion , editable: true , nullable: true , length: 250 )
+            //IdMatricula ( type: esriFieldTypeInteger , alias: IdMatricula , editable: true , nullable: true )
+            //IdCarretera ( type: esriFieldTypeInteger , alias: IdCarretera , editable: true , nullable: true )
+            //idctramo ( type: esriFieldTypeString , alias: idctramo , editable: true , nullable: true , length: 50 )
+            //Autor ( type: esriFieldTypeString , alias: Autor , editable: true , nullable: true , length: 50 )
+            //Estado ( type: esriFieldTypeInteger , alias: Estado , editable: true , nullable: true )
+            //fecha ( type: esriFieldTypeDate , alias: fecha , editable: true , nullable: true , length: 36 )
+            //idProblema ( type: esriFieldTypeInteger , alias: idProblema , editable: true , nullable: true )
+            //observacion ( type: esriFieldTypeString , alias: observacion , editable: true , nullable: true , length: 200 )
+            //idProvincia ( type: esriFieldTypeInteger , alias: idProvincia , editable: true , nullable: true )
+            //Resuelta ( type: esriFieldTypeString , alias: Resuelta , editable: true , nullable: true , length: 50 )
+            //urlSalida ( type: esriFieldTypeString , alias: urlSalida , editable: true , nullable: true , length: 250 )
+
+            incidenciasLayer.setInfoTemplates({
+                0: { infoTemplate: template }
+            });
+
+
+
         }
     });
 });

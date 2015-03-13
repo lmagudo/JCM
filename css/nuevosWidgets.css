@@ -99,3 +99,9 @@
   border: 1px solid black;
   background: white;
 }
+
+
+/*El infowindows sale mal por defecto...*/
+.esriPopup.light .titlePane, .esriPopup.dark .titlePane {
+height:30px;
+}
