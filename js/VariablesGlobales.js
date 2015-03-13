@@ -1,1 +1,2 @@
 ﻿var TwoCartoMap;
+var incidenciasLayer;

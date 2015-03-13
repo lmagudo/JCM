@@ -343,7 +343,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             deferred.resolve(true);
             return deferred.promise;
         },
-         _addIncidenciasTool: function (tool, toolbar, panelClass) {
+        _addIncidenciasTool: function (tool, toolbar, panelClass) {
             var deferred = new Deferred();
             var incidenciasDiv = toolbar.createTool(tool, panelClass);
 
@@ -357,7 +357,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             deferred.resolve(true);
             return deferred.promise;
         },
-            _addDetails: function (tool, toolbar, panelClass) {
+        _addDetails: function (tool, toolbar, panelClass) {
             //Add the default map description panel
             var deferred = new Deferred();
             if (has("details")) {
@@ -999,17 +999,18 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                 mapOptions: {},
                 editable: has("edit"),
                 //is the app editable
-                usePopupManager: true,
+                //usePopupManager: true,
                 bingMapsKey: this.config.bingKey
             }).then(lang.hitch(this, function (response) {
 
 
-
+                
                 this.map = response.map;
                 TwoCartoMap = response.map;
 
-                
-                domClass.add(this.map.infoWindow.domNode, "light");
+                this._createInfoEvent();
+
+                //domClass.add(this.map.infoWindow.domNode, "light");
 
 
                 this._updateTheme();
@@ -1071,6 +1072,64 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                     }));
                 }
             }), this.reportError);
+        },
+        _createInfoEvent: function ()
+        {
+            console.log("Creting infoWindow");
+            domClass.add(this.map.infoWindow.domNode, "light");
+            incidenciasLayer = this.map.getLayer("operational0");
+            //console.log(layer);
+
+            //define the info template that is used to display the popup content. 
+            var templateIncidcidencias = new InfoTemplate();
+            templateIncidcidencias.setTitle("<b>Incidencias</b>");
+           
+            templateIncidcidencias.setContent("<div>" +
+                "<b>IdIncidencia: </b>${IdIncidencia}<br>" +
+                "<b>Problema: </b>${Problema}<br>" +
+                "<b>Solucion: </b>${Solucion}<br>" +
+                "<b>IdMatricula: </b>${IdMatricula}<br>" +
+                "<b>IdCarretera: </b>${IdCarretera}<br>" +
+                "<b>idctramo: </b>${idctramo}<br>" +
+                "<b>Autor: </b>${Autor}<br>" +
+                "<b>Estado: </b>${Estado}<br>" +
+                 "<b>idProblema: </b>${idProblema}<br>" +
+                 "<b>observacion: </b>${observacion}<br>" +
+                "<b>fecha: </b>${fecha}<br>" +
+                "<b>Resuelta: </b>${Resuelta}<br>" +
+                "<b>urlSalida: </b>${urlSalida}<br>" +
+                "</div>");
+            
+
+            var templateCarreteras = new InfoTemplate();
+            templateCarreteras.setTitle("<b>Carreteras</b>");
+            templateCarreteras.setContent("<div>" +
+                "<b>idMatricula: </b>${idMatricula}<br>" +
+                "<b>Matricula: </b>${Matricula}<br>" +
+                "<b>Longitud: </b>${Longitud}<br>" +
+                "<b>PkINI: </b>${PkINI}<br>" +
+                "<b>PkFin: </b>${PkFin}<br>" +
+                "<b>Matricula_Plan: </b>${Matricula_Plan}<br>" +
+                "<b>Titularidad: </b>${Titularidad}<br>" +
+                "<b>Funcionalidad: </b>${Funcionalidad}<br>" +
+                "<b>Tipologia_DobleC: </b>${Tipologia_DobleC}<br>" +
+                "<b>Tipologia_UnaC: </b>${Tipologia_UnaC}<br>" +
+                "<b>Denominacion: </b>${Denominacion}<br>" +
+                "<b>Long_Km: </b>${Long_Km}<br>" +
+                "<b>idOrdenCtra: </b>${idOrdenCtra}<br>" +
+                "<b>Origen: </b>${Origen}<br>" +
+                "<b>Destino: </b>${Destino}<br>" +
+                "<b>Provincia: </b>${Provincia}<br>" +
+                "</div>");
+           
+
+            incidenciasLayer.setInfoTemplates({
+                0: { infoTemplate: templateIncidcidencias },
+                1: { infoTemplate: templateCarreteras }
+            });
+
+
+
         }
     });
 });

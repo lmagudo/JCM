@@ -82,7 +82,14 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                 
                 map.graphics.clear();                
 
+<<<<<<< HEAD
                 require(["esri/toolbars/draw","dijit/Tooltip", "dojo/domReady!"], function(Draw, Tooltip){
+=======
+                //desactivar el infowindow
+                map.setInfoWindowOnClick(false);
+
+                require(["esri/toolbars/draw"], function(){
+>>>>>>> cff1d29108eff9d8c9761375f4e9943012429143
                     tb = new esri.toolbars.Draw(map);
                     tb.on("draw-end", _DrawResults);
                     tb.activate(esri.toolbars.Draw.POINT);                    
@@ -136,7 +143,12 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
 
                         _Popup("incidenciasForm", geometry);
 
+                        //reactivar el infowindow
+
+                        map.setInfoWindowOnClick(true);
                     });
+
+                   
 
                 }
 
@@ -146,7 +158,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         dojo.byId(id).style.display = "block";
 
                         //Cierro el panel de la derecha
-                        closePage(0);
+                        //closePage(0); //Esto es lo que daba el problema de "estropear" el wheel mouse...
                         map.centerAt(map.graphics.graphics[0].geometry);
                         map.disableScrollWheelZoom();
 
