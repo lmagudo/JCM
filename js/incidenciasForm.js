@@ -47,6 +47,7 @@
         $scope.promselected;
         $scope.showmessages = false;
         $scope.dicMatricula = new Object();
+        $scope.dicProblema = new Object();
 
         $scope.CancelIncidencia = function () {
             TwoCartoMap.graphics.clear();
@@ -63,8 +64,12 @@
             $scope.X = TwoCartoMap.graphics.graphics[0].geometry.getLongitude().toString();
             $scope.Y = TwoCartoMap.graphics.graphics[0].geometry.getLatitude().toString();
 
+            //Obtengo mediante el diccionario, el valor de la clave que corresponde al problema elegido por el usuario
+            $scope.idProblema = $scope.dicProblema[$scope.problema];
+            console.log($scope.idProblema);
+
             //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
-            $scope.idMatricula = $scope.dicMatricula[$scope.Matricula]
+            $scope.idMatricula = $scope.dicMatricula[$scope.Matricula];
 
             console.log($("#date").val());
 
@@ -83,6 +88,7 @@
                     "Autor": this.Autor,
                     "Problema": this.problema,
                     "Solucion": this.Solucion,
+                    "idProblema": this.idProblema,
                     "IdMatricula": this.idMatricula,
                     "fecha": "11/03/2015"
                 },
@@ -117,7 +123,7 @@
                 IncidenciafeatureLayer.on("edits-complete", function () {
                     console.log("Completada edición");
                     TwoCartoMap.graphics.clear();
-                    TwoCartoMap.refresh();                    
+                    TwoCartoMap.refresh();
                 });
             });
         };
@@ -127,7 +133,7 @@
             var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/prueba/MapServer/1");
             var query = new Query();
             query.returnGeometry = false;
-            query.outFields = ["Problema"];
+            query.outFields = ["Problema", "idProblema"];
             query.where = "idProblema > 0";
 
             queryTask.execute(query, showResults);
@@ -144,6 +150,8 @@
         function showResults(results) {
             for (i = 0; i < results.features.length; i++) {
                 $scope.problemas.push(results.features[i].attributes.Problema);
+                //Relleno el diccionario de Problemas con los pares codigo/valor que corresponden a Problema/idProblema
+                $scope.dicProblema[results.features[i].attributes.Problema] = results.features[i].attributes.idProblema;
             };
             //Intento refrescar el div del form
             $("incidenciasForm").load("index.html");

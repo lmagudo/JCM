@@ -70,21 +70,27 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             var boton = document.getElementsByClassName("btn_incidencias")[0];
 
             boton.addEventListener("click", function (evt) {
-                console.log("click");
                 showFormIncidencias();
             });
 
             var map = map;
             var tb;
+            var mytooltip;
+
             function showFormIncidencias()
             {                              
                 
-                map.graphics.clear();
+                map.graphics.clear();                
 
-                require(["esri/toolbars/draw"], function(){
+                require(["esri/toolbars/draw","dijit/Tooltip", "dojo/domReady!"], function(Draw, Tooltip){
                     tb = new esri.toolbars.Draw(map);
                     tb.on("draw-end", _DrawResults);
-                    tb.activate(esri.toolbars.Draw.POINT);
+                    tb.activate(esri.toolbars.Draw.POINT);                    
+
+                    mytooltip = new Tooltip({
+                        connectId: ["mapDiv_container"],
+                        label: "Haz click para agregar un punto"
+                    });
                 });
 
                 function _DrawResults(evt) {
@@ -97,6 +103,11 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                     function (Color, Graphic, SimpleLineSymbol, SimpleMarkerSymbol) {
 
                         tb.deactivate();
+
+                        //Elimino el tooltip
+                        console.log(mytooltip);
+                        mytooltip.destroy();
+
 
                         if (dojo.byId('incidenciasForm').style.display == "block") {
                             dojo.byId('incidenciasForm').style.display = "none";
