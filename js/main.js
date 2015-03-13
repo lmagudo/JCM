@@ -1081,39 +1081,51 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             //console.log(layer);
 
             //define the info template that is used to display the popup content. 
-            var template = new InfoTemplate();
-            template.setTitle("<b>Incidencias</b>");
+            var templateIncidcidencias = new InfoTemplate();
+            templateIncidcidencias.setTitle("<b>Incidencias</b>");
            
-            template.setContent("<div>" +
+            templateIncidcidencias.setContent("<div>" +
                 "<b>IdIncidencia: </b>${IdIncidencia}<br>" +
                 "<b>Problema: </b>${Problema}<br>" +
                 "<b>Solucion: </b>${Solucion}<br>" +
                 "<b>IdMatricula: </b>${IdMatricula}<br>" +
                 "<b>IdCarretera: </b>${IdCarretera}<br>" +
+                "<b>idctramo: </b>${idctramo}<br>" +
                 "<b>Autor: </b>${Autor}<br>" +
                 "<b>Estado: </b>${Estado}<br>" +
-                "<b>idctramo: </b>${idctramo}<br>" +
+                 "<b>idProblema: </b>${idProblema}<br>" +
+                 "<b>observacion: </b>${observacion}<br>" +
                 "<b>fecha: </b>${fecha}<br>" +
                 "<b>Resuelta: </b>${Resuelta}<br>" +
+                "<b>urlSalida: </b>${urlSalida}<br>" +
                 "</div>");
-            //OBJECTID ( type: esriFieldTypeOID , alias: OBJECTID , editable: false , nullable: false )
-            //IdIncidencia ( type: esriFieldTypeInteger , alias: IdIncidencia , editable: true , nullable: true )
-            //Problema ( type: esriFieldTypeString , alias: Problema , editable: true , nullable: true , length: 250 )
-            //Solucion ( type: esriFieldTypeString , alias: Solucion , editable: true , nullable: true , length: 250 )
-            //IdMatricula ( type: esriFieldTypeInteger , alias: IdMatricula , editable: true , nullable: true )
-            //IdCarretera ( type: esriFieldTypeInteger , alias: IdCarretera , editable: true , nullable: true )
-            //idctramo ( type: esriFieldTypeString , alias: idctramo , editable: true , nullable: true , length: 50 )
-            //Autor ( type: esriFieldTypeString , alias: Autor , editable: true , nullable: true , length: 50 )
-            //Estado ( type: esriFieldTypeInteger , alias: Estado , editable: true , nullable: true )
-            //fecha ( type: esriFieldTypeDate , alias: fecha , editable: true , nullable: true , length: 36 )
-            //idProblema ( type: esriFieldTypeInteger , alias: idProblema , editable: true , nullable: true )
-            //observacion ( type: esriFieldTypeString , alias: observacion , editable: true , nullable: true , length: 200 )
-            //idProvincia ( type: esriFieldTypeInteger , alias: idProvincia , editable: true , nullable: true )
-            //Resuelta ( type: esriFieldTypeString , alias: Resuelta , editable: true , nullable: true , length: 50 )
-            //urlSalida ( type: esriFieldTypeString , alias: urlSalida , editable: true , nullable: true , length: 250 )
+            
+
+            var templateCarreteras = new InfoTemplate();
+            templateCarreteras.setTitle("<b>Carreteras</b>");
+            templateCarreteras.setContent("<div>" +
+                "<b>idMatricula: </b>${idMatricula}<br>" +
+                "<b>Matricula: </b>${Matricula}<br>" +
+                "<b>Longitud: </b>${Longitud}<br>" +
+                "<b>PkINI: </b>${PkINI}<br>" +
+                "<b>PkFin: </b>${PkFin}<br>" +
+                "<b>Matricula_Plan: </b>${Matricula_Plan}<br>" +
+                "<b>Titularidad: </b>${Titularidad}<br>" +
+                "<b>Funcionalidad: </b>${Funcionalidad}<br>" +
+                "<b>Tipologia_DobleC: </b>${Tipologia_DobleC}<br>" +
+                "<b>Tipologia_UnaC: </b>${Tipologia_UnaC}<br>" +
+                "<b>Denominacion: </b>${Denominacion}<br>" +
+                "<b>Long_Km: </b>${Long_Km}<br>" +
+                "<b>idOrdenCtra: </b>${idOrdenCtra}<br>" +
+                "<b>Origen: </b>${Origen}<br>" +
+                "<b>Destino: </b>${Destino}<br>" +
+                "<b>Provincia: </b>${Provincia}<br>" +
+                "</div>");
+           
 
             incidenciasLayer.setInfoTemplates({
-                0: { infoTemplate: template }
+                0: { infoTemplate: templateIncidcidencias },
+                1: { infoTemplate: templateCarreteras }
             });
 
 
