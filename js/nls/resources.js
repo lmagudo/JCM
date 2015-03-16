@@ -49,6 +49,14 @@ define({
 			    //"selectAnother": "Select another location",
 			    //"currentLocation": "Current Location",
 			    "title": "WMS Layers"
+			},
+
+			"incidencias": {
+			    "title": "Incidencias"
+			},
+
+			"buscador": {
+			    "title": "Buscador"
 			}
 
         },
@@ -66,7 +74,9 @@ define({
         	"print": "Print",
         	"details": "Details",
         	"share": "Share",
-            "wmstool": "WMS Layers"
+        	"wmstool": "WMS Layers",
+        	"incidencias": "Panel de incidencias",
+        	"buscador": "Panel de busqueda de elementos"
         }
     }),
 "ar": 1,

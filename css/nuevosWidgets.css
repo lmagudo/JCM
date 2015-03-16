@@ -111,3 +111,9 @@ height:30px;
 .esriBookmarkItem {
 height:30px;
 }
+
+/*dialogo de buscador tool*/
+#buscadorDialogDiv div{
+
+    text-align:center;
+}
