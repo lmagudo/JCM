@@ -106,41 +106,6 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             on(window, "orientationchange", lang.hitch(this, this._adjustPopupSize));
             this._adjustPopupSize();
             
-            var layerJCM = this.map.getLayer("operational0");
-            this._addLayerInfoWindow(layerJCM);
-        },
-        _addLayerInfoWindow: function (layer) {
-            var content = "<b>Matricula</b>: ${Matricula}";
-            //"<br><b>Matriculaaaaaaa</b>: ${CUMM_GAS} MCF" +
-            //"<br><b>Total Acres</b>: ${APPROXACRE}" +
-            //"<br><b>Avg. Field Depth</b>: ${AVG_DEPTH} meters";
-            //var infoTemplate = new InfoTemplate("${Matricula}", content);
-            console.log(".......................................................");
-            ////console.log(layer);
-
-            //var infoTemplates = {
-            //    3: {
-            //        infoTemplate: InfoTemplate,
-            //        layerUrl: null
-            //    }
-            //};
-
-            //layer.setInfoTemplates(infoTemplates);
-
-            //layer.infoTemplates = infoTemplates;
-            //layer.outFields = ["*"];
-            //console.log(this.map);
-
-            console.log(layer);
-
-            //this.map.on("click", function (evt) {
-                
-
-            //    this.infoWindow.setTitle("Coordinates");
-            //    this.infoWindow.setContent("lat/lon : " + evt.mapPoint.y + ", " + evt.mapPoint.x);
-            //    this.infoWindow.show(evt.screenPoint, this.getInfoWindowAnchor(evt.screenPoint));
-            //});
-
         },
 
         // Create UI
@@ -193,7 +158,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                             toolList.push(this._addIncidenciasTool(this.config.tools[i], toolbar, "medium"));
                             break;
                         case "buscador":
-                            toolList.push(this.__addbuscadorTool(this.config.tools[i], toolbar, "medium"));
+                            toolList.push(this._addbuscadorTool(this.config.tools[i], toolbar, "medium"));
                             break;
                         default:
                             break;
@@ -367,7 +332,8 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             var buscadorDial = new buscadorDialog({
                 title: this.config.title,
                 map: this.map
-            }, incidenciasDiv);
+            }, buscadorDiv);
+
             domClass.add(buscadorDial.domNode, "pageBody");
             buscadorDial.startup();
 
