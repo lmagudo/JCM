@@ -1,12 +1,15 @@
 ﻿define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", "dijit/_WidgetBase", "dijit/a11yclick", "dijit/_TemplatedMixin", "dojo/on",
 // load template
-"dojo/text!application/dijit/templates/buscadorDialog.html", "dojo/i18n!application/nls/buscadorDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event", 'esri/geometry/Extent'], function (
-Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event, Extent) {
+"dojo/text!application/dijit/templates/buscadorDialog.html", "dojo/i18n!application/nls/buscadorDialog", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "esri/request", "esri/urlUtils", "dijit/Dialog", "dojo/number", "dojo/_base/event"], function (
+Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on, dijitTemplate, i18n, domClass, domStyle, domAttr, domConstruct, esriRequest, urlUtils, Dialog, number, event) {
+        
+    var docu = this.document;
 
     var Widget = declare("esri.dijit.buscadorDialog", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: dijitTemplate,
         options: {
-            title: null,
+            //theme: "ShareDialog",
+            title: window.document.title,
             map: null
             
         },
@@ -17,7 +20,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             // widget node
             this.domNode = srcRefNode;
             this._i18n = i18n;
-            //console.log(defaults);
+            
             this.set("title", defaults.title);
             this.set("map", defaults.map);
             
@@ -26,16 +29,11 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                 buscadorDialogContent: "dialog-content",
                
             };
-
         },
         // bind listener for button to action
         postCreate: function () {
             this.inherited(arguments);
-
-            //this._creteLayerButtons(this.wmslayers);
             this._creteLayerButtons(this.map);
-            //this._cbEvents(this.layersColection);
-
         },
         // start widget. called by user
         startup: function () {
@@ -48,6 +46,9 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         },
        
         _init: function () {
+            // set sizes for select box
+            //this._setSizeOptions();
+
             var dialog = new Dialog({
                 title: i18n.widgets.buscadorDialog.title,
                 draggable: false
@@ -57,17 +58,144 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             // loaded
             this.set("loaded", true);
             this.emit("load", {});
-        }
-        ,
+        },
         _creteLayerButtons: function (map)
-        {
+        {  
+           
+            var div = "";
+            var id = 'incidenciasForm';
+            div += "<div class='contenedor'><button id='btnIncidencias' class='btn_incidencias'>Crear Incidencia</button></div>";
             
+            document.getElementById("layerButton").innerHTML = div;
+            var boton = document.getElementsByClassName("btn_incidencias")[0];
+
+            boton.addEventListener("click", function (evt) {
+                showFormIncidencias();
+            });
+
+            var map = map;
+            var tb;
+            var mytooltip;
+
+            function showFormIncidencias()
+            {                              
+                
+                map.graphics.clear();
+                
+                //desactivar el infowindow
+                map.setInfoWindowOnClick(false);
+
+                require(["esri/toolbars/draw","dijit/Tooltip", "dojo/domReady!"], function(Draw, Tooltip){
+
+                    tb = new esri.toolbars.Draw(map);
+                    tb.on("draw-end", _DrawResults);
+                    tb.activate(esri.toolbars.Draw.POINT);                    
+
+                    mytooltip = new Tooltip({
+                        connectId: ["mapDiv_container"],
+                        label: "Haz click para agregar un punto"
+                    });
+                });
+
+                function _DrawResults(evt) {
+                    require([
+                    "esri/Color",
+                    "esri/graphic",
+                    "esri/symbols/SimpleLineSymbol",
+                    "esri/symbols/SimpleMarkerSymbol"
+                    ],
+                    function (Color, Graphic, SimpleLineSymbol, SimpleMarkerSymbol) {
+
+                        tb.deactivate();
+
+                        //Elimino el tooltip
+                        console.log(mytooltip);
+                        mytooltip.destroy();
+
+
+                        if (dojo.byId('incidenciasForm').style.display == "block") {
+                            dojo.byId('incidenciasForm').style.display = "none";
+                        }
+
+                        else {
+                            dojo.byId('incidenciasForm').style.display = "none";
+                        }
+
+                        // add the drawn graphic to the map
+                        var geometry = evt.geometry;
+
+                        var symbol = new SimpleMarkerSymbol(
+                            SimpleMarkerSymbol.STYLE_CIRCLE,
+                            12,
+                            new SimpleLineSymbol(
+                            SimpleLineSymbol.STYLE_NULL,
+                            new Color([0, 0, 255, 0.9]),
+                            1
+                            ),
+                            new Color([0, 0, 255, 0.5])
+                        );
+
+                        var graphicpoint = new Graphic(geometry, symbol);
+                        map.graphics.add(graphicpoint);
+
+                        _Popup("incidenciasForm", geometry);
+
+                        //reactivar el infowindow
+
+                        map.setInfoWindowOnClick(true);
+                    });
+
+                   
+
+                }
+
+                function _Popup(id, geometry) {
+                    
+                    if (dojo.byId(id).style.display == "none") {
+                        dojo.byId(id).style.display = "block";
+
+                        //Cierro el panel de la derecha
+                        //closePage(0); //Esto es lo que daba el problema de "estropear" el wheel mouse...
+                        map.centerAt(map.graphics.graphics[0].geometry);
+                        map.disableScrollWheelZoom();
+
+                    }
+
+                    else {
+                        dojo.byId(id).style.display = "none";
+                    }
+                }
+
+
+                function closePage (num) {
+
+                    require([
+                        "dojo/_base/html", "dojo/dom"
+                    ],
+                    function(html, dom){
+                        var box = html.getContentBox(dom.byId("panelContent"));
+
+                        var startPos = this.curTool * box.h;
+                        var endPos = num * box.h;
+                        var diff = Math.abs(num - this.curTool);
+                        this.snap = false;
+                        if (diff == 1) {
+                            this._animateScroll(startPos, endPos);
+                        } else {
+                            document.body.scrollTop = endPos;
+                            document.documentElement.scrollTop = endPos;
+                            this.snap = true;
+                        }
+                        this.curTool = num;
+                    });
+                }
+
+
+            }
         }
-        
 
-    });
+        });
 
-   
 
     return Widget;
         

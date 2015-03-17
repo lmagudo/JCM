@@ -193,7 +193,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                             toolList.push(this._addIncidenciasTool(this.config.tools[i], toolbar, "medium"));
                             break;
                         case "buscador":
-                            toolList.push(this.__addBuscadorTool(this.config.tools[i], toolbar, "medium"));
+                            toolList.push(this.__addbuscadorTool(this.config.tools[i], toolbar, "medium"));
                             break;
                         default:
                             break;
@@ -360,14 +360,14 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             deferred.resolve(true);
             return deferred.promise;
         },
-        _addBuscadorTool: function (tool, toolbar, panelClass) {
+        _addbuscadorTool: function (tool, toolbar, panelClass) {
             var deferred = new Deferred();
             var buscadorDiv = toolbar.createTool(tool, panelClass);
 
             var buscadorDial = new buscadorDialog({
                 title: this.config.title,
                 map: this.map
-            }, buscadorDiv);
+            }, incidenciasDiv);
             domClass.add(buscadorDial.domNode, "pageBody");
             buscadorDial.startup();
 

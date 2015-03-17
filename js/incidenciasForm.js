@@ -41,6 +41,48 @@
         $scope.format = $scope.formats[0];
     });
 
+    //Controlador para funcionalidad buscador
+    app.controller('buscadorController', function ($scope) {
+        $scope.provincias = ["CIUDAD REAL", "CUENCA", "GUADALAJARA", "TOLEDO"];
+        $scope.municipios = [];
+        $scope.poblaciones = [];
+        $scope.carreteras = [];
+        $scope.pks = [];
+
+        $scope.LanzarBuscador = function () {
+            //Funcionalidad que se lanza cuando le damos al submmit        
+        }
+
+        $scope.Cancelbusqueda = function () {
+            //Cancelamos la busqueda
+        }
+
+        require(["esri/tasks/query", "esri/tasks/QueryTask"],
+        function (Query, QueryTask) {
+            //Query para cargar poblaciones
+            var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/prueba/MapServer/1");
+            var query = new Query();
+            query.returnGeometry = false;
+            query.outFields = ["Problema", "idProblema"];
+            query.where = "idProblema > 0";
+
+            queryTask.execute(query, showResults);
+
+        });
+
+        function showResults(results) {
+            console.log(results);
+            for (i = 0; i < results.features.length; i++) {
+                $scope.poblaciones.push(results.features[i].attributes.Problema);
+            };
+            //Intento refrescar el div del form
+            //$("incidenciasForm").load("index.html");
+        };
+
+    });
+
+
+    //Controlador para funcionalidad incidencias
     app.controller('incidenciasController', function ($scope) {
         $scope.problemas = [];
         $scope.matriculas = [];
