@@ -992,7 +992,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                 TwoCartoMap = response.map;
 
                 this._createInfoEvent();
-
+                this._createIdentityManager();
                 //domClass.add(this.map.infoWindow.domNode, "light");
 
 
@@ -1113,6 +1113,20 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
 
 
 
+        },
+
+        _createIdentityManager: function ()
+        {
+            console.log("creando identity manager");
+
+            require(["esri/IdentityManager"], function (esriId) {
+                
+                //var idman = new IdentityManager();
+
+            });
+          
+
         }
+
     });
 });
