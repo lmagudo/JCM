@@ -48,9 +48,11 @@
         $scope.poblaciones = [];
         $scope.carreteras = [];
         $scope.pks = [];
+        console.log($scope.provincias);
 
         $scope.LanzarBuscador = function () {
-            //Funcionalidad que se lanza cuando le damos al submmit        
+            //Funcionalidad que se lanza cuando le damos al submmit
+            console.log("hola");
         }
 
         $scope.Cancelbusqueda = function () {
@@ -76,7 +78,7 @@
                 $scope.poblaciones.push(results.features[i].attributes.Problema);
             };
             //Intento refrescar el div del form
-            //$("incidenciasForm").load("index.html");
+            $("incidenciasForm").load("index.html");
         };
 
     });

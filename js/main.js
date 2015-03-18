@@ -193,7 +193,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                             toolList.push(this._addIncidenciasTool(this.config.tools[i], toolbar, "medium"));
                             break;
                         case "buscador":
-                            toolList.push(this.__addbuscadorTool(this.config.tools[i], toolbar, "medium"));
+                            toolList.push(this._addbuscadorTool(this.config.tools[i], toolbar, "medium"));
                             break;
                         default:
                             break;
@@ -367,7 +367,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             var buscadorDial = new buscadorDialog({
                 title: this.config.title,
                 map: this.map
-            }, incidenciasDiv);
+            }, buscadorDiv);
             domClass.add(buscadorDial.domNode, "pageBody");
             buscadorDial.startup();
 

@@ -1,24 +1,24 @@
-﻿<div class="buscadorDialogClass" role="presentation">
+﻿<div class="buscadorDialogClass" role="presentation" ng-controller="buscadorController as buscador">
     <div data-dojo-attach-point="_dialogNode">
         <div class="${css.buscadorDialogContent}" id="buscadorDialogDiv">
 
             <div data-dojo-attach-point="_layersNode" id="layerButtons"></div>
 
             <!-- Formulario buscador -->
-            <div id="buscadorDiv" ng-controller="buscadorController as buscador" >
-                <form name="buscadorForm" ng-submit="buscadorForm.$valid && LanzarBuscador()" novalidate>
+            <div id="buscadorDiv">
+                <form name="buscadorForm" ng-submit="LanzarBuscador()" novalidate>
                 <div class="control-group" ng-class="{true: 'error'}[submitted && buscadorForm.email.$invalid]">
-                     <fieldset class="form-group" >
+                     <fieldset class="form-group" style="margin:10px; width:300px; float:left">
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Provincia:</label>
                                 <div class="controls">
-                                    <select name="Provincia" class="form-control" ng-model="provincia" ng-options="provincia for provincia in provincias" ><option></option></select>
+                                    <select name="Provincia" class="form-control" ng-model="provincia" ng-options="prov for provincia in provincias" ><option></option></select>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
-                     <fieldset class="form-group" >
+                     <fieldset class="form-group" style="width:300px">
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Municipio:</label>
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="form-group" >
+                    <fieldset class="form-group" style="width:120px; float:left" >
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Poblaci&oacute;n:</label>
@@ -58,13 +58,13 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="form-group" style="width:140px; float:left">
+                    <fieldset class="form-group" style="width:120px; float:left">
                         <label>Longitud:</label>
                         <div class="controls">
-                            <input name="X" type="text" ng-model="Longitud" class="form-control"/>
+                            <input id="coordx" name="X" type="text" ng-model="Longitud" class="form-control"/>
                         </div>
                     </fieldset>
-                    <fieldset class="form-group" style="width:140px">
+                    <fieldset class="form-group" style="width:120px">
                         <label>Latitud:</label>
                         <div class="controls">
                             <input name="Latitud" type="text" ng-model="Latitud" class="form-control"/>
