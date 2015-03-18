@@ -106,41 +106,6 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             on(window, "orientationchange", lang.hitch(this, this._adjustPopupSize));
             this._adjustPopupSize();
             
-            var layerJCM = this.map.getLayer("operational0");
-            this._addLayerInfoWindow(layerJCM);
-        },
-        _addLayerInfoWindow: function (layer) {
-            var content = "<b>Matricula</b>: ${Matricula}";
-            //"<br><b>Matriculaaaaaaa</b>: ${CUMM_GAS} MCF" +
-            //"<br><b>Total Acres</b>: ${APPROXACRE}" +
-            //"<br><b>Avg. Field Depth</b>: ${AVG_DEPTH} meters";
-            //var infoTemplate = new InfoTemplate("${Matricula}", content);
-            console.log(".......................................................");
-            ////console.log(layer);
-
-            //var infoTemplates = {
-            //    3: {
-            //        infoTemplate: InfoTemplate,
-            //        layerUrl: null
-            //    }
-            //};
-
-            //layer.setInfoTemplates(infoTemplates);
-
-            //layer.infoTemplates = infoTemplates;
-            //layer.outFields = ["*"];
-            //console.log(this.map);
-
-            console.log(layer);
-
-            //this.map.on("click", function (evt) {
-                
-
-            //    this.infoWindow.setTitle("Coordinates");
-            //    this.infoWindow.setContent("lat/lon : " + evt.mapPoint.y + ", " + evt.mapPoint.x);
-            //    this.infoWindow.show(evt.screenPoint, this.getInfoWindowAnchor(evt.screenPoint));
-            //});
-
         },
 
         // Create UI
@@ -1026,7 +991,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                 TwoCartoMap = response.map;
 
                 this._createInfoEvent();
-
+                this._createIdentityManager();
                 //domClass.add(this.map.infoWindow.domNode, "light");
 
 
@@ -1147,6 +1112,26 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
 
 
 
+        },
+
+        _createIdentityManager: function ()
+        {
+            console.log("creando identity manager");
+
+            //require(["esri/IdentityManager"], function (esriId) {
+                
+            //    //var idman = new IdentityManager();
+
+            //});
+
+            //require([
+            //  "dijit/registry", "dojo/query", ...
+            //            ], function(registry, query, ... ) {
+            //                var dialog = registry.byNode(query.query(".esriSignInDialog")[0]);
+            //});
+          
+
         }
+
     });
 });

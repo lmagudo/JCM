@@ -33,7 +33,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         // bind listener for button to action
         postCreate: function () {
             this.inherited(arguments);
-            this._creteLayerButtons(this.map);
+            
         },
         // start widget. called by user
         startup: function () {
@@ -61,7 +61,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         },
         _creteLayerButtons: function (map)
         {  
-           dojo.byId('coordx').value = "Hola";            
+           dojo.byId('coordx').value = "Hola";
         }
 
         });
