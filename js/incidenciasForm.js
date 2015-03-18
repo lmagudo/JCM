@@ -48,15 +48,15 @@
         $scope.poblaciones = [];
         $scope.carreteras = [];
         $scope.pks = [];
-        console.log($scope.provincias);
 
         $scope.LanzarBuscador = function () {
             //Funcionalidad que se lanza cuando le damos al submmit
-            console.log("hola");
+            console.log($scope.provincias);
         }
 
         $scope.Cancelbusqueda = function () {
             //Cancelamos la busqueda
+            $('#buscaForm').hide();
         }
 
         require(["esri/tasks/query", "esri/tasks/QueryTask"],
@@ -73,7 +73,6 @@
         });
 
         function showResults(results) {
-            console.log(results);
             for (i = 0; i < results.features.length; i++) {
                 $scope.poblaciones.push(results.features[i].attributes.Problema);
             };

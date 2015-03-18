@@ -1,89 +1,33 @@
-﻿<div class="buscadorDialogClass" role="presentation" ng-controller="buscadorController as buscador">
+﻿<div class="buscadorDialogClass" role="presentation">
     <div data-dojo-attach-point="_dialogNode">
         <div class="${css.buscadorDialogContent}" id="buscadorDialogDiv">
 
-            <div data-dojo-attach-point="_layersNode" id="layerButtons"></div>
-
-            <!-- Formulario buscador -->
-            <div id="buscadorDiv">
-                <form name="buscadorForm" ng-submit="LanzarBuscador()" novalidate>
-                <div class="control-group" ng-class="{true: 'error'}[submitted && buscadorForm.email.$invalid]">
-                     <fieldset class="form-group" style="margin:10px; width:300px; float:left">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Provincia:</label>
-                                <div class="controls">
-                                    <select name="Provincia" class="form-control" ng-model="provincia" ng-options="prov for provincia in provincias" ><option></option></select>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                     <fieldset class="form-group" style="width:300px">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Municipio:</label>
-                                <div class="controls">
-                                    <select name="Municipio" class="form-control" ng-model="municipio" ng-options="municipio for municipio in municipios" ><option></option></select>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group" style="width:120px; float:left" >
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Poblaci&oacute;n:</label>
-                                <div class="controls">
-                                    <select name="poblacion" class="form-control" ng-model="poblacion" ng-options="poblacion for poblacion in poblaciones" ><option></option></select>
-
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Carretera:</label>
-                                <div class="controls">
-                                    <select name="carretera" class="form-control" ng-model="carretera" ng-options="carretera for carretera in carreteras">
-                                        <option></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>PK:</label>
-                                <div class="controls">
-                                    <select name="PK" class="form-control" ng-model="PK" ng-options="pk for pk in pks">
-                                        <option></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group" style="width:120px; float:left">
-                        <label>Longitud:</label>
-                        <div class="controls">
-                            <input id="coordx" name="X" type="text" ng-model="Longitud" class="form-control"/>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group" style="width:120px">
-                        <label>Latitud:</label>
-                        <div class="controls">
-                            <input name="Latitud" type="text" ng-model="Latitud" class="form-control"/>
-                        </div>
-                    </fieldset>
-                    </div>
-
-                    <div style="text-align: center; margin-left: auto; margin-right: auto">
-                        <fieldset class="form-group">
-                            <input class="btn btn-primary pull-right" type="button" value="Cancel" ng-click="Cancelbusqueda()" style="margin-left: 5px; float: left" />
-                            <input class="btn btn-primary pull-right" type="submit" value="Submit" ng-click="submitted=true" />
-                    </div>
+            <div data-dojo-attach-point="_layersNode" id="buscadorButton" style="margin:10px">
+                <form id="formbusquedapanel">
+                    <input class="myradiobuttons" type="radio" name="busqueda" id="radioOne" value="Carretera"/> <label for="radioOne">Buscar por Carretera</label> <br />
+                    <input class="myradiobuttons" type="radio" data-dojo-type="dijit/form/RadioButton" name="busqueda" id="radioTwo" value="CarreterayPK"/> <label for="radioTwo">Buscar por Carretera y PK</label> <br />
+                    <input class="myradiobuttons" type="radio" data-dojo-type="dijit/form/RadioButton" name="busqueda" id="radioThree" value="Poblacion"/> <label for="radioTwo">Buscar por Poblacion</label> <br />
+                    <input class="myradiobuttons" type="radio" data-dojo-type="dijit/form/RadioButton" name="busqueda" id="radioFour" value="Coordenadas"/> <label for="radioTwo">Buscar por Coordenadas</label> <br />
                 </form>
             </div>
+            <!--script>
+                require([
+                    "dojo/parser",
+                    "dijit/form/RadioButton",
+                    "dijit/form/Button", // used for example purpose
+                    "dojo/domReady!"
+                    ], function(parser, RadioButton){
+                        console.log(parser);
+                        parser.parse();
+                        var radioOne = new RadioButton({
+                            checked: true,
+                            value: "Carretera",
+                            name: "drink",
+                        }, "radioOne").startup();
+                });
+            </script-->
+
+            
 
         </div>
     </div>

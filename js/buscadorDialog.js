@@ -33,6 +33,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         // bind listener for button to action
         postCreate: function () {
             this.inherited(arguments);
+            this._creteLayerButtons(this.map);
             
         },
         // start widget. called by user
@@ -61,10 +62,67 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         },
         _creteLayerButtons: function (map)
         {  
-           dojo.byId('coordx').value = "Hola";
+            var cblist = docu.getElementsByClassName("myradiobuttons");
+
+            for (var i = 0 ; i < cblist.length; i++)
+            {
+                cblist[i].addEventListener("click", function (evt) {
+
+                    var checked = evt.target.checked;
+                    var index = evt.target.parentNode.id;
+                    var attributes = evt.target.attributes;                    
+                    
+                    toogleLayerto(index, checked, attributes);
+                });
+            }
+
+            function toogleLayerto(index, checked, attributes){
+                    
+                dojo.byId("buscaForm").style.display = "block";
+                var idradio = attributes[2].value
+                switch (idradio){
+                    case "radioOne":
+                        $('#FielsetProvincia').hide();
+                        $('#FielsetMunicipio').hide();                        
+                        $('#FielsetPoblacion').hide();
+                        $('#FielsetCarretera').show();
+                        $('#FielsetPK').hide();
+                        $('#FielsetLongitud').hide();
+                        $('#FielsetLatitud').hide();
+                        break;
+                    case "radioTwo":
+                        $('#FielsetProvincia').hide();
+                        $('#FielsetMunicipio').hide();                        
+                        $('#FielsetPoblacion').hide();
+                        $('#FielsetCarretera').show();
+                        $('#FielsetPK').show();
+                        $('#FielsetLongitud').hide();
+                        $('#FielsetLatitud').hide();
+                        break;
+                    case "radioThree":
+                        $('#FielsetProvincia').show();
+                        $('#FielsetMunicipio').show();                        
+                        $('#FielsetPoblacion').show();
+                        $('#FielsetCarretera').hide();
+                        $('#FielsetPK').hide();
+                        $('#FielsetLongitud').hide();
+                        $('#FielsetLatitud').hide();
+                        break;
+                    case "radioFour":
+                        $('#FielsetProvincia').hide();
+                        $('#FielsetMunicipio').hide();                        
+                        $('#FielsetPoblacion').hide();
+                        $('#FielsetCarretera').hide();
+                        $('#FielsetPK').hide();
+                        $('#FielsetLongitud').show();
+                        $('#FielsetLatitud').show();
+                        break;
+
+                }
+            }
         }
 
-        });
+    });
 
 
     return Widget;
