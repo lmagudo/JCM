@@ -117,3 +117,37 @@ height:30px;
 
     text-align:center;
 }
+
+/*login panel*/
+
+#loginPanel {
+    position: fixed;
+    left: 10px;
+    top: 105px;
+    color: white;
+    font-family: "Helvetica Neue", "Arial", sans-serif;
+    font-weight: bold;
+    padding: 8px;
+  
+}
+
+#loginForm {
+    display:none;
+    text-align:center;
+    position: fixed;
+    left: 45%;
+    top: 105px;
+    color: white;
+    font-family: "Helvetica Neue", "Arial", sans-serif;
+    font-weight: bold;
+    padding: 8px;
+  
+}
+.lgformdiv {
+    padding:5px;
+}
+
+
+.lgfbuttons {
+    display:inline-block !important;
+}

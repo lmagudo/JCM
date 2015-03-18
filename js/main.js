@@ -1119,11 +1119,17 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
         {
             console.log("creando identity manager");
 
-            require(["esri/IdentityManager"], function (esriId) {
+            //require(["esri/IdentityManager"], function (esriId) {
                 
-                //var idman = new IdentityManager();
+            //    //var idman = new IdentityManager();
 
-            });
+            //});
+
+            //require([
+            //  "dijit/registry", "dojo/query", ...
+            //            ], function(registry, query, ... ) {
+            //                var dialog = registry.byNode(query.query(".esriSignInDialog")[0]);
+            //});
           
 
         }
