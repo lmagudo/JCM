@@ -175,7 +175,7 @@ height:30px;
 }
 
 #loginForm {
-    display:none;
+    
     text-align:center;
     position: fixed;
     left: 45%;
@@ -193,4 +193,13 @@ height:30px;
 
 .lgfbuttons {
     display:inline-block !important;
+    margin:5px;
+}
+
+.oculto {
+    display:none;
+}
+
+.loginInputs {
+    color:black;
 }

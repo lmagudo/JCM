@@ -1118,17 +1118,69 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
         {
             console.log("creando identity manager");
 
-            //require(["esri/IdentityManager"], function (esriId) {
+            $("#loginButton").on("click", function () {
+                console.log("click");
+                $("#loginForm").removeClass("oculto");
+
+            });
+
+            $("#lgfCancelButton").on("click", function ( ) 
+            {
                 
-            //    //var idman = new IdentityManager();
+            });
+            $("#lgfOkButton").on("click", function ()
+            {
 
-            //});
+                console.log("bucando token");
 
-            //require([
-            //  "dijit/registry", "dojo/query", ...
-            //            ], function(registry, query, ... ) {
-            //                var dialog = registry.byNode(query.query(".esriSignInDialog")[0]);
-            //});
+                //require([
+                //    "esri/IdentityManagerBase"], function (IdentityManagerBase) {
+                //        /* code goes here */
+                //        console.log("eye");
+                //    });
+                //});
+            
+
+                require([
+                      "esri/ServerInfo", "esri/IdentityManager", "esri/layers/FeatureLayer"
+                ], function (ServerInfo, esriId, FeatureLayer) {
+                                var serverInfo = new ServerInfo();
+                                serverInfo.server = 'http://qvialweb.es';
+                                serverInfo.tokenServiceUrl = 'http://qvialweb.es:6080/arcgis/admin/generateToken?referer=http://qvialweb.es';
+    
+                                esriId.registerServers([serverInfo]);
+                                var userInfo = 
+                                    {
+                                        username:$("#inputUsuario").val(),
+                                        password: $("#inputPassword").val()
+                                        
+                                    };
+
+                                esriId.generateToken(serverInfo, userInfo).then(function (res) {
+                                    console.log(res);
+
+                                    var secureLayer = new FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM_SECURE/municipios_map/FeatureServer/0",
+                                        {
+                                            mode: FeatureLayer.MODE_ONDEMAND,
+                                            outFields: ["*"],
+                                           
+                                        });
+
+                                    esriId.initialize(res);
+
+                                    console.log(secureLayer);
+
+                                    TwoCartoMap.addLayer(secureLayer);
+                                });
+
+                                
+
+                             
+                                
+                            });
+                 });
+
+            
           
 
         }
