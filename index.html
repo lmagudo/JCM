@@ -118,7 +118,7 @@
                     <div class="contenedor">
                         <form name="buscadorForm" ng-submit="buscadorForm && LanzarBuscador()" novalidate>
                         <div class="control-group" ng-class="{true: 'error'}[submitted && buscadorForm.email.$invalid]">
-                                <fieldset class="form-group" id="FielsetProvincia" style="width:350px; float:left">
+                                <fieldset class="form-group" id="FielsetProvincia" style="width:350px; float:left; margin-left:20px">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Provincia:</label>
@@ -128,7 +128,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset id="FielsetMunicipio" class="form-group" style="width:530px; margin-right:10px">
+                            <fieldset id="FielsetMunicipio" class="form-group" style="width:490px; margin-right:20px">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Municipio:</label>
@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset id="FielsetPoblacion" class="form-group" >
+                            <fieldset id="FielsetPoblacion" class="form-group" style="margin-left:20px" >
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Poblaci&oacute;n:</label>
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group" id="FielsetCarretera">
+                            <fieldset class="form-group" id="FielsetCarretera" style="margin-left:20px">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Carretera:</label>
@@ -162,7 +162,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group" id="FielsetPK">
+                            <fieldset class="form-group" id="FielsetPK" style="margin-left:20px">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>PK:</label>
@@ -174,7 +174,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group" id="FielsetLongitud" style="width:120px; float:left">
+                            <fieldset class="form-group" id="FielsetLongitud" style="width:120px; float:left; margin-left:20px">
                                 <label>Longitud:</label>
                                 <div class="controls">
                                     <input id="coordx" name="X" type="text" ng-model="Longitud" class="form-control"/>
@@ -190,7 +190,7 @@
 
                             <div style="text-align: center; margin-left: auto; margin-right: auto">
                                 <fieldset class="form-group">
-                                    <input class="btn btn-primary pull-right" type="button" value="Cancel" ng-click="Cancelbusqueda()" style="margin-left: 5px; float: left" />
+                                    <input class="btn btn-primary pull-right" type="button" value="Cancel" ng-click="Cancelbusqueda()" style="margin-left: 5px; margin-right: 20px;float: left" />
                                     <input class="btn btn-primary pull-right" type="submit" value="Zoom" ng-click="submitted=true" />
                             </div>
                         </form>

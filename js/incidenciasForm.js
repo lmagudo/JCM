@@ -58,7 +58,7 @@
                 var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/1");
                 var query = new Query();
                 query.returnGeometry = false;
-                query.outFields = ["Matricula", "idMatricula"];
+                query.outFields = ["Matricula_Plan", "idMatricula"];
                 query.where = "OBJECTID > 0";
 
                 queryTask.execute(query, showResults);
@@ -69,15 +69,15 @@
 
                     for (i = 0; i < results.features.length; i++) {
                         for (j = 0; j < $scope.carreteras.length; j++) {
-                            if (results.features[i].attributes.Matricula == $scope.carreteras[j]) {
+                            if (results.features[i].attributes.Matricula_Plan == $scope.carreteras[j]) {
                                 count = 1
                             }
                         }
                         if (count == 0) {
                             //Relleno el combobox de matricula
-                            $scope.carreteras.push(results.features[i].attributes.Matricula);
+                            $scope.carreteras.push(results.features[i].attributes.Matricula_Plan);
                             //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula
-                            $scope.dicCarreteras[results.features[i].attributes.Matricula] = results.features[i].attributes.idMatricula;
+                            $scope.dicCarreteras[results.features[i].attributes.Matricula_Plan] = results.features[i].attributes.idMatricula;
                         }
                         else { count = 0 }
                     }
@@ -177,18 +177,19 @@
             var idcapa;
             switch (selectorBuscador) {
                 case 1:
-                    var whereclaus = "Matricula = '" + $scope.carretera + "'";
+                    var whereclaus = "Matricula_Plan = '" + $scope.carretera + "'";
                     idcapa = 1;
                     myrequest(whereclaus, idcapa);
                     break;
                 case 2:
-                    var whereclaus = "Matricula = '" + $scope.carretera + "'";
+                    var whereclaus = "PKhito = '" + $scope.PK + "'";
                     idcapa = 0;
                     myrequest(whereclaus, idcapa);
                     break;
                 case 3:
-                    var whereclaus = "Matricula = '" + $scope.carretera + "'";
-                    idcapa = 0;
+                    var whereclaus = "Texto = '" + $scope.municipio + "'";
+                    idcapa = 3;
+                    myrequest(whereclaus, idcapa);
                     break;
                 case 4:
                     var whereclaus = "Matricula = '" + $scope.carretera + "'";
@@ -214,26 +215,39 @@
 
             function zoomtoResult(result) {
                 console.log(result);
-                TwoCartoMap.setExtent(result.features[0].geometry.getExtent(), true);
-
-
-
+                //TwoCartoMap.setExtent(result.features[0].geometry.getExtent(), true);
 
                 ///geometry service...
-                require(["esri/SpatialReference"], function (SpatialReference) {
+                //                require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters"], function (SpatialReference, GeometryService, ProjectParameters) {
 
-                    var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
-                    var outSR = new SpatialReference(102100);
-                    gsvc.project([result.features[0].geometry], outSR, function (projectedGeometry) {
-                        TwoCartoMap.setExtent(projectedGeometry, true);
+                //                    var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
+                //                    var outSR = new SpatialReference(102100);
+                //                    gsvc.project([result.features[0].geometry], outSR, function (projectedGeometry) {
+                //                        TwoCartoMap.setExtent(projectedGeometry.getExtent(), true);
+                //                    });
+                //                
+                //                
+                //                });
+
+
+                require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters", "esri/geometry/Extent"],
+                    function (SpatialReference, GeometryService, ProjectParameters, Extent) {
+                        var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
+                        var params = new ProjectParameters();
+                        var outSR = new SpatialReference(102100);
+                        params.outSR = outSR;
+                        params.geometries = [result.features[0].geometry];
+
+                        gsvc.project(params, projectfeatures);
+
+                        function projectfeatures(projectedGeometry) {
+                            console.log(projectedGeometry);
+                            var myextent = new Extent();
+                            myextent = projectedGeometry.getExtent();
+                            TwoCartoMap.setExtent(myextent, true)
+                        }
+
                     });
-                
-                
-                });
-
-
-                
-                
 
             }
 
@@ -320,7 +334,7 @@
             require(["esri/layers/FeatureLayer", "esri/graphic", "dojo/domReady!"],
             function (FeatureLayer, Graphic) {
 
-               
+
 
                 //IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/FeatureServer/0", {
                 //    mode: FeatureLayer.MODE_ONDEMAND,
