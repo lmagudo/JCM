@@ -43,42 +43,183 @@
 
     //Controlador para funcionalidad buscador
     app.controller('buscadorController', function ($scope) {
-        $scope.provincias = ["CIUDAD REAL", "CUENCA", "GUADALAJARA", "TOLEDO"];
+        $scope.provincias = ["Ciudad Real", "Cuenca", "Guadalajara", "Toledo"];
         $scope.municipios = [];
         $scope.poblaciones = [];
         $scope.carreteras = [];
         $scope.pks = [];
+        $scope.idMatricula;
+        $scope.dicCarreteras = new Object();
+        $scope.selector;
+
+        //Relleno el combobox de carreteras
+        require(["esri/tasks/query", "esri/tasks/QueryTask"],
+            function (Query, QueryTask) {
+                var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/1");
+                var query = new Query();
+                query.returnGeometry = false;
+                query.outFields = ["Matricula", "idMatricula"];
+                query.where = "OBJECTID > 0";
+
+                queryTask.execute(query, showResults);
+
+                function showResults(results) {
+
+                    var count = 0;
+
+                    for (i = 0; i < results.features.length; i++) {
+                        for (j = 0; j < $scope.carreteras.length; j++) {
+                            if (results.features[i].attributes.Matricula == $scope.carreteras[j]) {
+                                count = 1
+                            }
+                        }
+                        if (count == 0) {
+                            //Relleno el combobox de matricula
+                            $scope.carreteras.push(results.features[i].attributes.Matricula);
+                            //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula
+                            $scope.dicCarreteras[results.features[i].attributes.Matricula] = results.features[i].attributes.idMatricula;
+                        }
+                        else { count = 0 }
+                    }
+                    //Intento refrescar el div del form
+                    $("buscaForm").load("index.html");
+
+                };
+
+            });
+
+        //Función para cambio en combobox
+        $scope.change = function (id) {
+
+            //Borro las consultas anteriores
+            $scope.municipios.length = 0;
+            $scope.poblaciones.length = 0;
+            $scope.pks.length = 0;
+
+            switch (id) {
+                case 1:
+                    var prov = $scope.provincia;
+                    require(["esri/tasks/query", "esri/tasks/QueryTask"],
+                    function (Query, QueryTask) {
+                        //Query para cargar municipios
+                        var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/3");
+                        var query = new Query();
+                        query.returnGeometry = false;
+                        query.outFields = ["Texto"];
+                        query.where = "Provincia = '" + prov + "'";
+
+                        queryTask.execute(query, showResults);
+
+                        //Query para cargar poblaciones
+                        var queryTask2 = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/2");
+                        var query2 = new Query();
+                        query2.returnGeometry = false;
+                        query2.outFields = ["Nucleo"];
+                        query2.where = "Provincia = '" + prov + "'";
+
+                        queryTask2.execute(query2, showResults2);
+
+                    });
+                    break;
+                case 2:
+                    //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
+                    $scope.idMatricula = $scope.dicCarreteras[$scope.carretera];
+                    console.log($scope.idMatricula);
+                    require(["esri/tasks/query", "esri/tasks/QueryTask"],
+                    function (Query, QueryTask) {
+                        //Query para cargar pks
+                        var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/0");
+                        var query = new Query();
+                        query.returnGeometry = false;
+                        query.outFields = ["PKhito"];
+                        query.where = "idMatricula = '" + $scope.idMatricula + "'";
+
+                        queryTask.execute(query, showResults3);
+
+                    });
+                    break;
+            }
+
+            function showResults(results) {
+
+                for (i = 0; i < results.features.length; i++) {
+                    $scope.municipios.push(results.features[i].attributes.Texto);
+                };
+                console.log($scope.municipios);
+            };
+
+            function showResults2(results) {
+
+                for (i = 0; i < results.features.length; i++) {
+                    $scope.poblaciones.push(results.features[i].attributes.Nucleo);
+                };
+                console.log($scope.poblaciones);
+            };
+
+            function showResults3(results) {
+
+                for (i = 0; i < results.features.length; i++) {
+                    $scope.pks.push(results.features[i].attributes.PKhito);
+                };
+                console.log($scope.pks);
+            };
+
+        };
+
 
         $scope.LanzarBuscador = function () {
             //Funcionalidad que se lanza cuando le damos al submmit
-            console.log($scope.provincias);
+            console.log(selectorBuscador);
+            //Capa a utilizar del servicio de mapa publicado
+            var idcapa;
+            switch (selectorBuscador) {
+                case 1:
+                    var whereclaus = "Matricula = '" + $scope.carretera + "'";
+                    idcapa = 1;
+                    myrequest(whereclaus, idcapa);
+                    break;
+                case 2:
+                    var whereclaus = "Matricula = '" + $scope.carretera + "'";
+                    idcapa = 0;
+                    myrequest(whereclaus, idcapa);
+                    break;
+                case 3:
+                    var whereclaus = "Matricula = '" + $scope.carretera + "'";
+                    idcapa = 0;
+                    break;
+                case 4:
+                    var whereclaus = "Matricula = '" + $scope.carretera + "'";
+                    idcapa = 0;
+                    myrequest(whereclaus, idcapa);
+                    break;
+            }
+
+            function myrequest(whereclaus, idcapa) {
+                require(["esri/tasks/query", "esri/tasks/QueryTask"],
+                    function (Query, QueryTask) {
+                        //Query para cargar pks
+                        var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/" + idcapa.toString());
+                        var query = new Query();
+                        query.returnGeometry = true;
+                        //query.outFields = ["PKhito"];
+                        query.where = whereclaus;
+
+                        queryTask.execute(query, zoomtoResult);
+
+                    });
+            }
+
+            function zoomtoResult(result) {
+                console.log(result);
+                TwoCartoMap.setExtent(result.features[0].geometry.getExtent(), true);
+            }
+
         }
 
         $scope.Cancelbusqueda = function () {
             //Cancelamos la busqueda
             $('#buscaForm').hide();
         }
-
-        require(["esri/tasks/query", "esri/tasks/QueryTask"],
-        function (Query, QueryTask) {
-            //Query para cargar poblaciones
-            var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/prueba/MapServer/1");
-            var query = new Query();
-            query.returnGeometry = false;
-            query.outFields = ["Problema", "idProblema"];
-            query.where = "idProblema > 0";
-
-            queryTask.execute(query, showResults);
-
-        });
-
-        function showResults(results) {
-            for (i = 0; i < results.features.length; i++) {
-                $scope.poblaciones.push(results.features[i].attributes.Problema);
-            };
-            //Intento refrescar el div del form
-            $("incidenciasForm").load("index.html");
-        };
 
     });
 
@@ -133,6 +274,7 @@
                     "Solucion": this.Solucion,
                     "idProblema": this.idProblema,
                     "IdMatricula": this.idMatricula,
+                    "idctramo": this.Matricula,
                     "fecha": "11/03/2015"
                 },
                 "symbol": {
@@ -223,5 +365,3 @@
         };
     });
 })();
-
-

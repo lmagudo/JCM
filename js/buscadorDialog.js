@@ -82,6 +82,8 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                 var idradio = attributes[2].value
                 switch (idradio){
                     case "radioOne":
+                        //Variable globar que me dice que ha seleccionado el usuario
+                        selectorBuscador = 1;
                         $('#FielsetProvincia').hide();
                         $('#FielsetMunicipio').hide();                        
                         $('#FielsetPoblacion').hide();
@@ -91,6 +93,8 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         $('#FielsetLatitud').hide();
                         break;
                     case "radioTwo":
+                        //Variable globar que me dice que ha seleccionado el usuario
+                        selectorBuscador = 2;
                         $('#FielsetProvincia').hide();
                         $('#FielsetMunicipio').hide();                        
                         $('#FielsetPoblacion').hide();
@@ -100,6 +104,8 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         $('#FielsetLatitud').hide();
                         break;
                     case "radioThree":
+                        //Variable globar que me dice que ha seleccionado el usuario
+                        selectorBuscador = 3;
                         $('#FielsetProvincia').show();
                         $('#FielsetMunicipio').show();                        
                         $('#FielsetPoblacion').show();
@@ -109,6 +115,8 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         $('#FielsetLatitud').hide();
                         break;
                     case "radioFour":
+                        //Variable globar que me dice que ha seleccionado el usuario
+                        selectorBuscador = 4;
                         $('#FielsetProvincia').hide();
                         $('#FielsetMunicipio').hide();                        
                         $('#FielsetPoblacion').hide();
@@ -117,7 +125,6 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         $('#FielsetLongitud').show();
                         $('#FielsetLatitud').show();
                         break;
-
                 }
             }
         }

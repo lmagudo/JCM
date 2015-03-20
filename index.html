@@ -123,7 +123,7 @@
                                     <div class="col-md-6">
                                         <label>Provincia:</label>
                                         <div class="controls">
-                                            <select name="Provincia" class="form-control" ng-model="provincia" ng-options="provincia for provincia in provincias" ><option></option></select>
+                                            <select name="Provincia" class="form-control" ng-model="provincia" ng-change="change(1)" ng-options="provincia for provincia in provincias" ><option></option></select>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +154,7 @@
                                     <div class="col-md-6">
                                         <label>Carretera:</label>
                                         <div class="controls">
-                                            <select name="carretera" class="form-control" ng-model="carretera" ng-options="carretera for carretera in carreteras">
+                                            <select name="carretera" class="form-control" ng-model="carretera" ng-change="change(2)" ng-options="carretera for carretera in carreteras">
                                                 <option></option>
                                             </select>
                                         </div>
@@ -179,7 +179,7 @@
                                     <input id="coordx" name="X" type="text" ng-model="Longitud" class="form-control"/>
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group" id="FielsetLatitud" style="width:120px">
+                            <fieldset class="form-group" id="FielsetLatitud" style="width:140px; padding-left:20px">
                                 <label>Latitud:</label>
                                 <div class="controls">
                                     <input name="Latitud" type="text" ng-model="Latitud" class="form-control"/>

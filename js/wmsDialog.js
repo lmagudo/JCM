@@ -83,7 +83,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                     j++;
                    
                     layersObject.push(response);
-                    console.log(response);
+                    //console.log(response);
                     if (j == max)
                     {
                         j = -1;
@@ -103,7 +103,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         this.document.getElementById("layerButtons").innerHTML = div;
 
                         var cblist = this.document.getElementsByClassName("wmsCB");
-                        console.log(cblist);
+                        //console.log(cblist);
                         for (var i = 0 ; i < cblist.length; i++)
                         {
                             cblist[i].addEventListener("click", function (evt) {
@@ -150,8 +150,8 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
 
                         function loadLayers(layersObject,map)
                         {
-                            console.log("Añadiendo capas wms");
-                            console.log(layersObject);
+                            //console.log("Añadiendo capas wms");
+                            //console.log(layersObject);
                             //console.log(map);
                             for (var i = 0 ; i < layersObject.length; i++)
                             {
@@ -240,7 +240,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
         _getWMSLayers: function (wmslayer,map, callback)
         {
             var wmsuri = wmslayer.url;
-            console.log("Obteniendo capas wms: " + wmsuri);
+            //console.log("Obteniendo capas wms: " + wmsuri);
             var url = "code/getLayers.ashx";
             url += "?wmsuri=" + wmsuri
             var layersRequest = esri.request({
