@@ -215,6 +215,26 @@
             function zoomtoResult(result) {
                 console.log(result);
                 TwoCartoMap.setExtent(result.features[0].geometry.getExtent(), true);
+
+
+
+
+                ///geometry service...
+                require(["esri/SpatialReference"], function (SpatialReference) {
+
+                    var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
+                    var outSR = new SpatialReference(102100);
+                    gsvc.project([result.features[0].geometry], outSR, function (projectedGeometry) {
+                        TwoCartoMap.setExtent(projectedGeometry, true);
+                    });
+                
+                
+                });
+
+
+                
+                
+
             }
 
         }
@@ -299,7 +319,16 @@
 
             require(["esri/layers/FeatureLayer", "esri/graphic", "dojo/domReady!"],
             function (FeatureLayer, Graphic) {
-                IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/FeatureServer/0", {
+
+               
+
+                //IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/FeatureServer/0", {
+                //    mode: FeatureLayer.MODE_ONDEMAND,
+                //    outFields: ["Autor", "Problema", "Solucion", "IdMatricula", "fecha"]
+                //});
+
+
+                IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM_SECURE/Base_Edit/FeatureServer/0", {
                     mode: FeatureLayer.MODE_ONDEMAND,
                     outFields: ["Autor", "Problema", "Solucion", "IdMatricula", "fecha"]
                 });

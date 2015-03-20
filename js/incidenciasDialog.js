@@ -85,17 +85,61 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                 //desactivar el infowindow
                 map.setInfoWindowOnClick(false);
 
-                require(["esri/toolbars/draw","dijit/Tooltip", "dojo/domReady!"], function(Draw, Tooltip){
+                if ($("#nombreUsuario").html() == "") {
 
-                    tb = new esri.toolbars.Draw(map);
-                    tb.on("draw-end", _DrawResults);
-                    tb.activate(esri.toolbars.Draw.POINT);                    
+                    require([
+                          "esri/ServerInfo", "esri/IdentityManager", "esri/layers/FeatureLayer"
+                    ], function (ServerInfo, esriId, FeatureLayer) {
 
-                    mytooltip = new Tooltip({
-                        connectId: ["mapDiv_container"],
-                        label: "Haz click para agregar un punto"
+                        idManager = esriId;
+                        var serverInfo = new ServerInfo();
+                        serverInfo.server = 'http://qvialweb.es';
+                        serverInfo.tokenServiceUrl = 'http://qvialweb.es:6080/arcgis/admin/generateToken?referer=http://qvialweb.es';
+
+                        esriId.registerServers([serverInfo]);
+
+                        console.log("esriId");
+                        console.log(esriId);
+
+                        esriId.getCredential("http://qvialweb.es:6080/arcgis/rest/services/JCM_SECURE/").then(function (res) {
+
+                            console.log("credential");
+                            console.log(res);
+                            $("#loginButton").html("Logout");
+                            $("#nombreUsuario").html(res.userId);
+                            $("#divUsuario").removeClass("oculto");
+
+                            require(["esri/toolbars/draw", "dijit/Tooltip", "dojo/domReady!"], function (Draw, Tooltip) {
+
+                                tb = new esri.toolbars.Draw(map);
+                                tb.on("draw-end", _DrawResults);
+                                tb.activate(esri.toolbars.Draw.POINT);
+
+                                mytooltip = new Tooltip({
+                                    connectId: ["mapDiv_container"],
+                                    label: "Haz click para agregar un punto"
+                                });
+                            });
+                        });
+
                     });
-                });
+
+                }
+
+
+                else {
+                    require(["esri/toolbars/draw", "dijit/Tooltip", "dojo/domReady!"], function (Draw, Tooltip) {
+
+                        tb = new esri.toolbars.Draw(map);
+                        tb.on("draw-end", _DrawResults);
+                        tb.activate(esri.toolbars.Draw.POINT);
+
+                        mytooltip = new Tooltip({
+                            connectId: ["mapDiv_container"],
+                            label: "Haz click para agregar un punto"
+                        });
+                    });
+                }
 
                 function _DrawResults(evt) {
                     require([

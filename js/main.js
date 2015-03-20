@@ -1144,7 +1144,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                             $("#nombreUsuario").html(res.userId);
                             $("#divUsuario").removeClass("oculto");
 
-                            //var secureLayer = new FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM_SECURE/municipios_map/FeatureServer/0",
+                            //var secureLayer = new FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM_SECURE/Base_Edit/FeatureServer/0",
                             //       {
                             //           id: "capamunicipios",
                             //           mode: FeatureLayer.MODE_ONDEMAND,
