@@ -145,6 +145,7 @@
                 for (i = 0; i < results.features.length; i++) {
                     $scope.municipios.push(results.features[i].attributes.Texto);
                 };
+                $scope.$apply()
                 console.log($scope.municipios);
             };
 
@@ -153,6 +154,7 @@
                 for (i = 0; i < results.features.length; i++) {
                     $scope.poblaciones.push(results.features[i].attributes.Nucleo);
                 };
+                $scope.$apply()
                 console.log($scope.poblaciones);
             };
 
@@ -161,6 +163,7 @@
                 for (i = 0; i < results.features.length; i++) {
                     $scope.pks.push(results.features[i].attributes.PKhito);
                 };
+                $scope.$apply()
                 console.log($scope.pks);
             };
 
