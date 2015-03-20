@@ -27,12 +27,12 @@
 #incidenciasForm 
 {
     width:600px;
-    height:400px;
+    height:auto;
     position:absolute;
     top:20%;
     left:20%;
     margin:auto;
-    background-color: transparent;
+    background-color: white;
     display:none;
     z-index: 9999;
 }
@@ -121,12 +121,12 @@ height:30px;
 #buscaForm 
 {
     width:600px;
-    height:400px;
+    height:auto;
     position:absolute;
     top:20%;
     left:20%;
     margin:auto;
-    background-color: transparent;
+    background-color: white;
     display:none;
     z-index: 9999;
 }

@@ -81,8 +81,8 @@
                         }
                         else { count = 0 }
                     }
-                    //Intento refrescar el div del form
-                    $("buscaForm").load("index.html");
+                    //Refresco mi modelo de datos en el form
+                    $scope.$apply()
 
                 };
 
