@@ -171,11 +171,13 @@ height:30px;
     font-family: "Helvetica Neue", "Arial", sans-serif;
     font-weight: bold;
     padding: 8px;
+    display:inline-block !important;
+    text-align: center;
   
 }
 
 #loginForm {
-    display:none;
+    
     text-align:center;
     position: fixed;
     left: 45%;
@@ -184,6 +186,7 @@ height:30px;
     font-family: "Helvetica Neue", "Arial", sans-serif;
     font-weight: bold;
     padding: 8px;
+   
   
 }
 .lgformdiv {
@@ -193,4 +196,17 @@ height:30px;
 
 .lgfbuttons {
     display:inline-block !important;
+    margin:5px;
+}
+
+.oculto {
+    display:none;
+}
+
+.loginInputs {
+    color:black;
+}
+#loginButton {
+   
+    display: inline-block;
 }

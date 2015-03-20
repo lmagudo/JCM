@@ -1118,17 +1118,73 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
         {
             console.log("creando identity manager");
 
-            //require(["esri/IdentityManager"], function (esriId) {
+            $("#loginButton").on("click", function () {
+                console.log("click");
+                if ($("#loginButton").html() == "Login") {
+
+                    require([
+                          "esri/ServerInfo", "esri/IdentityManager", "esri/layers/FeatureLayer"
+                    ], function (ServerInfo, esriId, FeatureLayer) {
+
+                        idManager = esriId;
+                        var serverInfo = new ServerInfo();
+                        serverInfo.server = 'http://qvialweb.es';
+                        serverInfo.tokenServiceUrl = 'http://qvialweb.es:6080/arcgis/admin/generateToken?referer=http://qvialweb.es';
+
+                        esriId.registerServers([serverInfo]);
+
+                        console.log("esriId");
+                        console.log(esriId);
+
+                        esriId.getCredential("http://qvialweb.es:6080/arcgis/rest/services/JCM_SECURE/").then(function (res) {
+
+                            console.log("credential");
+                            console.log(res);
+                            $("#loginButton").html("Logout");
+                            $("#nombreUsuario").html(res.userId);
+                            $("#divUsuario").removeClass("oculto");
+
+                            //var secureLayer = new FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM_SECURE/municipios_map/FeatureServer/0",
+                            //       {
+                            //           id: "capamunicipios",
+                            //           mode: FeatureLayer.MODE_ONDEMAND,
+                            //           outFields: ["*"],
+
+                            //       });
+
+                            //console.log(secureLayer);
+                            //TwoCartoMap.addLayer(secureLayer);
+
+
+                        });
+
+                    });
+                }
+                else
+                {
+                    console.log("logging out");
+                    
+                    idManager.destroyCredentials();
+                    $("#nombreUsuario").html("");
+                    $("#divUsuario").addClass("oculto");
+                    $("#loginButton").html("Login");
+                   
+                }
                 
-            //    //var idman = new IdentityManager();
 
-            //});
+            });
 
-            //require([
-            //  "dijit/registry", "dojo/query", ...
-            //            ], function(registry, query, ... ) {
-            //                var dialog = registry.byNode(query.query(".esriSignInDialog")[0]);
-            //});
+            $("#lgfCancelButton").on("click", function ( ) 
+            {
+                
+            });
+            $("#lgfOkButton").on("click", function ()
+            {
+
+                
+                 });
+
+            
           
 
         }
