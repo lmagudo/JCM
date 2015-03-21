@@ -111,7 +111,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         selectorBuscador = 3;
                         $('#FielsetProvincia').show();
                         $('#FielsetMunicipio').show();                        
-                        $('#FielsetPoblacion').show();
+                        $('#FielsetPoblacion').hide();
                         $('#FielsetCarretera').hide();
                         $('#FielsetPK').hide();
                         $('#FielsetLongitud').hide();
@@ -121,6 +121,18 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                     case "radioFour":
                         //Variable globar que me dice que ha seleccionado el usuario
                         selectorBuscador = 4;
+                        $('#FielsetProvincia').show();
+                        $('#FielsetMunicipio').hide();                        
+                        $('#FielsetPoblacion').show();
+                        $('#FielsetCarretera').hide();
+                        $('#FielsetPK').hide();
+                        $('#FielsetLongitud').hide();
+                        $('#FielsetLatitud').hide();
+                        $('#FieldsetCoordSystem').hide();
+                        break;
+                    case "radioFive":
+                        //Variable globar que me dice que ha seleccionado el usuario
+                        selectorBuscador = 5;
                         $('#FielsetProvincia').hide();
                         $('#FielsetMunicipio').hide();                        
                         $('#FielsetPoblacion').hide();

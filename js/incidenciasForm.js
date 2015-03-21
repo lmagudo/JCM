@@ -208,6 +208,11 @@
                     myrequest(whereclaus, idcapa, null);
                     break;
                 case 4:
+                    var whereclaus = "Nucleo = '" + $scope.poblacion + "'";
+                    idcapa = 2;
+                    myrequest(whereclaus, idcapa, null);
+                    break;
+                case 5:
                     require(["esri/geometry/Point", "esri/SpatialReference"],
                         function (Point, SpatialReference) {
                             var mypoint = new Point($scope.Longitud, $scope.Latitud, new SpatialReference({ wkid: $scope.CoordSystemFinal }));
@@ -239,8 +244,6 @@
             }
 
             function zoomtoResult(result) {
-                console.log(result);
-                
 
                 require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters", "esri/geometry/Extent"],
                     function (SpatialReference, GeometryService, ProjectParameters, Extent) {
@@ -253,8 +256,9 @@
                         gsvc.project(params, projectfeatures);
 
                         function projectfeatures(projectedGeometry) {
-                            
+
                             if (projectedGeometry[0].type == "point") {
+                                console.log(projectedGeometry[0]);
                                 TwoCartoMap.centerAndZoom(projectedGeometry, 12);
                             }
                             else {
@@ -266,6 +270,8 @@
 
                     });
 
+                //Oculto el formulario
+                $('#buscaForm').hide();
 
             }
 
@@ -347,13 +353,6 @@
 
             require(["esri/layers/FeatureLayer", "esri/graphic", "dojo/domReady!"],
             function (FeatureLayer, Graphic) {
-
-
-
-                //IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/FeatureServer/0", {
-                //    mode: FeatureLayer.MODE_ONDEMAND,
-                //    outFields: ["Autor", "Problema", "Solucion", "IdMatricula", "fecha"]
-                //});
 
 
                 IncidenciafeatureLayer = new esri.layers.FeatureLayer("http://qvialweb.es:6080/arcgis/rest/services/JCM_SECURE/Base_Edit/FeatureServer/0", {
