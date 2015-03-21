@@ -4,20 +4,20 @@
     var mydate;
 
     app.controller('DatepickerDemoCtrl', function ($scope) {
-
+        var mydate = $scope.dt;
         $scope.today = function () {
-            $scope.date = new Date();
-            console.log($scope);
+            $scope.dt = new Date();
         };
         //$scope.today();
 
         $scope.clear = function () {
-            $scope.date = null;
+            $scope.dt = null;
         };
 
         // Disable weekend selection
         $scope.disabled = function (date, mode) {
             return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+            console.log($scope.dt);
         };
 
         $scope.toggleMin = function () {
@@ -86,7 +86,7 @@
                         else { count = 0 }
                     }
                     //Refresco mi modelo de datos en el form
-                    $scope.$apply()
+                    $scope.$apply();
 
                 };
 
@@ -161,7 +161,7 @@
                 for (i = 0; i < results.features.length; i++) {
                     $scope.municipios.push(results.features[i].attributes.Texto);
                 };
-                $scope.$apply()
+                $scope.$apply();
                 console.log($scope.municipios);
             };
 
@@ -170,7 +170,7 @@
                 for (i = 0; i < results.features.length; i++) {
                     $scope.poblaciones.push(results.features[i].attributes.Nucleo);
                 };
-                $scope.$apply()
+                $scope.$apply();
                 console.log($scope.poblaciones);
             };
 
@@ -179,7 +179,7 @@
                 for (i = 0; i < results.features.length; i++) {
                     $scope.pks.push(results.features[i].attributes.PKhito);
                 };
-                $scope.$apply()
+                $scope.$apply();
                 console.log($scope.pks);
             };
 
@@ -198,7 +198,7 @@
                     myrequest(whereclaus, idcapa, null);
                     break;
                 case 2:
-                    var whereclaus = "PKhito = '" + $scope.PK + "'";
+                    var whereclaus = "PKhito = '" + $scope.PK + "'" + " AND " + "idMatricula = '" + $scope.idMatricula + "'";
                     idcapa = 0;
                     myrequest(whereclaus, idcapa, null);
                     break;
@@ -231,9 +231,9 @@
 
                     });
                 }
-                else {                    
+                else {
                     console.log(mygeometry);
-                    TwoCartoMap.centerAndZoom(mygeometry, 12);
+                    TwoCartoMap.centerAndZoom(mygeometry, 11);
                 }
 
             }
@@ -254,7 +254,6 @@
                 //                
                 //                });
 
-
                 require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters", "esri/geometry/Extent"],
                     function (SpatialReference, GeometryService, ProjectParameters, Extent) {
                         var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
@@ -266,13 +265,21 @@
                         gsvc.project(params, projectfeatures);
 
                         function projectfeatures(projectedGeometry) {
-                            console.log(projectedGeometry);
-                            var myextent = new Extent();
-                            myextent = projectedGeometry.getExtent();
-                            TwoCartoMap.setExtent(myextent, true)
+                            console.log(projectedGeometry)
+                            console.log(projectedGeometry.type);
+                            if (projectedGeometry.type == "point") {
+                                console.log("soy punto");
+                                TwoCartoMap.centerAndZoom(projectedGeometry, 11);
+                            }
+                            else {
+                                var myextent = new Extent();
+                                myextent = projectedGeometry.getExtent();
+                                TwoCartoMap.setExtent(myextent, true);
+                            }
                         }
 
-                    });
+                });                
+
 
             }
 
@@ -316,10 +323,6 @@
 
             //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
             $scope.idMatricula = $scope.dicMatricula[$scope.Matricula];
-
-            console.log($("#date").val());
-
-            $scope.date = $("#date").val();
 
             //Creo el gráfico
             $scope.newfeature = {
@@ -410,7 +413,7 @@
                 $scope.dicProblema[results.features[i].attributes.Problema] = results.features[i].attributes.idProblema;
             };
             //Intento refrescar el div del form
-            $("incidenciasForm").load("index.html");
+            $scope.$apply();
         };
 
         function showResults2(results) {
@@ -432,7 +435,7 @@
                 else { count = 0 }
             }
             //Intento refrescar el div del form
-            $("incidenciasForm").load("index.html");
+            $scope.$apply();
         };
     });
 })();

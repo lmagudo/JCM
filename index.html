@@ -47,7 +47,7 @@
                     <div class="contenedor">
                         <form name="inciForm" ng-submit="inciForm.$valid && crearincidencia()" novalidate>
                         <div class="control-group" ng-class="{true: 'error'}[submitted && inciForm.email.$invalid]">                           
-                            <fieldset class="form-group" style="width:140px; float:left">
+                            <fieldset class="form-group" style="width:140px; float:left; margin-left:20px">
                                 <label>Autor:</label>
                                 <div class="controls">
                                     <input name="autor" type="text" ng-model="Autor" class="form-control" required/>
@@ -62,7 +62,7 @@
                                         <p class="input-group">
                                             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar" ></i></button>
                                             <div class="controls">
-                                            <input name="date" type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="date" is-open="opened" datepicker-options="dateOptions" close-text="Close" readonly ng-click="open($event)" required/>
+                                            <input name="date" type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" datepicker-options="dateOptions" close-text="Close" readonly ng-click="open($event)" required/>
                                                 <span class="help-inline" ng-show="submitted && inciForm.date.$error.required">Olvidaste la fecha...</span>
                                                 <span class="help-inline" ng-show="submitted && inciForm.date.$error.date">Fecha no v&aacute;lida</span>
                                             </div>                           
@@ -70,7 +70,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group" style="width:360px;float:left">
+                            <fieldset class="form-group" style="width:360px;float:left; margin-left:20px">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Problema:</label>
@@ -90,7 +90,7 @@
                                         </div>
                                 </div>
                              </fieldset>                 
-                             <fieldset class="form-group" >
+                             <fieldset class="form-group" style=" margin-left:20px; margin-right:20px">
                                 <label>Soluci&oacute;n:</label>
                                 <div class="controls">
                                     <input name="solucion" type="text" ng-model="Solucion" class="form-control" required/>
@@ -101,7 +101,7 @@
 
                             <div style="text-align:center; margin-left:auto; margin-right:auto">
                              <fieldset class="form-group">
-                                <input class="btn btn-primary pull-right" type="button" value="Cancel" ng-click="CancelIncidencia()" style="margin-left:5px; float:left"/>
+                                <input class="btn btn-primary pull-right" type="button" value="Cancel" ng-click="CancelIncidencia()" style="margin-left:5px; float:left; margin-right:20px"/>
                                 <input class="btn btn-primary pull-right" type="submit" value="Submit" ng-click="submitted=true" />
                             </div>
                         </form>
