@@ -233,26 +233,14 @@
                 }
                 else {
                     console.log(mygeometry);
-                    TwoCartoMap.centerAndZoom(mygeometry, 11);
+                    TwoCartoMap.centerAndZoom(mygeometry, 12);
                 }
 
             }
 
             function zoomtoResult(result) {
                 console.log(result);
-                //TwoCartoMap.setExtent(result.features[0].geometry.getExtent(), true);
-
-                ///geometry service...
-                //                require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters"], function (SpatialReference, GeometryService, ProjectParameters) {
-
-                //                    var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
-                //                    var outSR = new SpatialReference(102100);
-                //                    gsvc.project([result.features[0].geometry], outSR, function (projectedGeometry) {
-                //                        TwoCartoMap.setExtent(projectedGeometry.getExtent(), true);
-                //                    });
-                //                
-                //                
-                //                });
+                
 
                 require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters", "esri/geometry/Extent"],
                     function (SpatialReference, GeometryService, ProjectParameters, Extent) {
@@ -265,20 +253,18 @@
                         gsvc.project(params, projectfeatures);
 
                         function projectfeatures(projectedGeometry) {
-                            console.log(projectedGeometry)
-                            console.log(projectedGeometry.type);
-                            if (projectedGeometry.type == "point") {
-                                console.log("soy punto");
-                                TwoCartoMap.centerAndZoom(projectedGeometry, 11);
+                            
+                            if (projectedGeometry[0].type == "point") {
+                                TwoCartoMap.centerAndZoom(projectedGeometry, 12);
                             }
                             else {
                                 var myextent = new Extent();
-                                myextent = projectedGeometry.getExtent();
+                                myextent = projectedGeometry[0].getExtent();
                                 TwoCartoMap.setExtent(myextent, true);
                             }
                         }
 
-                });                
+                    });
 
 
             }
