@@ -91,6 +91,8 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         $('#FielsetPK').hide();
                         $('#FielsetLongitud').hide();
                         $('#FielsetLatitud').hide();
+                        $('#FieldsetCoordSystem').hide();
+
                         break;
                     case "radioTwo":
                         //Variable globar que me dice que ha seleccionado el usuario
@@ -102,6 +104,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         $('#FielsetPK').show();
                         $('#FielsetLongitud').hide();
                         $('#FielsetLatitud').hide();
+                        $('#FieldsetCoordSystem').hide();
                         break;
                     case "radioThree":
                         //Variable globar que me dice que ha seleccionado el usuario
@@ -113,6 +116,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         $('#FielsetPK').hide();
                         $('#FielsetLongitud').hide();
                         $('#FielsetLatitud').hide();
+                        $('#FieldsetCoordSystem').hide();
                         break;
                     case "radioFour":
                         //Variable globar que me dice que ha seleccionado el usuario
@@ -124,6 +128,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         $('#FielsetPK').hide();
                         $('#FielsetLongitud').show();
                         $('#FielsetLatitud').show();
+                        $('#FieldsetCoordSystem').show();
                         break;
                 }
             }

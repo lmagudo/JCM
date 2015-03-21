@@ -44,10 +44,14 @@
     //Controlador para funcionalidad buscador
     app.controller('buscadorController', function ($scope) {
         $scope.provincias = ["Ciudad Real", "Cuenca", "Guadalajara", "Toledo"];
+        $scope.CoordSystems = ["WGS84", "UTM"];
         $scope.municipios = [];
         $scope.poblaciones = [];
         $scope.carreteras = [];
         $scope.pks = [];
+        $scope.textoX;
+        $scope.textoY;
+        $scope.CoordSystemFinal;
         $scope.idMatricula;
         $scope.dicCarreteras = new Object();
         $scope.selector;
@@ -138,6 +142,18 @@
 
                     });
                     break;
+                case 3:
+                    if ($scope.CoordSystem == "UTM") {
+                        $scope.textoX = "X:";
+                        $scope.textoY = "Y:";
+                        $scope.CoordSystemFinal = 25830;
+                    }
+                    else {
+                        $scope.textoX = "Longitud:";
+                        $scope.textoY = "Latitud";
+                        $scope.CoordSystemFinal = 4326;
+                    }
+                    break;
             }
 
             function showResults(results) {
@@ -179,38 +195,47 @@
                 case 1:
                     var whereclaus = "Matricula_Plan = '" + $scope.carretera + "'";
                     idcapa = 1;
-                    myrequest(whereclaus, idcapa);
+                    myrequest(whereclaus, idcapa, null);
                     break;
                 case 2:
                     var whereclaus = "PKhito = '" + $scope.PK + "'";
                     idcapa = 0;
-                    myrequest(whereclaus, idcapa);
+                    myrequest(whereclaus, idcapa, null);
                     break;
                 case 3:
                     var whereclaus = "Texto = '" + $scope.municipio + "'";
                     idcapa = 3;
-                    myrequest(whereclaus, idcapa);
+                    myrequest(whereclaus, idcapa, null);
                     break;
                 case 4:
-                    var whereclaus = "Matricula = '" + $scope.carretera + "'";
-                    idcapa = 0;
-                    myrequest(whereclaus, idcapa);
+                    require(["esri/geometry/Point", "esri/SpatialReference"],
+                        function (Point, SpatialReference) {
+                            var mypoint = new Point($scope.Longitud, $scope.Latitud, new SpatialReference({ wkid: $scope.CoordSystemFinal }));
+                            myrequest(null, null, mypoint);
+                        });
                     break;
             }
 
-            function myrequest(whereclaus, idcapa) {
-                require(["esri/tasks/query", "esri/tasks/QueryTask"],
+            function myrequest(whereclaus, idcapa, mygeometry) {
+
+                if (mygeometry == null) {
+                    require(["esri/tasks/query", "esri/tasks/QueryTask"],
                     function (Query, QueryTask) {
                         //Query para cargar pks
                         var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/" + idcapa.toString());
                         var query = new Query();
                         query.returnGeometry = true;
-                        //query.outFields = ["PKhito"];
                         query.where = whereclaus;
 
                         queryTask.execute(query, zoomtoResult);
 
                     });
+                }
+                else {                    
+                    console.log(mygeometry);
+                    TwoCartoMap.centerAndZoom(mygeometry, 12);
+                }
+
             }
 
             function zoomtoResult(result) {

@@ -144,9 +144,7 @@
                                         <label>Poblaci&oacute;n:</label>
                                         <div class="controls">
                                             <select name="poblacion" class="form-control" ng-model="poblacion" ng-options="poblacion for poblacion in poblaciones" ><option></option></select>
-
                                         </div>
-
                                     </div>
                                 </div>
                             </fieldset>
@@ -174,18 +172,28 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group" id="FielsetLongitud" style="width:120px; float:left; margin-left:20px">
-                                <label>Longitud:</label>
+                            <fieldset id="FieldsetCoordSystem" class="form-group" style="margin-left:20px" >
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Sistema de Coordenadas:</label>
+                                        <div class="controls">
+                                            <select name="CoordSystem" class="form-control" ng-model="CoordSystem" ng-options="CoordSystem for CoordSystem in CoordSystems"  ng-change="change(3)" ><option></option></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group" id="FielsetLongitud" style="width:120px; float:left; margin-left:20px" >
+                                <label>{{textoX}}</label>
                                 <div class="controls">
-                                    <input id="coordx" name="X" type="text" ng-model="Longitud" class="form-control"/>
+                                    <input id="Longitud" name="X" ng-model="Longitud" type="text" class="form-control" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group" id="FielsetLatitud" style="width:140px; padding-left:20px">
-                                <label>Latitud:</label>
+                                <label>{{textoY}}</label>
                                 <div class="controls">
                                     <input name="Latitud" type="text" ng-model="Latitud" class="form-control"/>
                                 </div>
-                            </fieldset>
+                            </fieldset>                            
                             </div>
 
                             <div style="text-align: center; margin-left: auto; margin-right: auto">
