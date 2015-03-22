@@ -70,7 +70,8 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
 
                     var checked = evt.target.checked;
                     var index = evt.target.parentNode.id;
-                    var attributes = evt.target.attributes;                    
+                    var attributes = evt.target.attributes; 
+                    
                     
                     toogleLayerto(index, checked, attributes);
                 });
@@ -79,7 +80,10 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
             function toogleLayerto(index, checked, attributes){
                     
                 dojo.byId("buscaForm").style.display = "block";
-                var idradio = attributes[2].value
+                //var idradio = attributes[2].value;
+               
+                var idradio = attributes["id"].value;
+         
                 switch (idradio){
                     case "radioOne":
                         //Variable globar que me dice que ha seleccionado el usuario
