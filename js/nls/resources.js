@@ -76,7 +76,7 @@ define({
         	"share": "Share",
         	"wmstool": "WMS Layers",
         	"incidencias": "Panel de incidencias",
-        	"buscador": "Panel de busqueda de elementos"
+        	"buscador": "Buscar elementos"
         }
     }),
 "ar": 1,

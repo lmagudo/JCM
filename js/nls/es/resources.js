@@ -75,7 +75,7 @@ define(
         	"share": "Compartir",
             "wmstool": "Capas WMS",
             "incidencias": "Panel de incidencias",
-            "buscador": "Panel de busqueda de elementos"
+            "buscador": "Buscar elementos"
         }
     })
 );

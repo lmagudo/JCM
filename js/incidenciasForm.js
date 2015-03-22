@@ -1,45 +1,43 @@
 ﻿(function () {
     var app = angular.module('incidencias', ['ui.bootstrap', 'ngMessages']);
 
-    var mydate;
+    //    app.controller('DatepickerDemoCtrl', function ($scope) {
 
-    app.controller('DatepickerDemoCtrl', function ($scope) {
-        var mydate = $scope.dt;
-        $scope.today = function () {
-            $scope.dt = new Date();
-        };
-        //$scope.today();
+    //        $scope.today = function () {
+    //            $scope.dt = new Date();
+    //        };
+    //        //$scope.today();
 
-        $scope.clear = function () {
-            $scope.dt = null;
-        };
+    //        $scope.clear = function () {
+    //            $scope.dt = null;
+    //        };
 
-        // Disable weekend selection
-        $scope.disabled = function (date, mode) {
-            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-            console.log($scope.dt);
-        };
+    //        // Disable weekend selection
+    //        $scope.disabled = function (date, mode) {
+    //            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+    //            console.log($scope.dt);
+    //        };
 
-        $scope.toggleMin = function () {
-            $scope.minDate = $scope.minDate ? null : new Date();
-        };
-        $scope.toggleMin();
+    //        $scope.toggleMin = function () {
+    //            $scope.minDate = $scope.minDate ? null : new Date();
+    //        };
+    //        $scope.toggleMin();
 
-        $scope.open = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
+    //        $scope.open = function ($event) {
+    //            $event.preventDefault();
+    //            $event.stopPropagation();
 
-            $scope.opened = true;
-        };
+    //            $scope.opened = true;
+    //        };
 
-        $scope.dateOptions = {
-            formatYear: 'yyyy',
-            startingDay: 1
-        };
+    //        $scope.dateOptions = {
+    //            formatYear: 'yyyy',
+    //            startingDay: 1
+    //        };
 
-        $scope.formats = ['dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
-    });
+    //        $scope.formats = ['dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
+    //        $scope.format = $scope.formats[0];
+    //    });
 
     //Controlador para funcionalidad buscador
     app.controller('buscadorController', function ($scope) {
@@ -237,8 +235,8 @@
                     });
                 }
                 else {
-                    console.log(mygeometry);
                     TwoCartoMap.centerAndZoom(mygeometry, 12);
+                    $('#buscaForm').hide();
                 }
 
             }
@@ -294,13 +292,54 @@
         $scope.dicMatricula = new Object();
         $scope.dicProblema = new Object();
 
+
+        //Funciones y variables que pertenecen al datapicker
+        $scope.today = function () {
+            $scope.dt = new Date();
+        };
+        //$scope.today();
+
+        $scope.clear = function () {
+            $scope.dt = null;
+        };
+
+        // Disable weekend selection
+        $scope.disabled = function (date, mode) {
+            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+            console.log($scope.dt);
+        };
+
+        $scope.toggleMin = function () {
+            $scope.minDate = $scope.minDate ? null : new Date();
+        };
+        $scope.toggleMin();
+
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.opened = true;
+        };
+
+        $scope.dateOptions = {
+            formatYear: 'yyyy',
+            startingDay: 1
+        };
+
+        $scope.formats = ['dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
+
+
+        //Hasta aquí la prueba
         $scope.CancelIncidencia = function () {
+            console.log($scope.dt);
             TwoCartoMap.graphics.clear();
             $('#incidenciasForm').hide();
             TwoCartoMap.enableScrollWheelZoom();
         };
 
         $scope.crearincidencia = function () {
+
             $scope.showmessages = true;
 
             //Oculto el formulario
