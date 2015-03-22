@@ -1,44 +1,6 @@
 ﻿(function () {
     var app = angular.module('incidencias', ['ui.bootstrap', 'ngMessages']);
 
-    //    app.controller('DatepickerDemoCtrl', function ($scope) {
-
-    //        $scope.today = function () {
-    //            $scope.dt = new Date();
-    //        };
-    //        //$scope.today();
-
-    //        $scope.clear = function () {
-    //            $scope.dt = null;
-    //        };
-
-    //        // Disable weekend selection
-    //        $scope.disabled = function (date, mode) {
-    //            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-    //            console.log($scope.dt);
-    //        };
-
-    //        $scope.toggleMin = function () {
-    //            $scope.minDate = $scope.minDate ? null : new Date();
-    //        };
-    //        $scope.toggleMin();
-
-    //        $scope.open = function ($event) {
-    //            $event.preventDefault();
-    //            $event.stopPropagation();
-
-    //            $scope.opened = true;
-    //        };
-
-    //        $scope.dateOptions = {
-    //            formatYear: 'yyyy',
-    //            startingDay: 1
-    //        };
-
-    //        $scope.formats = ['dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
-    //        $scope.format = $scope.formats[0];
-    //    });
-
     //Controlador para funcionalidad buscador
     app.controller('buscadorController', function ($scope) {
         $scope.provincias = ["Ciudad Real", "Cuenca", "Guadalajara", "Toledo"];
@@ -126,7 +88,6 @@
                 case 2:
                     //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
                     $scope.idMatricula = $scope.dicCarreteras[$scope.carretera];
-                    console.log($scope.idMatricula);
                     require(["esri/tasks/query", "esri/tasks/QueryTask"],
                     function (Query, QueryTask) {
                         //Query para cargar pks
@@ -178,15 +139,13 @@
                     $scope.pks.push(results.features[i].attributes.PKhito);
                 };
                 $scope.$apply();
-                console.log($scope.pks);
             };
 
         };
 
-
+        //Función que controla el submmit
         $scope.LanzarBuscador = function () {
-            //Funcionalidad que se lanza cuando le damos al submmit
-            console.log(selectorBuscador);
+
             //Capa a utilizar del servicio de mapa publicado
             var idcapa;
             switch (selectorBuscador) {
@@ -242,28 +201,27 @@
             }
 
             function zoomtoResult(result) {
-
+                console.log(result);
                 require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters", "esri/geometry/Extent"],
                     function (SpatialReference, GeometryService, ProjectParameters, Extent) {
                         var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
                         var params = new ProjectParameters();
                         var outSR = new SpatialReference(102100);
                         params.outSR = outSR;
-                        
+
                         var geoms = [];
-                        for (var i = 0 ; i < result.features.length; i++)
-                        {
+                        for (var i = 0; i < result.features.length; i++) {
                             geoms.push(result.features[i].geometry);
                         }
 
-                         params.geometries = geoms;
+                        params.geometries = geoms;
 
                         console.log(geoms);
 
                         gsvc.project(params, projectfeatures);
 
                         function projectfeatures(projectedGeometry) {
-                            
+                            console.log(projectedGeometry);
                             if (projectedGeometry[0].type == "point") {
                                 console.log(projectedGeometry[0]);
                                 TwoCartoMap.centerAndZoom(projectedGeometry[0], 12);
