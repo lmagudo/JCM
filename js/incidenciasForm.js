@@ -249,18 +249,28 @@
                         var params = new ProjectParameters();
                         var outSR = new SpatialReference(102100);
                         params.outSR = outSR;
-                        params.geometries = [result.features[0].geometry];
+                        
+                        var geoms = [];
+                        for (var i = 0 ; i < result.features.length; i++)
+                        {
+                            geoms.push(result.features[i].geometry);
+                        }
+
+                         params.geometries = geoms;
+
+                        console.log(geoms);
 
                         gsvc.project(params, projectfeatures);
 
                         function projectfeatures(projectedGeometry) {
-
+                            
                             if (projectedGeometry[0].type == "point") {
                                 console.log(projectedGeometry[0]);
-                                TwoCartoMap.centerAndZoom(projectedGeometry, 12);
+                                TwoCartoMap.centerAndZoom(projectedGeometry[0], 12);
                             }
                             else {
                                 var myextent = new Extent();
+                                console.log(projectedGeometry);
                                 myextent = projectedGeometry[0].getExtent();
                                 TwoCartoMap.setExtent(myextent, true);
                             }
