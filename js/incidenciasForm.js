@@ -8,10 +8,6 @@
         $scope.municipios = [];
         $scope.poblaciones = [];
         $scope.carreteras = [];
-        $scope.carreterasDiputacion = [];
-        $scope.carreterasEstatal = [];
-        $scope.carreterasJCCM = [];
-        $scope.carreterasOtras = [];
         $scope.pks = [];
         $scope.textoX;
         $scope.textoY;
@@ -81,26 +77,13 @@
 
                     for (i = 0; i < jsonObj.length; i++) {
                         for (j = 0; j < $scope.carreteras.length; j++) {
-                            if (jsonObj[i].Matricula_Plan == $scope.carreteras[j]) {
+                            if (jsonObj[i].Matricula_Plan == $scope.carreteras[j].Matricula_Plan) {
                                 count = 1
                             }
                         }
                         if (count == 0) {
-                            ////Relleno el combobox de matricula
-                            //switch (jsonObj[i].Titularidad) {
-                            //    case "Diputación":
-                            //        $scope.carreterasDiputacion.push(jsonObj[i].Matricula_Plan);
-                            //        break;
-                            //    case "Estatal":
-                            //        $scope.carreterasEstatal.push(jsonObj[i].Matricula_Plan);
-                            //        break;
-                            //    case "JCCM":
-                            //        $scope.carreterasJCCM.push(jsonObj[i].Matricula_Plan);
-                            //        break;
-                            //    case "Otras":
-                            //        $scope.carreterasOtras.push(jsonObj[i].Matricula_Plan);
-                            //        break;
-                            //}
+                            //Relleno el combobox de matricula
+                            
                             //$scope.carreteras.push(jsonObj[i].Matricula_Plan);
                             $scope.carreteras.push(jsonObj[i]);
                             //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula                            
@@ -108,8 +91,6 @@
                         }
                         else { count = 0 }
                     }
-                    console.log($scope.carreterasDiputacion);
-                    console.log($scope.carreterasEstatal);
 
                     //for (i = 0; i < results.features.length; i++) {
                     //    for (j = 0; j < $scope.carreteras.length; j++) {
@@ -169,7 +150,9 @@
                     break;
                 case 2:
                     //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
-                    $scope.idMatricula = $scope.dicCarreteras[$scope.carretera];
+                    console.log($scope.carretera);
+                    //$scope.idMatricula = $scope.dicCarreteras[$scope.carretera];
+                    $scope.idMatricula = $scope.carretera;
                     require(["esri/tasks/query", "esri/tasks/QueryTask"],
                     function (Query, QueryTask) {
                         //Query para cargar pks
