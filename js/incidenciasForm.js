@@ -32,6 +32,7 @@
                     var count = 0;
                     jsonObj = [];
 
+                    //Función para ordenar un objeto a partir de un atributo
                     var by = function (attr) {
                         return function (o, p) {
                             var a, b;
@@ -73,6 +74,7 @@
 
                         jsonObj.push(item);
                     }
+
                     jsonObj.sort(by("Titularidad"));
 
                     for (i = 0; i < jsonObj.length; i++) {
@@ -91,21 +93,6 @@
                         }
                         else { count = 0 }
                     }
-
-                    //for (i = 0; i < results.features.length; i++) {
-                    //    for (j = 0; j < $scope.carreteras.length; j++) {
-                    //        if (results.features[i].attributes.Matricula_Plan == $scope.carreteras[j]) {
-                    //            count = 1
-                    //        }
-                    //    }
-                    //    if (count == 0) {
-                    //        //Relleno el combobox de matricula
-                    //        $scope.carreteras.push(results.features[i].attributes.Matricula_Plan);
-                    //        //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula                            
-                    //        $scope.dicCarreteras[results.features[i].attributes.Matricula_Plan] = results.features[i].attributes.idMatricula;
-                    //    }
-                    //    else { count = 0 }
-                    //}
 
 
                     //Refresco mi modelo de datos en el form
@@ -214,7 +201,8 @@
             var idcapa;
             switch (selectorBuscador) {
                 case 1:
-                    var whereclaus = "Matricula_Plan = '" + $scope.carretera + "'";
+                    console.log($scope.carretera);
+                    var whereclaus = "idMatricula = '" + $scope.carretera + "'";
                     idcapa = 1;
                     myrequest(whereclaus, idcapa, null);
                     break;
@@ -265,7 +253,7 @@
             }
 
             function zoomtoResult(result) {
-
+                console.log(result);
                 require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters", "esri/geometry/Extent"],
                     function (SpatialReference, GeometryService, ProjectParameters, Extent) {
                         var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");

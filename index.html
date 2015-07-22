@@ -154,7 +154,7 @@
                                     <div class="col-md-6">
                                         <label>Carretera:</label>
                                         <div class="controls">
-                                            <select name="carretera" class="form-control" ng-options="carretera.idMatricula as carretera.Matricula_Plan group by carretera.Titularidad for carretera in carreteras" ng-model="carretera" ng-change="change(2)">
+                                            <select name="carretera" class="form-control" ng-options="carretera.idMatricula as carretera.Matricula_Plan group by carretera.Titularidad for carretera in carreteras | orderBy: '+'" ng-model="carretera" ng-change="change(2)">
                                                 <option></option>                                                
                                             </select>
                                         </div>
