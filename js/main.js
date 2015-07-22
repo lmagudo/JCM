@@ -1127,9 +1127,18 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                     ], function (ServerInfo, esriId, FeatureLayer) {
 
                         idManager = esriId;
+
+                        esriId.setProtocolErrorHandler(function () {
+                            console.log("Protocol mismatch error");
+                            //return window.confirm("Protocol mismatch error .... proceed anyway?");
+                            return true;
+                        });
+
+
                         var serverInfo = new ServerInfo();
                         serverInfo.server = 'http://qvialweb.es';
                         serverInfo.tokenServiceUrl = 'http://qvialweb.es:6080/arcgis/admin/generateToken?referer=http://qvialweb.es';
+
 
                         esriId.registerServers([serverInfo]);
 
@@ -1154,6 +1163,8 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
 
                             //console.log(secureLayer);
                             //TwoCartoMap.addLayer(secureLayer);
+
+                           
 
 
                         });

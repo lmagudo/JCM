@@ -124,7 +124,7 @@
                                     <div class="col-md-6">
                                         <label>Provincia:</label>
                                         <div class="controls">
-                                            <select name="Provincia" class="form-control" ng-model="provincia" ng-change="change(1)" ng-options="provincia for provincia in provincias" ><option></option></select>
+                                            <select name="Provincia" class="form-control" ng-model="provincia" ng-change="change(1)" ng-options="provincia for provincia in provincias | orderBy:'+'" ><option></option></select>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +134,7 @@
                                     <div class="col-md-6">
                                         <label>Municipio:</label>
                                         <div class="controls">
-                                            <select name="Municipio" class="form-control" ng-model="municipio" ng-options="municipio for municipio in municipios" ><option></option></select>
+                                            <select name="Municipio" class="form-control" ng-model="municipio" ng-options="municipio for municipio in municipios | orderBy:'+'" ><option></option></select>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
                                     <div class="col-md-6">
                                         <label>Poblaci&oacute;n:</label>
                                         <div class="controls">
-                                            <select name="poblacion" class="form-control" ng-model="poblacion" ng-options="poblacion for poblacion in poblaciones" ><option></option></select>
+                                            <select name="poblacion" class="form-control" ng-model="poblacion" ng-options="poblacion for poblacion in poblaciones | orderBy: '+'" ><option></option></select>
                                         </div>
                                     </div>
                                 </div>
@@ -154,8 +154,20 @@
                                     <div class="col-md-6">
                                         <label>Carretera:</label>
                                         <div class="controls">
-                                            <select name="carretera" class="form-control" ng-model="carretera" ng-change="change(2)" ng-options="carretera for carretera in carreteras">
+                                            <select name="carretera" class="form-control" ng-options="carretera.idMatricula as carretera.Matricula_Plan group by carretera.Titularidad for carretera in carreteras" ng-model="carretera" ng-change="change(2)">
                                                 <option></option>
+                                                <!--optgroup label=Diputacion ng-options="carretera for carretera in carreterasDiputacion">
+                                                    <option></option>
+                                                </optgroup>
+                                                <optgroup label=Estatal ng-options="carretera for carretera in carreterasEstatal">
+                                                    <option></option>
+                                                </optgroup>
+                                                <optgroup label=JCCM ng-options="carretera for carretera in carreterasJCCM">
+                                                    <option></option>
+                                                </optgroup>
+                                                <optgroup label=Otras ng-options="carretera for carretera in carreterasOtras">
+                                                    <option></option>
+                                                </optgroup-->
                                             </select>
                                         </div>
                                     </div>
