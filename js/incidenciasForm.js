@@ -3,11 +3,15 @@
 
     //Controlador para funcionalidad buscador
     app.controller('buscadorController', function ($scope) {
-        $scope.provincias = ["Ciudad Real", "Cuenca", "Guadalajara", "Toledo"];
+        $scope.provincias = ["Albacete", "Ciudad Real", "Cuenca", "Guadalajara", "Toledo"];
         $scope.CoordSystems = ["WGS84", "UTM"];
         $scope.municipios = [];
         $scope.poblaciones = [];
         $scope.carreteras = [];
+        $scope.carreterasDiputacion = [];
+        $scope.carreterasEstatal = [];
+        $scope.carreterasJCCM = [];
+        $scope.carreterasOtras = [];
         $scope.pks = [];
         $scope.textoX;
         $scope.textoY;
@@ -22,7 +26,7 @@
                 var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/1");
                 var query = new Query();
                 query.returnGeometry = false;
-                query.outFields = ["Matricula_Plan", "idMatricula"];
+                query.outFields = ["Matricula_Plan", "idMatricula", "Titularidad"];
                 query.where = "OBJECTID > 0";
 
                 queryTask.execute(query, showResults);
@@ -30,21 +34,99 @@
                 function showResults(results) {
 
                     var count = 0;
+                    jsonObj = [];
+
+                    var by = function (attr) {
+                        return function (o, p) {
+                            var a, b;
+
+                            if (typeof o === "object" && typeof p === "object" && o && p) {
+                                a = o[attr];
+                                b = p[attr];
+
+                                if (a === b) {
+                                    return 0;
+                                }
+
+                                if (typeof a === typeof b) {
+                                    return a < b ? -1 : 1;
+                                }
+
+                                return typeof a < typeof b ? -1 : 1;
+
+                            } else {
+
+                                throw {
+                                    name: "Error",
+                                    message: "Esto no es un objeto, al menos no tiene la propiedad " + attr
+                                };
+
+                            }
+                        };
+                    };
 
                     for (i = 0; i < results.features.length; i++) {
+                        var Matricula_Plan = results.features[i].attributes.Matricula_Plan;
+                        var idMatricula = results.features[i].attributes.idMatricula;
+                        var Titularidad = results.features[i].attributes.Titularidad;
+
+                        item = {}
+                        item["Matricula_Plan"] = Matricula_Plan;
+                        item["idMatricula"] = idMatricula;
+                        item["Titularidad"] = Titularidad;
+
+                        jsonObj.push(item);
+                    }
+                    jsonObj.sort(by("Titularidad"));
+
+                    for (i = 0; i < jsonObj.length; i++) {
                         for (j = 0; j < $scope.carreteras.length; j++) {
-                            if (results.features[i].attributes.Matricula_Plan == $scope.carreteras[j]) {
+                            if (jsonObj[i].Matricula_Plan == $scope.carreteras[j]) {
                                 count = 1
                             }
                         }
                         if (count == 0) {
-                            //Relleno el combobox de matricula
-                            $scope.carreteras.push(results.features[i].attributes.Matricula_Plan);
-                            //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula
-                            $scope.dicCarreteras[results.features[i].attributes.Matricula_Plan] = results.features[i].attributes.idMatricula;
+                            ////Relleno el combobox de matricula
+                            //switch (jsonObj[i].Titularidad) {
+                            //    case "Diputación":
+                            //        $scope.carreterasDiputacion.push(jsonObj[i].Matricula_Plan);
+                            //        break;
+                            //    case "Estatal":
+                            //        $scope.carreterasEstatal.push(jsonObj[i].Matricula_Plan);
+                            //        break;
+                            //    case "JCCM":
+                            //        $scope.carreterasJCCM.push(jsonObj[i].Matricula_Plan);
+                            //        break;
+                            //    case "Otras":
+                            //        $scope.carreterasOtras.push(jsonObj[i].Matricula_Plan);
+                            //        break;
+                            //}
+                            //$scope.carreteras.push(jsonObj[i].Matricula_Plan);
+                            $scope.carreteras.push(jsonObj[i]);
+                            //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula                            
+                            $scope.dicCarreteras[jsonObj[i].Matricula_Plan] = jsonObj[i].idMatricula;
                         }
                         else { count = 0 }
                     }
+                    console.log($scope.carreterasDiputacion);
+                    console.log($scope.carreterasEstatal);
+
+                    //for (i = 0; i < results.features.length; i++) {
+                    //    for (j = 0; j < $scope.carreteras.length; j++) {
+                    //        if (results.features[i].attributes.Matricula_Plan == $scope.carreteras[j]) {
+                    //            count = 1
+                    //        }
+                    //    }
+                    //    if (count == 0) {
+                    //        //Relleno el combobox de matricula
+                    //        $scope.carreteras.push(results.features[i].attributes.Matricula_Plan);
+                    //        //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula                            
+                    //        $scope.dicCarreteras[results.features[i].attributes.Matricula_Plan] = results.features[i].attributes.idMatricula;
+                    //    }
+                    //    else { count = 0 }
+                    //}
+
+
                     //Refresco mi modelo de datos en el form
                     $scope.$apply();
 
@@ -121,7 +203,6 @@
                     $scope.municipios.push(results.features[i].attributes.Texto);
                 };
                 $scope.$apply();
-                console.log($scope.municipios);
             };
 
             function showResults2(results) {
@@ -129,8 +210,8 @@
                 for (i = 0; i < results.features.length; i++) {
                     $scope.poblaciones.push(results.features[i].attributes.Nucleo);
                 };
-                $scope.$apply();
                 console.log($scope.poblaciones);
+                $scope.$apply();
             };
 
             function showResults3(results) {
@@ -201,7 +282,7 @@
             }
 
             function zoomtoResult(result) {
-                console.log(result);
+
                 require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters", "esri/geometry/Extent"],
                     function (SpatialReference, GeometryService, ProjectParameters, Extent) {
                         var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
@@ -216,19 +297,16 @@
 
                         params.geometries = geoms;
 
-                        console.log(geoms);
-
                         gsvc.project(params, projectfeatures);
 
+
                         function projectfeatures(projectedGeometry) {
-                            console.log(projectedGeometry);
+
                             if (projectedGeometry[0].type == "point") {
-                                console.log(projectedGeometry[0]);
                                 TwoCartoMap.centerAndZoom(projectedGeometry[0], 12);
                             }
                             else {
                                 var myextent = new Extent();
-                                console.log(projectedGeometry);
                                 myextent = projectedGeometry[0].getExtent();
                                 TwoCartoMap.setExtent(myextent, true);
                             }
@@ -252,7 +330,7 @@
 
 
     //Controlador para funcionalidad incidencias
-    app.controller('incidenciasController', function ($scope) {
+    app.controller('incidenciasController', function ($scope, $filter) {
         $scope.problemas = [];
         $scope.matriculas = [];
         $scope.promselected;
@@ -274,7 +352,6 @@
         // Disable weekend selection
         $scope.disabled = function (date, mode) {
             return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-            console.log($scope.dt);
         };
 
         $scope.toggleMin = function () {
@@ -296,11 +373,10 @@
 
         $scope.formats = ['dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
+        //Fin funcionalidad datapicker
 
 
-        //Hasta aquí la prueba
         $scope.CancelIncidencia = function () {
-            console.log($scope.dt);
             TwoCartoMap.graphics.clear();
             $('#incidenciasForm').hide();
             TwoCartoMap.enableScrollWheelZoom();
@@ -318,7 +394,6 @@
 
             //Obtengo mediante el diccionario, el valor de la clave que corresponde al problema elegido por el usuario
             $scope.idProblema = $scope.dicProblema[$scope.problema];
-            console.log($scope.idProblema);
 
             //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
             $scope.idMatricula = $scope.dicMatricula[$scope.Matricula];
@@ -339,7 +414,7 @@
                     "idProblema": this.idProblema,
                     "IdMatricula": this.idMatricula,
                     "idctramo": this.Matricula,
-                    "fecha": "11/03/2015"
+                    "fecha": $filter('date')($scope.dt, "dd/MM/yyyy") //Aplicamos un filter a la fecha para que se ajuste al formato que se utiliza en la bbdd
                 },
                 "symbol": {
                     "color": [255, 0, 0, 128],

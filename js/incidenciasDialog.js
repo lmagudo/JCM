@@ -96,7 +96,7 @@ Evented, declare, lang, has, esriNS, _WidgetBase, a11yclick, _TemplatedMixin, on
                         esriId.setProtocolErrorHandler(function () {
                             console.log("Protocol mismatch error");
                             //return window.confirm("Protocol mismatch error .... proceed anyway?");
-			    return true;
+                            return true;
                         });
 
 

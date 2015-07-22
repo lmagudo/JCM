@@ -1131,7 +1131,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                         esriId.setProtocolErrorHandler(function () {
                             console.log("Protocol mismatch error");
                             //return window.confirm("Protocol mismatch error .... proceed anyway?");
-			    return true;
+                            return true;
                         });
 
 
