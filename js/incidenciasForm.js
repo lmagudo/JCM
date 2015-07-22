@@ -121,6 +121,7 @@
                     $scope.municipios.push(results.features[i].attributes.Texto);
                 };
                 $scope.$apply();
+                console.log($scope.municipios);
             };
 
             function showResults2(results) {
@@ -129,6 +130,7 @@
                     $scope.poblaciones.push(results.features[i].attributes.Nucleo);
                 };
                 $scope.$apply();
+                console.log($scope.poblaciones);
             };
 
             function showResults3(results) {
@@ -199,7 +201,7 @@
             }
 
             function zoomtoResult(result) {
-
+                console.log(result);
                 require(["esri/SpatialReference", "esri/tasks/GeometryService", "esri/tasks/ProjectParameters", "esri/geometry/Extent"],
                     function (SpatialReference, GeometryService, ProjectParameters, Extent) {
                         var gsvc = new GeometryService("http://qvialweb.es:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
@@ -214,16 +216,19 @@
 
                         params.geometries = geoms;
 
+                        console.log(geoms);
+
                         gsvc.project(params, projectfeatures);
 
-
                         function projectfeatures(projectedGeometry) {
-
+                            console.log(projectedGeometry);
                             if (projectedGeometry[0].type == "point") {
+                                console.log(projectedGeometry[0]);
                                 TwoCartoMap.centerAndZoom(projectedGeometry[0], 12);
                             }
                             else {
                                 var myextent = new Extent();
+                                console.log(projectedGeometry);
                                 myextent = projectedGeometry[0].getExtent();
                                 TwoCartoMap.setExtent(myextent, true);
                             }
@@ -247,7 +252,7 @@
 
 
     //Controlador para funcionalidad incidencias
-    app.controller('incidenciasController', function ($scope, $filter) {
+    app.controller('incidenciasController', function ($scope) {
         $scope.problemas = [];
         $scope.matriculas = [];
         $scope.promselected;
@@ -269,6 +274,7 @@
         // Disable weekend selection
         $scope.disabled = function (date, mode) {
             return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+            console.log($scope.dt);
         };
 
         $scope.toggleMin = function () {
@@ -290,10 +296,11 @@
 
         $scope.formats = ['dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
-        //Fin funcionalidad datapicker
 
 
+        //Hasta aquí la prueba
         $scope.CancelIncidencia = function () {
+            console.log($scope.dt);
             TwoCartoMap.graphics.clear();
             $('#incidenciasForm').hide();
             TwoCartoMap.enableScrollWheelZoom();
@@ -311,6 +318,7 @@
 
             //Obtengo mediante el diccionario, el valor de la clave que corresponde al problema elegido por el usuario
             $scope.idProblema = $scope.dicProblema[$scope.problema];
+            console.log($scope.idProblema);
 
             //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
             $scope.idMatricula = $scope.dicMatricula[$scope.Matricula];
@@ -331,8 +339,7 @@
                     "idProblema": this.idProblema,
                     "IdMatricula": this.idMatricula,
                     "idctramo": this.Matricula,
-                    //Aplicamos un filter a la fecha para que se ajuste al formato que se utiliza en la bbdd
-                    "fecha": $filter('date')($scope.dt, "dd/MM/yyyy")
+                    "fecha": "11/03/2015"
                 },
                 "symbol": {
                     "color": [255, 0, 0, 128],
