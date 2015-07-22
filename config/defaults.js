@@ -27,12 +27,31 @@ define({
 			},
         "itemData": {
 				"operationalLayers": [{
-				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Base/MapServer",
+				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Visor_WEB/MapServer",
 				  "visibility": true,
 				  "opacity": 0.7,
 				  "title": "Junta Castilla la Mancha App",
 				  "itemId": false,
+				}, {
+				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Actua_Extraordinaria_Prog_Conservaci%C3%B3n/MapServer",
+				  "visibility": true,
+				  "opacity": 0.7,
+				  "title": "Programa de conservación",
+				  "itemId": false,
+				},{
+				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Modernizaci%C3%B3n_Prog_Modernizaci%C3%B3n/MapServer",
+				  "visibility": true,
+				  "opacity": 0.7,
+				  "title": "Programa de modernización",
+				  "itemId": false,
+				},{
+				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/Prog_Mejora_Funcionalidad_Red/MapServer",
+				  "visibility": true,
+				  "opacity": 0.7,
+				  "title": "Programa de mejora de funcionalidad",
+				  "itemId": false,
 				}],
+				
 				"baseMap": {
 				  "baseMapLayers": [{
 					"opacity": 1,
