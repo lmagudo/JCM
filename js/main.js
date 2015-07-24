@@ -1137,7 +1137,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
 
                         var serverInfo = new ServerInfo();
                         serverInfo.server = 'http://qvialweb.es';
-                        serverInfo.tokenServiceUrl = 'http://qvialweb.es:6080/arcgis/admin/generateToken?referer=http://qvialweb.es';
+                        serverInfo.tokenServiceUrl = 'https://qvialweb.es:6443/arcgis/tokens/?referer=http://qvialweb.es';
 
 
                         esriId.registerServers([serverInfo]);
