@@ -85,9 +85,14 @@
                         }
                         if (count == 0) {
                             //Relleno el combobox de matricula
-                            
+                            console.log(jsonObj[i].Titularidad);
+                            if (jsonObj[i].Titularidad == '999') {
+                                jsonObj[i].Titularidad = 'Otras';
+                            }
+                            console.log(jsonObj[i].Titularidad);
                             //$scope.carreteras.push(jsonObj[i].Matricula_Plan);
                             $scope.carreteras.push(jsonObj[i]);
+                            
                             //Relleno el diccionario con los pares codigo/valor que corresponden a Matricula/idMatricula                            
                             $scope.dicCarreteras[jsonObj[i].Matricula_Plan] = jsonObj[i].idMatricula;
                         }
