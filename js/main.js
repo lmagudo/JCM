@@ -1061,7 +1061,6 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
             console.log("Creting infoWindow");
             domClass.add(this.map.infoWindow.domNode, "light");
             incidenciasLayer = this.map.getLayer("operational0");
-            //console.log(layer);
 
             //define the info template that is used to display the popup content. 
             var templateIncidcidencias = new InfoTemplate();
@@ -1107,8 +1106,8 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
            
 
             incidenciasLayer.setInfoTemplates({
-                0: { infoTemplate: templateIncidcidencias },
-                1: { infoTemplate: templateCarreteras }
+                0: { infoTemplate: templateCarreteras },
+                1: { infoTemplate: templateIncidcidencias }
             });
 
 
