@@ -111,6 +111,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
         // Create UI
         _createUI: function () {
             domStyle.set("panelPages", "visibility", "hidden");
+
             //Add tools to the toolbar. The tools are listed in the defaults.js file
             var toolbar = new Toolbar(this.config);
             toolbar.startup().then(lang.hitch(this, function () {

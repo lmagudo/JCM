@@ -22,7 +22,8 @@
                 var queryTask = new QueryTask("http://qvialweb.es:6080/arcgis/rest/services/JCM/Busquedas/MapServer/1");
                 var query = new Query();
                 query.returnGeometry = false;
-                query.outFields = ["Matricula_Plan", "idMatricula", "Titularidad"];
+                //query.outFields = ["Matricula_Plan", "idMatricula", "Titularidad"];
+                query.outFields = ["Matricula", "idMatricula", "Titularidad"];
                 query.where = "OBJECTID > 0";
 
                 queryTask.execute(query, showResults);
@@ -63,7 +64,8 @@
                     };
 
                     for (i = 0; i < results.features.length; i++) {
-                        var Matricula_Plan = results.features[i].attributes.Matricula_Plan;
+                        //var Matricula_Plan = results.features[i].attributes.Matricula_Plan;
+                        var Matricula_Plan = results.features[i].attributes.Matricula;
                         var idMatricula = results.features[i].attributes.idMatricula;
                         var Titularidad = results.features[i].attributes.Titularidad;
 
@@ -85,11 +87,9 @@
                         }
                         if (count == 0) {
                             //Relleno el combobox de matricula
-                            console.log(jsonObj[i].Titularidad);
                             if (jsonObj[i].Titularidad == '999') {
                                 jsonObj[i].Titularidad = 'Otras';
                             }
-                            console.log(jsonObj[i].Titularidad);
                             //$scope.carreteras.push(jsonObj[i].Matricula_Plan);
                             $scope.carreteras.push(jsonObj[i]);
                             
@@ -142,7 +142,6 @@
                     break;
                 case 2:
                     //Obtengo mediante el diccionario, el valor de la clave que corresponde a la matricula elegida por el usuario
-                    console.log($scope.carretera);
                     //$scope.idMatricula = $scope.dicCarreteras[$scope.carretera];
                     $scope.idMatricula = $scope.carretera;
                     require(["esri/tasks/query", "esri/tasks/QueryTask"],
@@ -206,7 +205,6 @@
             var idcapa;
             switch (selectorBuscador) {
                 case 1:
-                    console.log($scope.carretera);
                     var whereclaus = "idMatricula = '" + $scope.carretera + "'";
                     idcapa = 1;
                     myrequest(whereclaus, idcapa, null);
