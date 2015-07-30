@@ -50,20 +50,26 @@ define({
 				  "opacity": 0.7,
 				  "title": "Programa de mejora de funcionalidad",
 				  "itemId": false,
+				},{
+				    "url": "http://qvialweb.es:6080/arcgis/rest/services/JCM/GEOPKS/MapServer",
+				    "visibility": true,
+				    "opacity": 0.7,
+				    "title": "Puntos Kilométricos",
+				    "itemId": false,
 				}],
 				
 				"baseMap": {
 				  "baseMapLayers": [{
 					"opacity": 1,
 					"visibility": true,
-					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
-				  },
-                {
-					"isReference": true,
-					"opacity": 1,
-					"visibility": true,
-					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
-                }
+					"url": "http://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer"
+				  }
+                //{
+				//	"isReference": true,
+				//	"opacity": 1,
+				//	"visibility": true,
+				//	"url": "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
+                //}
 				  ],
 				  "title": "World_Terrain_Base"
 				},
