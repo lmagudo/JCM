@@ -278,7 +278,7 @@
                         function projectfeatures(projectedGeometry) {
 
                             if (projectedGeometry[0].type == "point") {
-                                TwoCartoMap.centerAndZoom(projectedGeometry[0], 12);
+                                TwoCartoMap.centerAndZoom(projectedGeometry[0], 16);
                             }
                             else {
                                 var myextent = new Extent();
