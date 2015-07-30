@@ -23,7 +23,7 @@
                 var query = new Query();
                 query.returnGeometry = false;
                 //query.outFields = ["Matricula_Plan", "idMatricula", "Titularidad"];
-                query.outFields = ["Matricula", "idMatricula", "Titularidad"];
+                query.outFields = ["Matricula", "idMatricula", "Titularidad", "idOrdenCtra"];
                 query.where = "OBJECTID > 0";
 
                 queryTask.execute(query, showResults);
@@ -68,16 +68,18 @@
                         var Matricula_Plan = results.features[i].attributes.Matricula;
                         var idMatricula = results.features[i].attributes.idMatricula;
                         var Titularidad = results.features[i].attributes.Titularidad;
+                        var idOrdenCtra = results.features[i].attributes.idOrdenCtra;
 
                         item = {}
                         item["Matricula_Plan"] = Matricula_Plan;
                         item["idMatricula"] = idMatricula;
                         item["Titularidad"] = Titularidad;
+                        item["idOrdenCtra"] = idOrdenCtra;
 
                         jsonObj.push(item);
                     }
 
-                    jsonObj.sort(by("Titularidad"));
+                    //jsonObj.sort(by("idOrdenCtra"));
 
                     for (i = 0; i < jsonObj.length; i++) {
                         for (j = 0; j < $scope.carreteras.length; j++) {

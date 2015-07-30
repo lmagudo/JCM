@@ -57,12 +57,14 @@ define({
 					"opacity": 1,
 					"visibility": true,
 					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
-                }, {
+				  },
+                {
 					"isReference": true,
 					"opacity": 1,
 					"visibility": true,
 					"url": "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
-					}],
+                }
+				  ],
 				  "title": "World_Terrain_Base"
 				},
             "version": "1.1",

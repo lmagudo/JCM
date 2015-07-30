@@ -193,6 +193,7 @@ ready, JSON, array, Color, declare, lang, dom, domGeometry, domAttr, domClass, d
                     //to the toolbar panel, update the color theme and set the active tool.
                     this._updateTheme();
 
+                    console.log(toolbar);
 
                     if (this.config.activeTool !== "") {
                         toolbar.activateTool(this.config.activeTool);
